@@ -9,16 +9,21 @@ app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 app.use(express.urlencoded({extended: true}));      // lets you access the body of the request
 
+require('dotenv').config();
+
 const knex = require('knex') ({
     client : 'pg',
     connection : {
-        host : 'localhost',
-        user : 'postgres',
-        password : 'Pinacolada17',
-        database : 'starwars',
-        port : 5432
+        host : process.env.PG_HOST,
+        user : process.env.PG_USER,
+        password : process.env.PG_PASSWORD,
+        database : process.env.PG_DATABASE,
+        port : process.env.PG_PORT
     }
-})
+});
+db.raw('SELECT 1')
+    .then(() => console.log('Database connected!'))
+    .catch((err) => console.error('Database connection failed:', err));
 
 // Route to display Character records
 app.get('/', (req, res) => {
