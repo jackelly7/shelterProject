@@ -25,3 +25,6 @@ Thumbs.db
 
 # EJS temporary files
 *.tmp
+
+#Zip versions
+*.zip
