@@ -1,0 +1,25 @@
+{
+  "name": "shelterproject",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jackelly7/shelterProject.git"
+  },
+  "author": "Jack Kelly, Katherine Creer, Hannah Gouff, Dallen Openshaw",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jackelly7/shelterProject/issues"
+  },
+  "homepage": "https://github.com/jackelly7/shelterProject#readme",
+  "dependencies": {
+    "ejs": "^3.1.10",
+    "express": "^4.21.1",
+    "knex": "^3.1.0",
+    "pg": "^8.13.1"
+  }
+}
