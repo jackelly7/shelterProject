@@ -18,6 +18,7 @@
   "homepage": "https://github.com/jackelly7/shelterProject#readme",
   "description": "",
   "dependencies": {
+    "dotenv": "^16.4.7",
     "ejs": "^3.1.10",
     "express": "^4.21.1",
     "knex": "^3.1.0",

@@ -1,9 +1,7 @@
 const express = require("express");
 const app = express();
-
-// Set EJS as the view engine
-app.set('view engine', 'ejs');
-app.set('views', './views');
+let path = require('path');
+require('dotenv').config();
 
 const knex = require('knex') ({
     client : 'pg',
@@ -16,17 +14,43 @@ const knex = require('knex') ({
     }
 })
 
-// GET route for the index page
-app.get('/', async (req, res) => {
-    try {
-        // Query the database to fetch data
-        const data = await knex('users').select('*'); // Replace 'users' with your table name
+// Middleware to parse POST request bodies
+app.use(express.urlencoded({ extended: true }));
 
-        // Render the EJS file and pass the data
-        res.render('index', { data });
-    } catch (error) {
-        console.error('Error fetching data:', error);
-        res.status(500).send('An error occurred while fetching data.');
+// -----> Connect Database here
+
+// Set view engine and views folder
+app.set("views", path.join(__dirname, "views"));
+app.set("view engine", "ejs");
+
+// Serve static files (like CSS)
+app.use(express.static(path.join(__dirname, 'public')));
+
+// Routes
+
+app.get('/', (req, res) => {
+    res.render('index');  // You can create an index.ejs to show your homepage
+});
+
+app.get('/meet_jen', (req, res) => {
+    res.render('meet_jen'); // Render the 'meet-jen.ejs' file
+});
+
+app.get('/admin', (req, res) => {
+    res.render('admin'); // Render the 'meet-jen.ejs' file
+});
+
+
+// Handle login form submission
+app.post('/admin', (req, res) => {
+    const { email, password } = req.body;
+
+    // Add authentication logic here (e.g., check the database for the user)
+    
+    if (email === 'test@example.com' && password === 'password') {
+        res.send('Logged in successfully!');
+    } else {
+        res.send('Invalid credentials.');
     }
 });
 
