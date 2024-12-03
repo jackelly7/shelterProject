@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Database Data</title>
+</head>
+<body>
+    <h1>Data from the Database</h1>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Email</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% if (data && data.length > 0) { %>
+                <% data.forEach(row => { %>
+                    <tr>
+                        <td><%= row.id %></td>
+                        <td><%= row.name %></td>
+                        <td><%= row.email %></td>
+                    </tr>
+                <% }); %>
+            <% } else { %>
+                <tr>
+                    <td colspan="3">No data available</td>
+                </tr>
+            <% } %>
+        </tbody>
+    </table>
+</body>
+</html>
