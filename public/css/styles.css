@@ -595,16 +595,6 @@ progress {
   margin-bottom: 0;
 }
 
-.blockquote-footer {
-  margin-top: -1rem;
-  margin-bottom: 1rem;
-  font-size: 0.65em;
-  color: #6c757d;
-}
-.blockquote-footer::before {
-  content: "— ";
-}
-
 .img-fluid {
   max-width: 100%;
   height: auto;
@@ -5019,11 +5009,7 @@ textarea.form-control-lg {
   --bs-modal-header-border-color: var(--bs-border-color);
   --bs-modal-header-border-width: 1px;
   --bs-modal-title-line-height: 1.5;
-  --bs-modal-footer-gap: 0.3rem;
-  --bs-modal-footer-bg: ;
-  --bs-modal-footer-border-color: var(--bs-border-color);
-  --bs-modal-footer-border-width: 1px;
-  position: fixed;
+ position: fixed;
   top: 0;
   left: 0;
   z-index: var(--bs-modal-zindex);
@@ -5128,20 +5114,6 @@ textarea.form-control-lg {
   position: relative;
   flex: 1 1 auto;
   padding: var(--bs-modal-padding);
-}
-
-.modal-footer {
-  display: flex;
-  flex-shrink: 0;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: flex-end;
-  padding: calc(var(--bs-modal-padding) - var(--bs-modal-footer-gap) * 0.5);
-  background-color: var(--bs-modal-footer-bg);
-  border-top: var(--bs-modal-footer-border-width) solid var(--bs-modal-footer-border-color);
-}
-.modal-footer > * {
-  margin: calc(var(--bs-modal-footer-gap) * 0.5);
 }
 
 @media (min-width: 576px) {
@@ -7306,8 +7278,8 @@ textarea.form-control-lg {
 }
 
 .my-4 {
-  margin-top: 1.5rem !important;
-  margin-bottom: 1.5rem !important;
+  margin-top: 1rem !important;
+  margin-bottom: 1rem !important;
 }
 
 .my-5 {
@@ -7512,8 +7484,8 @@ textarea.form-control-lg {
 }
 
 .py-5 {
-  padding-top: 3rem !important;
-  padding-bottom: 3rem !important;
+  padding-top: 1rem !important;
+  padding-bottom: 1rem !important;
 }
 
 .pt-0 {
@@ -10670,13 +10642,6 @@ blockquote {
     /* if the user changes the scrolling direction, we show the header */
     transform: translate3d(0, 100%, 0);
   }
-}
-
-footer {
-  padding-top: 3rem;
-  padding-bottom: 3rem;
-  line-height: normal;
-  font-size: medium;
 }
 
 .masthead {
