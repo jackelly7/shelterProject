@@ -1,25 +1,24 @@
 const express = require("express");
-const session = require("express-session"); // For session management
-const bcrypt = require("bcrypt"); // For secure password hashing
+const session = require("express-session");
+const bcrypt = require("bcrypt");
 const path = require("path");
 require("dotenv").config();
 
 const app = express();
-const bodyParser = require('body-parser');
-require('dotenv').config();
+const bodyParser = require("body-parser");
 const port = 3000;
 
-const knex = require('knex') ({
-    client : 'pg',
-    connection : {
-        host : process.env.DB_HOST || 'localhost',
-        user : process.env.DB_USER,
-        password : process.env.DB_PASSWORD,
-        database : process.env.DB_NAME,
-        port : process.env.DB_PORT || 5432,
-        ssl: { rejectUnauthorized: false }
-    }
-})
+const knex = require("knex")({
+    client: "pg",
+    connection: {
+        host: process.env.DB_HOST || "localhost",
+        user: process.env.DB_USER,
+        password: process.env.DB_PASSWORD,
+        database: process.env.DB_NAME,
+        port: process.env.DB_PORT || 5432,
+        ssl: { rejectUnauthorized: false },
+    },
+});
 
 // Middleware to parse POST request bodies
 app.use(express.urlencoded({ extended: true }));
@@ -30,41 +29,41 @@ app.use(
         secret: process.env.SESSION_SECRET || "yourSecretKey",
         resave: false,
         saveUninitialized: false,
-        cookie: { secure: false }, // Set to true if using HTTPS
+        cookie: {
+            secure: process.env.NODE_ENV === "production",
+            httpOnly: true,
+        },
     })
 );
 
 // Set view engine and views folder
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
-app.use(bodyParser.urlencoded({ extended: true }));
 
 // Serve static files (like CSS)
 app.use(express.static(path.join(__dirname, "public")));
 
 // Middleware for protected routes
 function authMiddleware(req, res, next) {
-    if (req.session.userId) {
-        next();
-    } else {
-        res.redirect("/login");
+    if (!req.session.userId) {
+        return res.redirect("/login");
     }
+    next();
 }
 
 function isAdmin(req, res, next) {
-  console.log('Role:', req.session.role);  // Debugging
-  if (req.session.role === 'admin') {
-    next(); // User is an admin
-  } else {
-    res.status(403).send('Access denied'); // Forbidden
-  }
+    if (req.session.role === "admin") {
+        next();
+    } else {
+        res.status(403).send("Access denied");
+    }
 }
 
 function isVolunteer(req, res, next) {
-    if (req.session.role === 'volunteer') {
-        next(); // User is a volunteer
+    if (req.session.role === "volunteer") {
+        next();
     } else {
-        res.status(403).send('Access denied'); // Forbidden
+        res.status(403).send("Access denied");
     }
 }
 
@@ -72,12 +71,12 @@ function isVolunteer(req, res, next) {
 
 // Homepage
 app.get("/", (req, res) => {
-    res.render("index"); // Render 'index.ejs'
+    res.render("index");
 });
 
 // Meet Jen Page
 app.get("/meet_jen", (req, res) => {
-    res.render("meet_jen"); // Render 'meet_jen.ejs'
+    res.render("meet_jen");
 });
 
 // Login Page
@@ -112,78 +111,90 @@ app.get("/event_manager", authMiddleware, isAdmin, (req, res) => {
     });
 });
 
-// Admin Page
-app.get("/admin", (req, res) => {
-    res.render("admin"); // Render 'admin.ejs'
-});
-
-app.post('/login', async (req, res) => {
+// Login Route
+app.post("/login", async (req, res) => {
     const { username, password } = req.body;
 
     try {
-        // Query the database for a user with the given username and password
-        const user = await knex('users')
+        const user = await knex("users")
             .where({ username, user_password: password })
             .first();
 
-        // Check if a matching user was found
         if (!user) {
-            console.log('Invalid username or password');
-            return res.status(401).send('Invalid username or password');
+            console.log("Invalid username or password");
+            return res.status(401).send("Invalid username or password");
         }
 
-        // Store user details in session
+        // Set session variables
         req.session.userId = user.user_id;
         req.session.role = user.user_type;
 
-        // Redirect based on user role
-        console.log('Login successful:', user);
-        res.redirect(user.user_type === 'admin' ? '/admin' : '/dashboard');
+        // Redirect based on role
+        res.redirect(user.user_type === "admin" ? "/admin" : "/volunteer");
     } catch (err) {
-        console.error('Server error during login:', err);
-        res.status(500).send('Server error');
+        console.error("Error during login:", err);
+        res.status(500).send("Server error");
     }
 });
 
 // Admin-only route
-app.get('/admin', isAdmin, (req, res) => {
-    res.render('admin'); // Render admin dashboard
-});
+// app.get("/admin", authMiddleware, isAdmin, (req, res) => {
+//     res.render("admin");
+// });
+
+app.get('/admin', authMiddleware, isAdmin, async (req, res) => {
+    try {
+        const adminDetails = await knex('admins')
+            .join('users', 'admins.user_id', 'users.user_id')
+            .select('admins.admin_first_name')
+            .where('users.user_id', req.session.userId)
+            .first();
+  
+        if (!adminDetails) {
+            return res.status(404).send('Admin details not found');
+        }
+  
+        res.render('admin', { adminName: adminDetails.admin_first_name });
+  
+    } catch (error) {
+        console.error('Error fetching admin details:', error);
+        res.status(500).send('Server error');
+    }
+  });
 
 // Volunteer-only route
-app.get('/volunteer', isVolunteer, (req, res) => {
-    res.render('volunteer'); // Render volunteer dashboard
-});
-
-// Shared route for both roles
-app.get('/dashboard', (req, res) => {
-    if (req.session.role === 'admin') {
-        res.render('admin-dashboard'); // Admin-specific dashboard
-    } else if (req.session.role === 'volunteer') {
-        res.render('volunteer-dashboard'); // Volunteer-specific dashboard
-    } else {
-        res.redirect('/login'); // Redirect to login if no valid session
-    }
+app.get("/volunteer", authMiddleware, isVolunteer, (req, res) => {
+    res.render("volunteer");
 });
 
 // Logout Route
 app.get("/logout", (req, res) => {
     req.session.destroy((err) => {
-        if (err) return res.status(500).send("Server error");
+        if (err) {
+            console.error("Error during logout:", err);
+            return res.status(500).send("Server error");
+        }
+        res.clearCookie("connect.sid");
         res.redirect("/login");
     });
 });
 
 // Register New User (For testing purposes only)
 app.post("/register", async (req, res) => {
-    const { email, password } = req.body;
+    const { username, password, user_type } = req.body;
 
-    // Add authentication logic here (e.g., check the database for the user)
-    
-    if (email === 'test@example.com' && password === 'password') {
-        res.send('Logged in successfully!');
-    } else {
-        res.send('Invalid credentials.');
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    try {
+        await knex("users").insert({
+            username,
+            user_password: hashedPassword,
+            user_type,
+        });
+        res.send("User registered successfully!");
+    } catch (error) {
+        console.error("Error registering user:", error);
+        res.status(500).send("Server error");
     }
 });
 
@@ -204,59 +215,62 @@ app.get('/request_event', (req, res) => {
 
 
 // POST route to request an event
-app.post('/request_event', (req, res) => {
-  const {
-    event_name,
-    number_of_participants_expected,
-    event_type,
-    event_date_time,
-    event_street_address,
-    event_city,
-    event_county,
-    event_state,
-    event_zip,
-    event_duration_hrs,
-    event_contact_first_name,
-    event_contact_last_name,
-    event_contact_phone,
-    event_contact_email,
-    event_jen_story,
-    event_donate_money
-  } = req.body;
+app.post("/request_event", authMiddleware, (req, res) => {
+    const {
+        event_name,
+        number_of_participants_expected,
+        event_type,
+        event_date_time,
+        event_street_address,
+        event_city,
+        event_county,
+        event_state,
+        event_zip,
+        event_duration_hrs,
+        event_contact_first_name,
+        event_contact_last_name,
+        event_contact_phone,
+        event_contact_email,
+        event_jen_story,
+        event_donate_money,
+    } = req.body;
 
-  knex('events').insert({
-    event_name,
-    number_of_participants_expected,
-    event_type,
-    event_date_time,
-    event_street_address,
-    event_city,
-    event_county,
-    event_state,
-    event_zip,
-    event_duration_hrs,
-    event_contact_first_name,
-    event_contact_last_name,
-    event_contact_phone,
-    event_contact_email,
-    event_jen_story,
-    event_donate_money,
-    event_status: "pending"  // Automatically set this to pending
-  })
-  .then(() => {
-    res.redirect('/request_event');
-  })
-  .catch(error => {
-    console.error('Error inserting event:', error);
-    res.status(500).send('Something went wrong');
-  });
+    knex("events")
+        .insert({
+            event_name,
+            number_of_participants_expected,
+            event_type,
+            event_date_time,
+            event_street_address,
+            event_city,
+            event_county,
+            event_state,
+            event_zip,
+            event_duration_hrs,
+            event_contact_first_name,
+            event_contact_last_name,
+            event_contact_phone,
+            event_contact_email,
+            event_jen_story,
+            event_donate_money,
+            event_status: "pending",
+        })
+        .then(() => {
+            res.redirect("/request_event");
+        })
+        .catch((error) => {
+            console.error("Error inserting event:", error);
+            res.status(500).send("Something went wrong");
+        });
 });
+
 
 
 // Start the server
 app.listen(port, () => {
-  console.log(`Server is running on http://localhost:${port}`);
+    console.log(`Server is running on http://localhost:${port}`);
 });
+
 
 
 
