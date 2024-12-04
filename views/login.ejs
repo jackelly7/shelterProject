@@ -3,40 +3,121 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Your Website</title>
+    <link rel="icon" type="image/x-icon" href="assets/favicon.png" />
+    <title>Login - Turtle Shelter Project</title>
     <link rel="stylesheet" href="/css/styles.css">
-    <!-- Add other meta tags or links to libraries here -->
+    <link rel="stylesheet" href="/css/ourStyles.css">
+    <style>
+        /* Login page-specific styles */
+        body {
+            background-color: #2b2b2b; /* Match admin page background */
+            margin: 0;
+            font-family: "Open Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+        }
+
+        .login-container {
+            margin: 150px auto;
+            max-width: 400px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            padding: 30px 20px;
+            text-align: center;
+        }
+
+        h2 {
+            color: #0066ff;
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 1rem;
+            margin-bottom: 5px;
+            color: #333;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            font-size: 1rem;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            background-color: #0066ff; /* Correct blue color */
+            color: white;
+            padding: 10px 20px;
+            font-size: 1rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #004db3;
+        }
+
+        p {
+            font-size: 0.9rem;
+            color: #808080;
+        }
+
+        p a {
+            color: #0066ff;
+            text-decoration: none;
+        }
+    </style>
 </head>
 <body>
-    <header>
-        <nav>
-            <ul>
-                <li><a href="/">Home</a></li>
-                <li><a href="/login">Login</a></li>
-                <li><a href="/contact">Contact</a></li>
-            </ul>
-        </nav>
-    </header>
-
-    <main class="login-page">
-        <div class="container">
-            <h2>Login</h2>
-            <form action="/login" method="POST">
-                <div class="form-group">
-                    <label for="username">Username</label>
-                    <input type="text" id="username" name="username" required />
-                </div>
-                <div class="form-group">
-                    <label for="password">Password</label>
-                    <input type="password" id="password" name="password" required />
-                </div>
-                <button type="submit">Log In</button>
-            </form>
-            <p>Don't have an account? <a href="/signup">Sign up</a></p>
+    <!-- Navigation: Using the same header as the admin page -->
+    <nav class="navbar navbar-expand-lg navbar-light" id="mainNav" style="position: fixed; width: 100%; z-index: 100; background-color: #393939;">
+        <div class="container px-4 px-lg-5">
+            <a class="navbar-brand" href="/">TURTLE SHELTER PROJECT</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                Menu
+                <i class="fas fa-bars"></i>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ms-auto py-4 py-lg-0">
+                    <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="#about-us">About</a></li>
+                    <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="#join-us">Sponsorship</a></li>
+                    <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="/meet_jen">Jen's Story</a></li>
+                    <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="/request_event">How to help</a></li>
+                    <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="/admin">TSP Log In</a></li>
+                </ul>
+            </div>
         </div>
-    </main>
+    </nav>
+
+    <!-- Login Form -->
+    <div class="login-container">
+        <h2>Turtle Team Login</h2>
+        <form action="/login" method="POST">
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" required />
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required />
+            </div>
+            <button type="submit">Log In</button>
+        </form>
+        <p>Don't have an account? <a href="/signup">Sign up</a></p>
+    </div>
+
+    <!-- Footer: Using the same footer as the admin page -->
     <footer>
-        <p>&copy; 2023 Your Website</p>
+        <p>&copy; 2023 Turtle Shelter Project</p>
     </footer>
 </body>
 </html>

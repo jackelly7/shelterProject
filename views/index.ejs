@@ -19,9 +19,9 @@
     </head>
     <body>
         <!-- Navigation-->
-        <nav class="navbar navbar-expand-lg navbar-light" id="mainNav" style='background-color: white; position: fixed;'>
+        <nav class="navbar navbar-expand-lg navbar-light" id="mainNav" style='background-color: white; position: fixed; border-bottom: 1px solid #393939'>
             <div class="container px-4 px-lg-5">
-                <a class="navbar-brand" href="index.html" style="color: #393939">TURTLE SHELTER PROJECT</a>
+                <a class="navbar-brand" href="/" style="color: #393939">TURTLE SHELTER PROJECT</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                     Menu
                     <i class="fas fa-bars"></i>
@@ -32,14 +32,22 @@
                         <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" style="color: #393939;" href="#join-us">Sponsorship</a></li>
                         <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" style="color: #393939;" href="/meet_jen">Jen's Story</a></li>
                         <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" style="color: #393939;" href="/request_event">How to help</a></li>
-                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" style="color: #393939;" href="/login">TSP Log In</a></li>
+                        <% if (adminName) { %>
+                            <li class="nav-item">
+                                <a class="nav-link px-lg-3 py-3 py-lg-4" style="color: #393939;" href="/admin">My Dashboard</a>
+                            </li>
+                        <% } else { %>
+                            <li class="nav-item">
+                                <a class="nav-link px-lg-3 py-3 py-lg-4" style="color: #393939;" href="/login">TSP Log In</a>
+                            </li>
+                        <% } %>
                     </ul>
                 </div>
             </div>
         </nav>
 
         <!-- Page Header-->
-        <header class="masthead" style="background-image: url('assets/img/pexels-astreyas-photo-9928338.jpg')">
+        <header class="masthead" style="background-image: url('assets/img/test-bkg.png')">
             <div class="container position-relative px-4 px-lg-5">
                 <div class="row gx-4 gx-lg-5 justify-content-center">
                     <div class="col-md-10 col-lg-8 col-xl-7">
