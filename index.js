@@ -81,7 +81,34 @@ app.get("/meet_jen", (req, res) => {
 
 // Login Page
 app.get("/login", (req, res) => {
-    res.render("login");
+    res.render("login"); // Render 'login.ejs'
+});
+
+// Admin Event Manager Page
+// Admin Event Manager Page
+app.get("/event_manager", authMiddleware, isAdmin, (req, res) => {
+  // Fetch events based on the event_status
+  knex('events')
+    .select('*')
+    .then(result => {
+      // Separate events by status
+      const approvedEvents = result.filter(event => event.event_status === 'approved');
+      const pendingEvents = result.filter(event => event.event_status === 'pending');
+      const declinedEvents = result.filter(event => event.event_status === 'declined');
+      const completedEvents = result.filter(event => event.event_status === 'completed');
+
+      // Render the event manager page with the separated event data
+      res.render("event_manager", {
+        approvedEvents,
+        pendingEvents,
+        declinedEvents,
+        completedEvents
+      });
+    })
+    .catch(error => {
+      console.error('Error fetching events:', error);
+      res.status(500).send('Something went wrong');
+    });
 });
 
 // Login Route
@@ -171,18 +198,21 @@ app.post("/register", async (req, res) => {
     }
 });
 
-// GET route for event page
-app.get("/request_event", authMiddleware, (req, res) => {
-    knex("events")
-        .select("*")
-        .then((result) => {
-            res.render("request_event", { events: result });
-        })
-        .catch((error) => {
-            console.error("Error fetching events:", error);
-            res.status(500).send("Something went wrong");
-        });
+const stateAbbreviations = ["AL", "AK", "AZ", "AR", "CA", "CO", "CT", "DE", "FL", "GA", "HI", "ID", "IL", "IN", "IA", "KS", "KY", "LA", "ME", "MD", "MA", "MI", "MN", "MS", "MO", "MT", "NE", "NV", "NH", "NJ", "NM", "NY", "NC", "ND", "OH", "OK", "OR", "PA", "RI", "SC", "SD", "TN", "TX", "UT", "VT", "VA", "WA", "WV", "WI", "WY"];
+
+//GET route for event page
+app.get('/request_event', (req, res) => {
+  knex('events').select('*')
+    .then(result => {
+      res.render('request_event', { events: result, stateAbbreviations: stateAbbreviations });
+    })
+    .catch(error => {
+      console.error('Error fetching events:', error);
+      res.status(500).send('Something went wrong');
+    });
 });
+
+
 
 // POST route to request an event
 app.post("/request_event", authMiddleware, (req, res) => {
@@ -234,7 +264,44 @@ app.post("/request_event", authMiddleware, (req, res) => {
         });
 });
 
+
+
 // Start the server
 app.listen(port, () => {
     console.log(`Server is running on http://localhost:${port}`);
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

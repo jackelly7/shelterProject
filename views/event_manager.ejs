@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>Event Manager - Turtle Shelter Project</title>
+        <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+        <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css" />
+        <link href="css/styles.css" rel="stylesheet" />
+        <link href="css/ourStyles.css" rel="stylesheet" />
+    </head>
+    <body>
+        <!-- Navigation-->
+        <nav class="navbar navbar-expand-lg navbar-light" id="mainNav" style='background-color: white; position: fixed;'>
+            <div class="container px-4 px-lg-5">
+                <a class="navbar-brand" href="index.html" style="color: #393939">TURTLE SHELTER PROJECT</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                    Menu
+                    <i class="fas fa-bars"></i>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarResponsive">
+                    <ul class="navbar-nav ms-auto py-4 py-lg-0" style="color: #393939;">
+                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" style="color: #393939;" href="#about-us">About</a></li>
+                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" style="color: #393939;" href="#join-us">Sponsorship</a></li>
+                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" style="color: #393939;" href="/meet_jen">Jen's Story</a></li>
+                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" style="color: #393939;" href="/request_event">How to help</a></li>
+                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" style="color: #393939;" href="/admin">TSP Log In</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <h1>EVENT MANAGER</h1>
+
+        <h2>Approved Events</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Event Name</th>
+                    <th>Event Type</th>
+                    <th>Participants</th>
+                    <th>Date/Time</th>
+                    <th>City/State</th>
+                    <th>Jen's Story</th>
+                    <th>Contact</th>
+                    <th>Action</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% approvedEvents.forEach(event => { %>
+                    <tr>
+                        <td><%= event.event_name %></td>
+                        <td><%= event.event_type %></td>
+                        <td><%= event.number_of_participants_expected %></td>
+                        <td><%= new Date(event.event_date_time).toLocaleString('en-US', { month: '2-digit', day: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' }) %></td>
+                        <td><%= event.event_city %> <%= event.event_state %></td>
+                        <td><%= event.event_jen_story %></td>
+                        <td><%= event.event_contact_first_name %> <%= event.event_contact_last_name %>: <%= event.event_contact_phone %></td>
+                    </tr>
+                <% }) %>
+            </tbody>
+        </table>
+
+        <h2>Pending Events</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Event Name</th>
+                    <th>Event Type</th>
+                    <th>Participants</th>
+                    <th>Date/Time</th>
+                    <th>City/State</th>
+                    <th>Jen's Story</th>
+                    <th>Contact</th>
+                    <th>Action</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% pendingEvents.forEach(event => { %>
+                    <tr>
+                        <td><%= event.event_name %></td>
+                        <td><%= event.event_type %></td>
+                        <td><%= event.number_of_participants_expected %></td>
+                        <td><%= new Date(event.event_date_time).toLocaleString('en-US', { month: '2-digit', day: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' }) %></td>
+                        <td><%= event.event_city %> <%= event.event_state %></td>
+                        <td><%= event.event_jen_story %></td>
+                        <td><%= event.event_contact_first_name %> <%= event.event_contact_last_name %>: <%= event.event_contact_phone %></td>
+                    </tr>
+                <% }) %>
+            </tbody>
+        </table>
+
+        <h2>Declined Events</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Event Name</th>
+                    <th>Event Type</th>
+                    <th>Participants</th>
+                    <th>Date/Time</th>
+                    <th>City/State</th>
+                    <th>Jen's Story</th>
+                    <th>Contact</th>
+                    <th>Action</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% declinedEvents.forEach(event => { %>
+                    <tr>
+                        <td><%= event.event_name %></td>
+                        <td><%= event.event_type %></td>
+                        <td><%= event.number_of_participants_expected %></td>
+                        <td><%= new Date(event.event_date_time).toLocaleString('en-US', { month: '2-digit', day: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' }) %></td>
+                        <td><%= event.event_city %> <%= event.event_state %></td>
+                        <td><%= event.event_jen_story %></td>
+                        <td><%= event.event_contact_first_name %> <%= event.event_contact_last_name %>: <%= event.event_contact_phone %></td>
+                    </tr>
+                <% }) %>
+            </tbody>
+        </table>
+
+        <h2>Completed Events</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Event Name</th>
+                    <th>Event Type</th>
+                    <th>Participants</th>
+                    <th>Date/Time</th>
+                    <th>City/State</th>
+                    <th>Jen's Story</th>
+                    <th>Contact</th>
+                    <th>Action</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% completedEvents.forEach(event => { %>
+                    <tr>
+                        <td><%= event.event_name %></td>
+                        <td><%= event.event_type %></td>
+                        <td><%= event.number_of_participants_expected %></td>
+                        <td><%= new Date(event.event_date_time).toLocaleString('en-US', { month: '2-digit', day: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' }) %></td>
+                        <td><%= event.event_city %> <%= event.event_state %></td>
+                        <td><%= event.event_jen_story %></td>
+                        <td><%= event.event_contact_first_name %> <%= event.event_contact_last_name %>: <%= event.event_contact_phone %></td>
+                    </tr>
+                <% }) %>
+            </tbody>
+        </table>
+    </body>
+</html>
