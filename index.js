@@ -5,19 +5,21 @@ const path = require("path");
 require("dotenv").config();
 
 const app = express();
+const bodyParser = require('body-parser');
+require('dotenv').config();
+const port = 3000;
 
-// Knex setup
-const knex = require("knex")({
-    client: "pg",
-    connection: {
-        host: process.env.DB_HOST || "localhost",
-        user: process.env.DB_USER,
-        password: process.env.DB_PASSWORD,
-        database: process.env.DB_NAME,
-        port: process.env.DB_PORT || 5432,
-        ssl: { rejectUnauthorized: false },
-    },
-});
+const knex = require('knex') ({
+    client : 'pg',
+    connection : {
+        host : process.env.DB_HOST || 'localhost',
+        user : process.env.DB_USER,
+        password : process.env.DB_PASSWORD,
+        database : process.env.DB_NAME,
+        port : process.env.DB_PORT || 5432,
+        ssl: { rejectUnauthorized: false }
+    }
+})
 
 // Middleware to parse POST request bodies
 app.use(express.urlencoded({ extended: true }));
@@ -35,6 +37,7 @@ app.use(
 // Set view engine and views folder
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
+app.use(bodyParser.urlencoded({ extended: true }));
 
 // Serve static files (like CSS)
 app.use(express.static(path.join(__dirname, "public")));
@@ -147,18 +150,114 @@ app.get("/logout", (req, res) => {
 app.post("/register", async (req, res) => {
     const { email, password } = req.body;
 
-    try {
-        const hashedPassword = await bcrypt.hash(password, 10); // Hash the password
-        await knex("users").insert({ email, password: hashedPassword });
-        res.send("User registered successfully!");
-    } catch (err) {
-        console.error(err);
-        res.status(500).send("Server error");
+    // Add authentication logic here (e.g., check the database for the user)
+    
+    if (email === 'test@example.com' && password === 'password') {
+        res.send('Logged in successfully!');
+    } else {
+        res.send('Invalid credentials.');
     }
 });
 
-// -----> Start the server
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-    console.log(`Server is running on http://localhost:${PORT}`);
+//GET route for event page
+app.get('/request_event', (req, res) => {
+  knex('events').select('*')
+    .then(result => {
+      res.render('request_event', { events: result });
+    })
+    .catch(error => {
+      console.error('Error fetching events:', error);
+      res.status(500).send('Something went wrong');
+    });
 });
+
+// POST route to request an event
+app.post('/request_event', (req, res) => {
+  const {
+    event_name,
+    number_of_participants_expected,
+    event_type,
+    event_date_time,
+    event_street_address,
+    event_city,
+    event_county,
+    event_state,
+    event_zip,
+    event_duration_hrs,
+    event_contact_first_name,
+    event_contact_last_name,
+    event_contact_phone,
+    event_contact_email,
+    event_jen_story,
+    event_donate_money
+  } = req.body;
+
+  knex('events').insert({
+    event_name,
+    number_of_participants_expected,
+    event_type,
+    event_date_time,
+    event_street_address,
+    event_city,
+    event_county,
+    event_state,
+    event_zip,
+    event_duration_hrs,
+    event_contact_first_name,
+    event_contact_last_name,
+    event_contact_phone,
+    event_contact_email,
+    event_jen_story,
+    event_donate_money,
+    event_status: "pending"  // Automatically set this to pending
+  })
+  .then(() => {
+    res.redirect('/request_event');
+  })
+  .catch(error => {
+    console.error('Error inserting event:', error);
+    res.status(500).send('Something went wrong');
+  });
+});
+
+
+
+// Start the server
+app.listen(port, () => {
+  console.log(`Server is running on http://localhost:${port}`);
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
