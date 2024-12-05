@@ -182,10 +182,68 @@ app.post('/edit_events/:event_id', async (req, res) => {
         event_duration_hrs: eventData.event_duration_hrs,
         number_of_participants_expected: eventData.number_of_participants_expected,
         event_type: eventData.event_type,
+        event_contact_first_name: eventData.event_contact_first_name,
+        event_contact_last_name: eventData.event_contact_last_name,
         event_contact_phone: eventData.event_contact_phone,
         event_contact_email: eventData.event_contact_email,
         event_jen_story: eventData.event_jen_story === 'true', // convert to boolean
-        event_donate_money: eventData.event_donate_money === 'true' // convert to boolean
+        event_donate_money: eventData.event_donate_money === 'true', // convert to boolean
+        event_status: eventData.event_status
+      });
+
+    res.redirect('/event_manager');
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Server error');
+  }
+});
+
+//edit_events GET route
+app.get('/add_event', async (req, res) => {
+  
+  try {
+    knex('events')
+    .then(events => {
+      const stateAbbreviations = [
+        'AL', 'AK', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DE', 'FL', 'GA',
+        'HI', 'ID', 'IL', 'IN', 'IA', 'KS', 'KY', 'LA', 'ME', 'MD',
+        'MA', 'MI', 'MN', 'MS', 'MO', 'MT', 'NE', 'NV', 'NH', 'NJ',
+        'NM', 'NY', 'NC', 'ND', 'OH', 'OK', 'OR', 'PA', 'RI', 'SC',
+        'SD', 'TN', 'TX', 'UT', 'VT', 'VA', 'WA', 'WV', 'WI', 'WY'
+      ];
+      res.render('add_event', { events, stateAbbreviations });
+    })
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Server error');
+  }
+});
+
+//edit_events POST route
+app.post('/add_event', async (req, res) => {
+  const eventData = req.body;
+
+  try {
+    // Update the event using Knex
+    await knex('events')
+      .insert({
+        event_name: eventData.event_name,
+        event_date_time: eventData.event_date_time,
+        event_city: eventData.event_city,
+        event_county: eventData.event_county,
+        event_state: eventData.event_state,
+        event_street_address: eventData.event_street_address,
+        event_zip: eventData.event_zip,
+        event_duration_hrs: eventData.event_duration_hrs,
+        number_of_participants_expected: eventData.number_of_participants_expected,
+        event_type: eventData.event_type,
+        event_contact_first_name: eventData.event_contact_first_name,
+        event_contact_last_name: eventData.event_contact_last_name,
+        event_contact_phone: eventData.event_contact_phone,
+        event_contact_email: eventData.event_contact_email,
+        event_jen_story: eventData.event_jen_story === 'true', // convert to boolean
+        event_donate_money: eventData.event_donate_money === 'true', // convert to boolean
+        event_status: eventData.event_status
       });
 
     res.redirect('/event_manager');
