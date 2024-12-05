@@ -128,36 +128,28 @@
         <h1 style="background-color: #FBFAF7;">Request a Service Project Event</h1>
     </header>
     <div class="container">
-        <h2 style="font-size: 20px; font-weight: 100;">Edit Event Form</h2>
-        <form action="/edit_events/<%= events.event_id %>" method="POST">
+        <h2 style="font-size: 20px; font-weight: 100;">Add Event Form</h2>
+        <form action="/add_event" method="POST">
             <!-- Your existing form fields, similar to request_event.ejs -->
-            <label for="event_name" style="font-weight: 300;">UPDATE EVENT STATUS:</label>
-            <select id="event_status" name="event_status" required>
-                <option style="color: gray;" value="">Select an option</option>
-                <option value="approved" <% if (events.event_status === 'approved') { %>selected<% } %>>Approved</option>
-                <option value="pending" <% if (events.event_status === 'pending') { %>selected<% } %>>Pending</option>
-                <option value="declined" <% if (events.event_status === 'declined') { %>selected<% } %>>Declined</option>
-                <option value="completed" <% if (events.event_status === 'completed') { %>selected<% } %>>Completed</option>
-            </select>
-            
             
             <label for="event_contact_first_name" style="font-weight: 150;">First Name:</label>
-            <input type="text" id="event_contact_first_name" name="event_contact_first_name" value="<%= events.event_contact_first_name %>" required>
+            <input type="text" id="event_contact_first_name" name="event_contact_first_name" required>
 
             <label for="event_contact_last_name" style="font-weight: 150;">Last Name:</label>
-            <input type="text" id="event_contact_last_name" name="event_contact_last_name" value="<%= events.event_contact_last_name %>"required>
+            <input type="text" id="event_contact_last_name" name="event_contact_last_name" required>
 
             <label for="event_contact_phone" style="font-weight: 150;">Phone Number:</label>
-            <input type="phone" id="event_contact_phone" name="event_contact_phone" value="<%= events.event_contact_phone %>"required>
+            <input type="phone" id="event_contact_phone" name="event_contact_phone" required>
 
             <label for="event_contact_email" style="font-weight: 150;">Email:</label>
-            <input type="email" id="event_contact_email" name="event_contact_email" value="<%= events.event_contact_email %>"required>
+            <input type="email" id="event_contact_email" name="event_contact_email" required>
 
+            
             <label for="event_name" style="font-weight: 150;">Event name:</label>
-            <input type="text" id="event_name" name="event_name" value="<%= events.event_name %>" required>
+            <input type="text" id="event_name" name="event_name" required>
 
             <label for="number_of_participants_expected" style="font-weight: 150;">Number of participants:</label>
-            <input type="number" id="number_of_participants_expected" name="number_of_participants_expected" value="<%= events.number_of_participants_expected %>" required>
+            <input type="number" id="number_of_participants_expected" name="number_of_participants_expected"  required>
 
             <label for="event_type" style="font-weight: 150;">Event type:</label>
             <select id="event_type" name="event_type" required>
@@ -168,40 +160,49 @@
             </select>
 
             <label for="event_date_time" style="font-weight: 150;">Event date and time:</label>
-            <input 
-                type="datetime-local" 
-                id="event_date_time" 
-                name="event_date_time" 
-                value="<%= new Date(events.event_date_time).toISOString().slice(0, 16) %>" 
-                required
-            >
+            <input type="datetime-local" id="event_date_time" name="event_date_time"  required>
+
+            <label for="event_duration_hrs" style="font-weight: 150;">Event duration:</label>
+            <input type="number" id="event_duration_hrs" name="event_duration_hrs" max="12" required>
 
             <label for="event_street_address" style="font-weight: 150;">Event address:</label>
-            <input type="text" id="event_street_address" name="event_street_address" value="<%= events.event_street_address %>" required>
+            <input type="text" id="event_street_address" name="event_street_address"  required>
 
             <label for="event_city" style="font-weight: 150;">City:</label>
-            <input type="text" id="event_city" name="event_city" value="<%= events.event_city %>" required>
+            <input type="text" id="event_city" name="event_city"  required>
 
             <label for="event_county" style="font-weight: 150;">County:</label>
-            <input type="text" id="event_county" name="event_county"  value="<%= events.event_county %>" required>
+            <input type="text" id="event_county" name="event_county"  required>
 
             <label for="event_state" style="font-weight: 150;">State:</label>
             <select name="event_state" id="event_state" required>
-                <% stateAbbreviations.forEach(function(state) { %>
-                    <option value="<%= state %>" <% if (state === events.event_state) { %>selected<% } %>><%= state %></option>
+                <% stateAbbreviations.forEach(state => { %>
+                    <option value="<%= state %>"><%= state %></option>
                 <% }); %>
             </select>
 
             <label for="event_zip" style="font-weight: 150;">Zip Code:</label>
-            <input type="text" id="event_zip" name="event_zip" value="<%= events.event_zip %>" required>
+            <input type="text" id="event_zip" name="event_zip"  required>
+
 
             <label for="event_jen_story" style="font-weight: 150;">Would you like Jen to tell her story?</label>
-            <input type="checkbox" id="event_jen_story"  <% if (events.event_jen_story) { %>checked<% } %> name="event_jen_story"> 
+            <input type="checkbox" id="event_jen_story" name="event_jen_story">
 
             <label for="event_donate_money" style="font-weight: 150;">Would you like to donate money and/or materials?</label>
-            <input type="checkbox" id="event_donate_money" <% if (events.event_donate_money) { %>checked<% } %>  name="event_donate_money">
+            <input type="checkbox" id="event_donate_money" name="event_donate_money">
+
             
-            <button type="submit" style="background-color: #457DD7;">Submit Event Changes</button>
+            <label for="event_name" style="font-weight: 300;">Event Status:</label>
+            <select id="event_status" name="event_status" required>
+                <option style="color: gray;" value="">Select an option</option>
+                <option value="approved">Approved</option>
+                <option value="pending">Pending</option>
+                <option value="declined">Declined</option>
+                <option value="completed">Completed</option>
+            </select>
+
+
+            <button type="submit" style="background-color: #457DD7;">Add Event</button>
         </form>
     </div>
         <!-- Smaller Site Footer -->
