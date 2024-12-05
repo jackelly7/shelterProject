@@ -19,7 +19,7 @@
         <style>
             /* Apply white background to both html and body */
             html, body {
-                background-color: #FBFAF7;
+                background-color: #393939;
                 margin: 0;
                 padding: 0;
             }        
@@ -71,7 +71,7 @@
                 margin-bottom: 10px;
                 border-radius: 4px;
                 border: 1px solid #ddd;
-                background-color: white;
+                background-color: #FBFAF7;
             }
         
             form button {
@@ -94,7 +94,7 @@
                 margin: 0; /* Ensure no margin is added around the select elements */
                 border-radius: 4px;
                 border: 1px solid #ddd;
-                background-color: white;
+                background-color: #FBFAF7;
             }
             form input, form select, form textarea, form button {
             margin: 0;
@@ -125,13 +125,13 @@
         </nav>
 
     <header>
-        <h1 style="background-color: #FBFAF7;">Request a Service Project Event</h1>
+        <h1 style="background-color: #393939; color:#FBFAF7" >Service Project Event — Admin Edit</h1>
     </header>
-    <div class="container">
+    <div class="form-container">
         <h2 style="font-size: 20px; font-weight: 100;">Edit Event Form</h2>
         <form action="/edit_events/<%= events.event_id %>" method="POST">
             <!-- Your existing form fields, similar to request_event.ejs -->
-            <label for="event_name" style="font-weight: 300;">UPDATE EVENT STATUS:</label>
+            <label for="event_name" style="font-weight: 150;">Update Event Status:</label>
             <select id="event_status" name="event_status" required>
                 <option style="color: gray;" value="">Select an option</option>
                 <option value="approved" <% if (events.event_status === 'approved') { %>selected<% } %>>Approved</option>
@@ -142,7 +142,7 @@
             
             
             <label for="event_contact_first_name" style="font-weight: 150;">First Name:</label>
-            <input type="text" id="event_contact_first_name" name="event_contact_first_name" value="<%= events.event_contact_first_name %>" required>
+            <input type="text" style="background-color: #FBFAF7"id="event_contact_first_name" name="event_contact_first_name" value="<%= events.event_contact_first_name %>"required>
 
             <label for="event_contact_last_name" style="font-weight: 150;">Last Name:</label>
             <input type="text" id="event_contact_last_name" name="event_contact_last_name" value="<%= events.event_contact_last_name %>"required>
@@ -164,7 +164,7 @@
                 <option style="color: gray;" value="">Select an option</option>
                 <option value="sewing" <% if (events.event_type === 'sewing') { %>selected<% } %>>Sewing</option>
                 <option value="non-sewing" <% if (events.event_type === 'non-sewing') { %>selected<% } %>>Non-sewing</option>
-                <option value="both" <% if (events.type === 'both') { %>selected<% } %>>Both</option>
+                <option value="both" <% if (events.event_type === 'both') { %>selected<% } %>>Both</option>
             </select>
 
             <label for="event_date_time" style="font-weight: 150;">Event date and time:</label>
@@ -195,34 +195,37 @@
             <label for="event_zip" style="font-weight: 150;">Zip Code:</label>
             <input type="text" id="event_zip" name="event_zip" value="<%= events.event_zip %>" required>
 
-            <label for="event_jen_story" style="font-weight: 150;">Would you like Jen to tell her story?</label>
-            <input type="checkbox" id="event_jen_story"  <% if (events.event_jen_story) { %>checked<% } %> name="event_jen_story"> 
+            <label for="event_jen_story" style="font-weight: 150; margin-right: 10px;">Would you like Jen to tell her story?</label>
+            <input type="text" id="event_jen_story" name="event_jen_story" value="<%= events.event_jen_story %>" required>
 
-            <label for="event_donate_money" style="font-weight: 150;">Would you like to donate money and/or materials?</label>
-            <input type="checkbox" id="event_donate_money" <% if (events.event_donate_money) { %>checked<% } %>  name="event_donate_money">
-            
+
+            <label for="event_donate_money" style="font-weight: 150; margin-right: 10px;">Would you like to donate money and/or materials?</label>
+            <input type="text" id="event_donate_money" name="event_donate_money" value="<%= events.event_donate_money %>" required>
+
+        
             <button type="submit" style="background-color: #457DD7;">Submit Event Changes</button>
         </form>
     </div>
         <!-- Smaller Site Footer -->
-        <footer class="site-footer">
-            <div class="container">
+        <footer class="site-footer" style="height: 150px; position: relative; bottom: 0; left: 0; width: 100%; background-color: #393939; padding: 0; border-top: .5px solid #FBFAF7">
+            <div class="container" style="height: 100%; display: flex; flex-direction: column; justify-content: center;">
                 <div class="row">
                     <div class="col-sm-12">
-                        <p class="text-center">Copyright &copy; 2024 The Turtle Shelter Project. All Rights Reserved.</p>
+                        <h5 class="text-uppercase" style="font-weight: 100; font-size: 16px; text-align: center; color: #FBFAF7; padding-top: 40px;">Thank you for visiting the turtle shelter project</h5>
+                        <p class="small mb-0" style="font-family: sans-serif; font-size: 10px; font-weight: 100; text-align: center; color: #FBFAF7;">
+                            &copy; 2024 Turtle Shelter Project. All Rights Reserved. We are a registered 501(c)(3) nonprofit organization.
+                        </p>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-sm-12 text-center">
                         <ul class="social-icons">
-                            <li><a class="facebook" href="#"><i class="fa fa-facebook"></i></a></li>
-                            <li><a class="twitter" href="#"><i class="fa fa-twitter"></i></a></li>
-                            <li><a class="linkedin" href="#"><i class="fa fa-linkedin"></i></a></li>
+                            <li><a class="facebook" href="https://www.facebook.com/turtleshelterproject/"><i class="fab fa-facebook" style="color: #FBFAF7;"></i></a></li>
+                            <li><a class="linkedin" href="https://www.linkedin.com/in/turtle-shelter-project-6aa0aa1a4/"><i class="fab fa-linkedin" style="color: #FBFAF7;"></i></a></li>
                         </ul>
                     </div>
                 </div>
             </div>
         </footer>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
     </body>
 </html>
