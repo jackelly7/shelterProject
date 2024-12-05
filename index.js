@@ -70,9 +70,34 @@ function isVolunteer(req, res, next) {
 // -----> Routes
 
 // Homepage
-app.get("/", (req, res) => {
-    res.render("index");
-});
+// app.get("/", (req, res) => {
+//     res.render("index");
+// });
+
+app.get("/", async (req, res) => {
+    try {
+      let adminName;
+  
+      // Check if the user is logged in and has an admin role
+      if (req.session.userId && req.session.role === 'admin') {
+        const adminDetails = await knex('admins')
+          .join('users', 'admins.user_id', 'users.user_id')
+          .select('admins.admin_first_name')
+          .where('users.user_id', req.session.userId)
+          .first();
+  
+        if (adminDetails) {
+          adminName = adminDetails.admin_first_name;
+        }
+      }
+  
+      // Render index.ejs and pass adminName (null if not logged in)
+      res.render("index", { adminName });
+    } catch (error) {
+      console.error("Error fetching admin details:", error);
+      res.status(500).send("Server error");
+    }
+  });
 
 // Meet Jen Page
 app.get("/meet_jen", (req, res) => {
@@ -175,7 +200,7 @@ app.get("/logout", (req, res) => {
             return res.status(500).send("Server error");
         }
         res.clearCookie("connect.sid");
-        res.redirect("/login");
+        res.redirect("/");
     });
 });
 
