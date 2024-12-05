@@ -108,10 +108,10 @@ app.get("/meet_jen", (req, res) => {
     res.render("meet_jen");
 });
 
-//Become a volunteer GET
-app.get("/request_volunteer", (req, res) => {
-  res.render("request_volunteer");
-});
+// //Become a volunteer GET
+// app.get("/request_volunteer", (req, res) => {
+//   res.render("request_volunteer");
+// });
 
 // Login Page
 app.get("/login", (req, res) => {
@@ -450,23 +450,24 @@ app.get('/request_volunteer', (req, res) => {
 });
 
 // POST route to request to be a volunteer
+// POST route to request to be a volunteer
 app.post("/request_volunteer", authMiddleware, (req, res) => {
-    const {
-        volunteer_first_name,
-        volunteer_last_name,
-        volunteer_enroll_date,
-        volunteer_how_heard,
-        volunteer_sewing_level,
-        volunteer_hrs_monthly_availability,
-        volunteer_email,
-        volunteer_phone,
-        volunteer_city,
-        volunteer_county,
-        volunteer_state,
-    } = req.body;
+  const {
+      volunteer_first_name,
+      volunteer_last_name,
+      volunteer_enroll_date,
+      volunteer_how_heard,
+      volunteer_sewing_level,
+      volunteer_hrs_monthly_availability,
+      volunteer_email,
+      volunteer_phone,
+      volunteer_city,
+      volunteer_county,
+      volunteer_state,
+  } = req.body;
 
-    knex("volunteers")
-        .insert({
+  knex("volunteers")
+      .insert({
           volunteer_first_name,
           volunteer_last_name,
           volunteer_enroll_date,
@@ -478,15 +479,19 @@ app.post("/request_volunteer", authMiddleware, (req, res) => {
           volunteer_city,
           volunteer_county,
           volunteer_state,
-        })
-        .then(() => {
-            res.redirect("/request_event");
-        })
-        .catch((error) => {
-            console.error("Error inserting event:", error);
-            res.status(500).send("Something went wrong");
-        });
+      })
+      .then(() => {
+          // Re-fetch volunteers to include the newly added volunteer
+          knex("volunteers").select("*").then((result) => {
+              res.render("request_volunteer", { volunteers: result });
+          });
+      })
+      .catch((error) => {
+          console.error("Error inserting event:", error);
+          res.status(500).send("Something went wrong");
+      });
 });
+
 
 
 
