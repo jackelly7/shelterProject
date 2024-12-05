@@ -85,7 +85,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <% approvedEvents.forEach(events => { %>
+                    <% pendingEvents.forEach(events => { %>
                         <tr>
                             <td><%= events.event_name %></td>
                             <td><%= events.event_type %></td>
@@ -117,7 +117,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <% approvedEvents.forEach(events => { %>
+                    <% declinedEvents.forEach(events => { %>
                         <tr>
                             <td><%= events.event_name %></td>
                             <td><%= events.event_type %></td>
@@ -149,7 +149,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <% approvedEvents.forEach(events => { %>
+                    <% completedEvents.forEach(events => { %>
                         <tr>
                             <td><%= events.event_name %></td>
                             <td><%= events.event_type %></td>
