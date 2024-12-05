@@ -112,12 +112,6 @@ hr {
   opacity: 0.25;
 }
 
-#save-lives-heading {
-  font-family: 'Newsreader', serif;
-  font-weight: 400; /* Regular weight */
-  font-size: xx-large;
-  font-style: italic;
-}
 
 
 h6, .h6, h5, .h5, h4, .h4, h3, .h3, h2, .h2, h1, .h1 {
@@ -2829,22 +2823,7 @@ textarea.form-control-lg {
   --bs-btn-disabled-border-color: #6c757d;
 }
 
-.btn-success {
-  --bs-btn-color: #fff;
-  --bs-btn-bg: #198754;
-  --bs-btn-border-color: #198754;
-  --bs-btn-hover-color: #fff;
-  --bs-btn-hover-bg: #157347;
-  --bs-btn-hover-border-color: #146c43;
-  --bs-btn-focus-shadow-rgb: 60, 153, 110;
-  --bs-btn-active-color: #fff;
-  --bs-btn-active-bg: #146c43;
-  --bs-btn-active-border-color: #13653f;
-  --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
-  --bs-btn-disabled-color: #fff;
-  --bs-btn-disabled-bg: #198754;
-  --bs-btn-disabled-border-color: #198754;
-}
+
 
 .btn-info {
   --bs-btn-color: #000;
@@ -10524,7 +10503,7 @@ header.masthead {
   padding-top: calc(8rem + 57px);
   padding-bottom: 8rem;
   background: no-repeat center center;
-  background-color: #6c757d;
+  background-color: #FBFAF7;
   background-size: cover;
   background-attachment: scroll;
 }
@@ -10535,7 +10514,7 @@ header.masthead:before {
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: #212529;
+  background-color: transparent;
   opacity: 0.5;
 }
 
@@ -10567,7 +10546,7 @@ header.masthead:before {
 header.masthead .page-heading,
 header.masthead .post-heading,
 header.masthead .site-heading {
-  color: #fff;
+  color: white;
 }
 header.masthead .page-heading,
 header.masthead .site-heading {
@@ -10609,7 +10588,7 @@ header.masthead .post-heading .meta {
   font-family: "Lora", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 }
 header.masthead .post-heading .meta a {
-  color: #fff;
+  color: white;
 }
 @media (min-width: 992px) {
   header.masthead {
@@ -10676,144 +10655,4 @@ header.masthead .post-heading .meta a {
 }
 
 
-/* Example for the login page */
-
-body {
-  font-family: Arial, sans-serif;
-  background-color: #f4f4f4;
-}
-
-header {
-  background-color: #333;
-  padding: 10px;
-  text-align: center;
-}
-
-header nav ul {
-  list-style-type: none;
-  padding: 0;
-}
-
-header nav ul li {
-  display: inline;
-  margin: 0 10px;
-}
-
-header nav ul li a {
-  color: #fff;
-  text-decoration: none;
-}
-
-.login-page {
-  max-width: 400px;
-  margin: 50px auto;
-  padding: 20px;
-  background-color: #fff;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-.login-page .form-group {
-  margin-bottom: 15px;
-}
-
-.login-page .form-group label {
-  display: block;
-  font-weight: bold;
-}
-
-.login-page .form-group input {
-  width: 100%;
-  padding: 8px;
-  margin-top: 5px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-}
-
-.login-page button {
-  width: 100%;
-  padding: 10px;
-  background-color: #4CAF50;
-  color: white;
-  border: none;
-  border-radius: 4px;
-}
-
-.login-page p {
-  text-align: center;
-}
-
-.login-page a {
-  color: #4CAF50;
-}
-
-p {
-  font-family: 'Newsreader', serif;
-}
-
-.sponsor-container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  margin-top: 50px;
-}
-
-.sponsor-box {
-  width: 12%;
-  background-color: #f4f4f4;
-  padding: 10px;
-  margin-bottom: 10px;
-  text-align: center;
-  border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-.sponsor-box img {
-  width: 80%;
-  height: auto;
-  border-radius: 8px;
-  margin-bottom: 10px;
-}
-
-.sponsor-box h3 {
-  font-size: 14px;
-  margin-bottom: 10px;
-}
-
-.btn-sponsor {
-  background-color: #333;
-  color: #fff;
-  border: none;
-  padding: 8px 12px;
-  text-transform: uppercase;
-  margin-top: 20px;
-  cursor: pointer;
-  border-radius: 5px;
-  font-size: 14px;
-  transition: background-color 0.3s ease;
-}
-
-.btn-sponsor:hover {
-  background-color: #007bff;
-}
-
-.sponsor-buttons {
-  text-align: center;
-  margin-top: 40px;
-}
-
-.sponsor-buttons .btn {
-  margin: 0 10px;
-  font-size: 14px;
-}
-
-/* Center and adjust heading */
-.sponsor-heading {
-  text-align: center;
-  font-weight: 400;
-  max-width: 70%; /* Makes the heading slightly thinner */
-  margin: 0 auto; /* Centers the heading horizontally */
-  line-height: 1.5; /* Improves readability */
-  background-color: #fff;
-  font-family: "Open Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-}
 

@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="assets/favicon.png" />
     <title>Admin Dashboard</title>
     <link rel="stylesheet" href="/css/styles.css">
     <link rel="stylesheet" href="/css/ourStyles.css">
@@ -10,42 +11,24 @@
    </style>
 </head>
 <body>
-    <!-- Navigation-->
 
-    <!-- <nav class="navbar navbar-expand-lg navbar-light" id="mainNav" style='background-color: white; position: fixed;'>
-        <div class="container px-4 px-lg-5">
-            <a class="navbar-brand" href="index.html" style="color: #393939">TURTLE SHELTER PROJECT</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-                Menu
-                <i class="fas fa-bars"></i>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarResponsive">
-                <ul class="navbar-nav ms-auto py-4 py-lg-0" style="color: #393939;">
-                    <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" style="color: #393939;" href="#about-us">About</a></li>
-                    <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" style="color: #393939;" href="#join-us">Sponsorship</a></li>
-                    <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" style="color: #393939;" href="/meet_jen">Jen's Story</a></li>
-                    <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" style="color: #393939;" href="/request_event">How to help</a></li>
-                    <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" style="color: #393939;" href="/login">TSP Log In</a></li>
-                </ul>
-            </div>
-        </div>
-    </nav> -->
-    
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-light" id="mainNav" style="position: fixed; width: 100%; z-index: 100; background-color: #393939;">
         <div class="container px-4 px-lg-5">
-            <a class="navbar-brand" href="index.html">TURTLE SHELTER PROJECT</a>
+            <a class="navbar-brand" href="/" style="font-weight: 100;">
+                <img src="assets/favicon.png" alt="Logo" style="height: 40px; margin-right: 10px;">
+                TURTLE SHELTER PROJECT
+            </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                 Menu
                 <i class="fas fa-bars"></i>
             </button>
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav ms-auto py-4 py-lg-0">
-                    <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="#about-us">About</a></li>
-                    <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="#join-us">Sponsorship</a></li>
-                    <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="/meet_jen">Jen's Story</a></li>
-                    <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="/request_event">How to help</a></li>
-                    <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="/admin">TSP Log In</a></li>
+                    <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="/meet_jen">Manage Volunteers</a></li>
+                    <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="/event_manager">Manage Events</a></li>
+                    <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="/edit_profile">Profile</a></li>
+                    <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="/logout">Logout</a></li>
                 </ul>
             </div>
         </div>
@@ -57,16 +40,16 @@
 
         <!-- Cards Section -->
         <div class="cards-container">
-            <div class="card" onclick="location.href='/internal-tool-1';">
-                <h3>Tool 1</h3>
-                <p>Access reports and data</p>
+            <div class="card" onclick="location.href='/event_manager';">
+                <img src="assets/img/icons/calendar.png" alt="calendar Icon">
+                <p>View / edit all current and pending events</p>
             </div>
             <div class="card" onclick="location.href='/internal-tool-2';">
-                <h3>Tool 2</h3>
+                <img src="assets/img/icons/people.png" alt="Volunteers Icon">
                 <p>Manage user accounts</p>
             </div>
             <div class="card" onclick="location.href='/internal-tool-3';">
-                <h3>Tool 3</h3>
+                <img src="assets/img/icons/graph.png" alt="Dashboard Icon">
                 <p>View analytics dashboard</p>
             </div>
         </div>

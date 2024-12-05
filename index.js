@@ -4,6 +4,7 @@ const bcrypt = require("bcrypt");
 const path = require("path");
 require("dotenv").config();
 
+
 const app = express();
 const bodyParser = require("body-parser");
 const port = 3000;
@@ -22,6 +23,9 @@ const knex = require("knex")({
 
 // Middleware to parse POST request bodies
 app.use(express.urlencoded({ extended: true }));
+app.use(express.static('public'));
+
+
 
 // Session configuration
 app.use(
@@ -69,10 +73,35 @@ function isVolunteer(req, res, next) {
 
 // -----> Routes
 
-// Homepage
-app.get("/", (req, res) => {
-    res.render("index");
-});
+
+// app.get("/", (req, res) => {
+//     res.render("index");
+// });
+
+app.get("/", async (req, res) => {
+    try {
+      let adminName;
+  
+      // Check if the user is logged in and has an admin role
+      if (req.session.userId && req.session.role === 'admin') {
+        const adminDetails = await knex('admins')
+          .join('users', 'admins.user_id', 'users.user_id')
+          .select('admins.admin_first_name')
+          .where('users.user_id', req.session.userId)
+          .first();
+  
+        if (adminDetails) {
+          adminName = adminDetails.admin_first_name;
+        }
+      }
+  
+      // Render index.ejs and pass adminName (null if not logged in)
+      res.render("index", { adminName });
+    } catch (error) {
+      console.error("Error fetching admin details:", error);
+      res.status(500).send("Server error");
+    }
+  });
 
 // Meet Jen Page
 app.get("/meet_jen", (req, res) => {
@@ -110,6 +139,69 @@ app.get("/event_manager", authMiddleware, isAdmin, (req, res) => {
       res.status(500).send('Something went wrong');
     });
 });
+
+//edit_events GET route
+app.get('/edit_events/:eventId', async (req, res) => {
+  const eventId = req.params.eventId;
+  try {
+    const events= await knex('events').where({ "event_id": eventId }).first();
+    if (!events) {
+      return res.status(404).send('Event not found');
+    }
+    const stateAbbreviations = [
+      'AL', 'AK', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DE', 'FL', 'GA',
+      'HI', 'ID', 'IL', 'IN', 'IA', 'KS', 'KY', 'LA', 'ME', 'MD',
+      'MA', 'MI', 'MN', 'MS', 'MO', 'MT', 'NE', 'NV', 'NH', 'NJ',
+      'NM', 'NY', 'NC', 'ND', 'OH', 'OK', 'OR', 'PA', 'RI', 'SC',
+      'SD', 'TN', 'TX', 'UT', 'VT', 'VA', 'WA', 'WV', 'WI', 'WY'
+    ];
+    res.render('edit_events', { events, stateAbbreviations });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Server error');
+  }
+});
+
+//edit_events POST route
+app.post('/edit_events/:event_id', async (req, res) => {
+  const eventId = req.params.event_id;
+  const eventData = req.body;
+
+  try {
+    // Update the event using Knex
+    await knex('events')
+      .where({ event_id: eventId })
+      .update({
+        event_name: eventData.event_name,
+        event_date_time: eventData.event_date_time,
+        event_city: eventData.event_city,
+        event_county: eventData.event_county,
+        event_state: eventData.event_state,
+        event_street_address: eventData.event_street_address,
+        event_zip: eventData.event_zip,
+        event_duration_hrs: eventData.event_duration_hrs,
+        number_of_participants_expected: eventData.number_of_participants_expected,
+        event_type: eventData.event_type,
+        event_contact_phone: eventData.event_contact_phone,
+        event_contact_email: eventData.event_contact_email,
+        event_jen_story: eventData.event_jen_story === 'true', // convert to boolean
+        event_donate_money: eventData.event_donate_money === 'true' // convert to boolean
+      });
+
+    res.redirect('/event_manager');
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Server error');
+  }
+});
+
+// Delete Event
+app.get('/delete_event/:event_id', async (req, res) => {
+  const eventId = req.params.event_id;
+  await db.query('DELETE FROM events WHERE event_id = $1', [eventId]);
+  res.redirect('/event_manager');
+});
+
 
 // Login Route
 app.post("/login", async (req, res) => {
@@ -175,7 +267,7 @@ app.get("/logout", (req, res) => {
             return res.status(500).send("Server error");
         }
         res.clearCookie("connect.sid");
-        res.redirect("/login");
+        res.redirect("/");
     });
 });
 
@@ -211,8 +303,6 @@ app.get('/request_event', (req, res) => {
       res.status(500).send('Something went wrong');
     });
 });
-
-
 
 // POST route to request an event
 app.post("/request_event", authMiddleware, (req, res) => {
@@ -262,6 +352,102 @@ app.post("/request_event", authMiddleware, (req, res) => {
             console.error("Error inserting event:", error);
             res.status(500).send("Something went wrong");
         });
+});
+
+// edit profile page
+app.get("/edit_profile", (req, res) => {
+  const userId = req.session.userId; // Assuming you store the user ID in the session
+  
+
+  knex("users")
+      .where({ user_id: userId })
+      .first()
+      .then((user) => {
+          if (!user) {
+              return res.redirect("/login"); // If user doesn't exist, redirect to login
+          }
+          res.render("edit_profile", { user });
+      })
+      .catch((error) => {
+          console.error("Error fetching user data:", error);
+          res.status(500).send("Internal server error");
+      });
+});
+
+app.post("/update_profile", (req, res) => {
+  const userId = req.session.userId; // Assuming user ID is stored in session
+  const { username, password, updateType } = req.body; // Get form data from request body
+
+  // Determine the update type
+  let updateData = {};
+  if (updateType === "username" && username) {
+    updateData.username = username;
+  } else if (updateType === "password" && password) {
+    updateData.password = password;
+  }
+
+  // If no valid data is provided, redirect back with an error
+  if (Object.keys(updateData).length === 0) {
+    return res.status(400).send("No valid data provided for update.");
+  }
+  knex("users")
+      .where({ user_id: userId })
+      .update({ username: username, user_password: password })
+      .then(() => {
+        res.redirect("/admin"); // Redirect back to the edit profile page
+      })
+      .catch((error) => {
+          console.error("Error updating profile:", error);
+          res.status(500).send("Internal server error");
+      });
+});
+
+// edit profile page
+app.get("/edit_profile", (req, res) => {
+  const userId = req.session.userId; // Assuming you store the user ID in the session
+  
+
+  knex("users")
+      .where({ user_id: userId })
+      .first()
+      .then((user) => {
+          if (!user) {
+              return res.redirect("/login"); // If user doesn't exist, redirect to login
+          }
+          res.render("edit_profile", { user });
+      })
+      .catch((error) => {
+          console.error("Error fetching user data:", error);
+          res.status(500).send("Internal server error");
+      });
+});
+
+app.post("/update_profile", (req, res) => {
+  const userId = req.session.userId; // Assuming user ID is stored in session
+  const { username, password, updateType } = req.body; // Get form data from request body
+
+  // Determine the update type
+  let updateData = {};
+  if (updateType === "username" && username) {
+    updateData.username = username;
+  } else if (updateType === "password" && password) {
+    updateData.password = password;
+  }
+
+  // If no valid data is provided, redirect back with an error
+  if (Object.keys(updateData).length === 0) {
+    return res.status(400).send("No valid data provided for update.");
+  }
+  knex("users")
+      .where({ user_id: userId })
+      .update({ username: username, user_password: password })
+      .then(() => {
+        res.redirect("/admin"); // Redirect back to the edit profile page
+      })
+      .catch((error) => {
+          console.error("Error updating profile:", error);
+          res.status(500).send("Internal server error");
+      });
 });
 
 //event_production_report
@@ -400,38 +586,3 @@ app.post('/update-event-production/:event_id', (req, res) => {
 app.listen(port, () => {
     console.log(`Server is running on http://localhost:${port}`);
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
