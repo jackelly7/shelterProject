@@ -112,12 +112,6 @@ hr {
   opacity: 0.25;
 }
 
-#save-lives-heading {
-  font-family: 'Newsreader', serif;
-  font-weight: 400; /* Regular weight */
-  font-size: xx-large;
-  font-style: italic;
-}
 
 
 h6, .h6, h5, .h5, h4, .h4, h3, .h3, h2, .h2, h1, .h1 {
@@ -2829,22 +2823,7 @@ textarea.form-control-lg {
   --bs-btn-disabled-border-color: #6c757d;
 }
 
-.btn-success {
-  --bs-btn-color: #fff;
-  --bs-btn-bg: #198754;
-  --bs-btn-border-color: #198754;
-  --bs-btn-hover-color: #fff;
-  --bs-btn-hover-bg: #157347;
-  --bs-btn-hover-border-color: #146c43;
-  --bs-btn-focus-shadow-rgb: 60, 153, 110;
-  --bs-btn-active-color: #fff;
-  --bs-btn-active-bg: #146c43;
-  --bs-btn-active-border-color: #13653f;
-  --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
-  --bs-btn-disabled-color: #fff;
-  --bs-btn-disabled-bg: #198754;
-  --bs-btn-disabled-border-color: #198754;
-}
+
 
 .btn-info {
   --bs-btn-color: #000;
@@ -10524,7 +10503,7 @@ header.masthead {
   padding-top: calc(8rem + 57px);
   padding-bottom: 8rem;
   background: no-repeat center center;
-  background-color: #6c757d;
+  background-color: white;
   background-size: cover;
   background-attachment: scroll;
 }
@@ -10535,7 +10514,7 @@ header.masthead:before {
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: #212529;
+  background-color: transparent;
   opacity: 0.5;
 }
 
@@ -10567,7 +10546,7 @@ header.masthead:before {
 header.masthead .page-heading,
 header.masthead .post-heading,
 header.masthead .site-heading {
-  color: #fff;
+  color: white;
 }
 header.masthead .page-heading,
 header.masthead .site-heading {
@@ -10609,7 +10588,7 @@ header.masthead .post-heading .meta {
   font-family: "Lora", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 }
 header.masthead .post-heading .meta a {
-  color: #fff;
+  color: white;
 }
 @media (min-width: 992px) {
   header.masthead {
@@ -10684,7 +10663,7 @@ body {
 }
 
 header {
-  background-color: #333;
+  background-color: #FBFAF7;
   padding: 10px;
   text-align: center;
 }

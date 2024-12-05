@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <title>Clean Blog - Start Bootstrap Theme</title>
+        <title>Event Request Form</title>
         <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
         <!-- Font Awesome icons (free version)-->
         <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
@@ -16,10 +16,99 @@
         <!-- Core theme CSS (includes Bootstrap)-->
         <link href="css/styles.css" rel="stylesheet" />
         <link href="css/ourStyles.css" rel="stylesheet" />
+        <style>
+            /* Apply white background to both html and body */
+            html, body {
+                background-color: #FBFAF7;
+                margin: 0;
+                padding: 0;
+            }
+        
+            footer {
+                background-color: #393939;
+                text-align: center;
+                padding: 10px 0;
+            }
+        
+            select option {
+                color: lightgray;
+            }
+        
+            select {
+                color: gray; /* Ensures the text color for select dropdown is gray */
+            }
+        
+            header h1 {
+                text-align: center;
+                color: #393939;
+                background-color: #FBFAF7;
+            }
+        
+            .form-container {
+                max-width: 800px;
+                margin: 20px auto;
+                padding: 20px;
+                background-color: #F9F3E5;
+                border-radius: 8px;
+                /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); */
+            }
+        
+            .form-container h2 {
+                text-align: center;
+                color: #393939;
+            }
+        
+            form label {
+                display: block;
+                margin: 8px 0;
+                color: #393939;
+                padding: 0;
+                font-weight: 100;
+            }
+        
+            form input, form select {
+                width: 100%;
+                padding: 8px;
+                margin-bottom: 10px;
+                border-radius: 4px;
+                border: 1px solid #ddd;
+                background-color: white;
+            }
+        
+            form button {
+                width: 100%;
+                padding: 10px;
+                background-color: #393939;
+                color: white;
+                border: none;
+                border-radius: 4px;
+                font-size: 16px;
+                cursor: pointer;
+            }
+        
+            form button:hover {
+                background-color: #555;
+            }
+            form select {
+                width: 100%;
+                padding: 8px;
+                margin: 0; /* Ensure no margin is added around the select elements */
+                border-radius: 4px;
+                border: 1px solid #ddd;
+                background-color: white;
+            }
+            form input, form select, form textarea, form button {
+            margin: 0;
+            padding: 8px;
+            }
+
+
+
+        </style>        
     </head>
     <body>
         <!-- Navigation-->
-        <nav class="navbar navbar-expand-lg navbar-light" id="mainNav" style='background-color: white; position: fixed;'>
+        <nav class="navbar navbar-expand-lg navbar-light" id="mainNav" style='background-color: #FBFAF7; position: fixed; border-bottom: .5px solid rgba(0,0,0,0.75)'>
             <div class="container px-4 px-lg-5">
                 <a class="navbar-brand" href="index.html" style="color: #393939">TURTLE SHELTER PROJECT</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
@@ -27,7 +116,7 @@
                     <i class="fas fa-bars"></i>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarResponsive">
-                    <ul class="navbar-nav ms-auto py-4 py-lg-0" style="color: #393939;">
+                    <ul class="navbar-nav ms-auto py-4 py-lg-0" style="color: #393939; background-color: #FBFAF7;">
                         <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" style="color: #393939;" href="#about-us">About</a></li>
                         <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" style="color: #393939;" href="#join-us">Sponsorship</a></li>
                         <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" style="color: #393939;" href="/meet_jen">Jen's Story</a></li>
@@ -39,75 +128,105 @@
         </nav>
 
     <header>
-        <h1>Request a Service Project Event</h1>
+        <h1 style="background-color: #FBFAF7;">Request a Service Project Event</h1>
     </header>
 
 <div class="form-container">
-    <h2>Event Request Form</h2>
+    <h2 style="font-size: 20px; font-weight: 100;">Event Request Form</h2>
     <form action="/request_event" method="POST">
-        <label for="event_name">Name your event:</label>
+        <label for="event_name" style="font-weight: 150;">Event name:</label>
         <input type="text" id="event_name" name="event_name" required>
 
-        <label for="number_of_participants_expected">How many people will be there?</label>
+        <label for="number_of_participants_expected" style="font-weight: 150;">Number of participants:</label>
         <input type="number" id="number_of_participants_expected" name="number_of_participants_expected" required>
 
-        <label for="event_type">Would you like to do sewing, non-sewing, or both?</label>
-        <input type="text" id="event_type" name="event_type" required>
+        <label for="event_type" style="font-weight: 150;">Event type:</label>
+                <select id="event_type" name="event_type" required>
+                    <option style="color: gray;" value="">Select an option</option>
+                    <option value="sewing">Sewing</option>
+                    <option value="non-sewing">Non-sewing</option>
+                    <option value="both">Both</option>
+                </select>
 
-        <label for="event_date_time">What date (or possible dates) would you like to schedule the event? What time?</label>
-        <input type="text" id="event_date_time" name="event_date_time" required>
+        <label for="event_date_time" style="font-weight: 150;">Event date and time</label>
+        <input type="datetime-local" id="event_date_time" name="event_date_time" required style="color: gray;">
 
-        <label for="event_street_address">What’s the address of the event?</label>
+
+        <label for="event_street_address" style="font-weight: 150;">Event address:</label>
         <input type="text" id="event_street_address" name="event_street_address" required>
 
-        <label for="event_city">City:</label>
+        <label for="event_city" style="font-weight: 150;">City:</label>
         <input type="text" id="event_city" name="event_city" required>
 
-        <label for="event_county">County:</label>
+        <label for="event_county" style="font-weight: 150;">County:</label>
         <input type="text" id="event_county" name="event_county" required>
 
-        <label for="event_state">State:</label>
+        <label for="event_state" style="font-weight: 150;">State:</label>
         <select name="event_state" id="event_state" required>
-        <option value="">Select your state</option>
+        <option style="color: gray;" value="">Select your state</option>
         <% stateAbbreviations.forEach(function(state) { %>
             <option value="<%= state %>"><%= state %></option>
         <% }); %>
         </select>
 
-        <label for="event_zip">Zip Code:</label>
+        <label for="event_zip" style="font-weight: 150;">Zip Code:</label>
         <input type="text" id="event_zip" name="event_zip" required>
 
-        <label for="event_duration_hrs">How long would you like it to go?</label>
+        <label for="event_duration_hrs"style="font-weight: 150;">Event duration:</label>
         <input type="number" id="event_duration_hrs" name="event_duration_hrs" required>
 
-        <label for="event_contact_first_name">Contact First Name:</label>
+        <label for="event_contact_first_name" style="font-weight: 150;">Contact First Name:</label>
         <input type="text" id="event_contact_first_name" name="event_contact_first_name" required>
 
-        <label for="event_contact_last_name">Contact Last Name:</label>
+        <label for="event_contact_last_name" style="font-weight: 150;">Contact Last Name:</label>
         <input type="text" id="event_contact_last_name" name="event_contact_last_name" required>
 
-        <label for="event_contact_phone">Contact Phone:</label>
-        <input type="text" id="event_contact_phone" name="event_contact_phone" required>
+        <label for="event_contact_phone" style="font-weight: 150;">Contact Phone:</label>
+        <input type="tel" id="event_contact_phone" name="event_contact_phone" placeholder="123-456-7890" pattern="\d{3}-\d{3}-\d{4}" required>
 
-        <label for="event_contact_email">Contact Email:</label>
+        <label for="event_contact_email" style="font-weight: 150;">Contact Email:</label>
         <input type="email" id="event_contact_email" name="event_contact_email" required>
 
-        <label for="event_jen_story">Would you like Jen to share her story?</label>
-        <textarea id="event_jen_story" name="event_jen_story"></textarea>
+        <label for="event_jen_story" style="font-weight: 150;">Would you like Jen to share her story?</label>
+                <select id="event_jen_story" name="event_jen_story" required>
+                    <option style="color: gray;" value="">Select an option</option>
+                    <option value="true">Yes</option>
+                    <option value="false">No</option>
+                </select>
 
-        <label for="event_donate_money">Would you like to donate for the cost of materials for your event?</label>
-        <input type="text" id="event_donate_money" name="event_donate_money">
-
+<label for="event_donate_money" style="font-weight: 150;">Will you be donating towards the cost of the event?</label>
+                <select id="event_donate_money" name="event_donate_money" required>
+                    <option value="">Select an option</option>
+                    <option value="true">Yes</option>
+                    <option value="false">No</option>
+                </select>
         <!-- Hidden fields for admins -->
         <input type="hidden" name="event_status" value="pending">
 
-        <button type="submit">Submit Request</button>
+        <button type="submit" style="background-color: #457DD7;">Submit Event Request</button>
     </form>
 </div>
 
-<footer>
-    <p>&copy; 2024 Turtle Shelter</p>
-</footer>
+        <!-- Footer-->
+        <!-- Smaller Site Footer -->
+        <footer class="site-footer">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <p class="text-center">Copyright &copy; 2024 The Turtle Shelter Project. All Rights Reserved.</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12 text-center">
+                        <ul class="social-icons">
+                            <li><a class="facebook" href="#"><i class="fa fa-facebook"></i></a></li>
+                            <li><a class="twitter" href="#"><i class="fa fa-twitter"></i></a></li>
+                            <li><a class="linkedin" href="#"><i class="fa fa-linkedin"></i></a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </footer>
 
-</body>
+    </body>
 </html>
