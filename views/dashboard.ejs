@@ -1,105 +1,115 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/x-icon" href="assets/favicon.png" />
-    <title>Admin Dashboard</title>
-    <link rel="stylesheet" href="/css/styles.css">
-    <link rel="stylesheet" href="/css/ourStyles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="assets/favicon.png" />
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="/css/ourStyles.css">
+    <style>
+   </style>
 </head>
 <body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light" id="mainNav" style="position: fixed; width: 100%; z-index: 100; background-color: #393939;">
+        <div class="container px-4 px-lg-5">
+            <a class="navbar-brand" href="/" style="font-weight: 100;">
+                <img src="assets/favicon.png" alt="Logo" style="height: 40px; margin-right: 10px;">
+                TURTLE SHELTER PROJECT
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                Menu
+                <i class="fas fa-bars"></i>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ms-auto py-4 py-lg-0">
+                    <% if (userRole === 'admin') { %>
+                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="/volunteer_manager">Manage Volunteers</a></li>
+                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="/event_manager">Manage Events</a></li>
+                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="/inventory_view">Inventory</a></li>
+                    <% } else { %>
+                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="/volunteer_now">Volunteer Now</a></li>
+                    <% } %>
+                    <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="/edit_profile">Profile</a></li>
+                    <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="/logout">Logout</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
 
-    <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-light" id="mainNav" style="position: fixed; width: 100%; z-index: 100; background-color: #393939;">
-        <div class="container px-4 px-lg-5">
-            <a class="navbar-brand" href="/" style="font-weight: 100;">
-                <img src="assets/favicon.png" alt="Logo" style="height: 40px; margin-right: 10px;">
-                TURTLE SHELTER PROJECT
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-                Menu
-                <i class="fas fa-bars"></i>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarResponsive">
-                <ul class="navbar-nav ms-auto py-4 py-lg-0">
-                    <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="/meet_jen">Manage Volunteers</a></li>
-                    <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="/event_manager">Manage Events</a></li>
-                    <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="/edit_profile">Profile</a></li>
-                    <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="/logout">Logout</a></li>
-                </ul>
-            </div>
-        </div>
-    </nav>
+    <!-- Admin Page Content -->
+    <div class="admin-container">
+        <% if (userRole === 'admin') { %>
+            <h2 class="welcome-msg">Welcome <%= userDetails.admin_first_name %>!</h2>
+        <% } else { %>
+            <h2 class="welcome-msg">Welcome <%= userDetails.volunteer_first_name %>!</h2>
+        <% } %>
 
-    <!-- Admin Page Content -->
-    <div class="admin-container">
-        <h2 class="welcome-msg">Welcome <%= adminName %>!</h2>
+        <!-- Cards Section -->
+        <div class="cards-container">
+            <div class="card" onclick="location.href='/event_manager';">
+                <img src="assets/img/icons/calendar.png" alt="calendar Icon">
+                <p>View / edit all current and pending events</p>
+            </div>
+            <div class="card" onclick="location.href='/internal-tool-2';">
+                <img src="assets/img/icons/people.png" alt="Volunteers Icon">
+                <p>Manage user accounts</p>
+            </div>
+            <div class="card" onclick="location.href='/internal-tool-3';">
+                <img src="assets/img/icons/graph.png" alt="Dashboard Icon">
+                <p>View analytics dashboard</p>
+            </div>
+        </div>
 
-        <!-- Cards Section -->
-        <div class="cards-container">
-            <div class="card" onclick="location.href='/event_manager';">
-                <img src="assets/img/icons/calendar.png" alt="calendar Icon">
-                <p>View / edit all current and pending events</p>
-            </div>
-            <div class="card" onclick="location.href='/internal-tool-2';">
-                <img src="assets/img/icons/people.png" alt="Volunteers Icon">
-                <p>Manage user accounts</p>
-            </div>
-            <div class="card" onclick="location.href='/internal-tool-3';">
-                <img src="assets/img/icons/graph.png" alt="Dashboard Icon">
-                <p>View analytics dashboard</p>
-            </div>
-        </div>
+        <div class="tableau-container">
+            <div class='tableauPlaceholder' id='viz1733340270292' style='position: relative'>
+                <noscript>
+                    <a href='#'>
+                        <img alt='Airbnb Dashboard' src='https://public.tableau.com/static/images/Gr/Group1-7AirbnbDash/AirbnbDashboard/1_rss.png' style='border: none' />
+                    </a>
+                </noscript>
+                <object class='tableauViz' style='display:none;'>
+                    <param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' />
+                    <param name='embed_code_version' value='3' />
+                    <param name='site_root' value='' />
+                    <param name='name' value='Group1-7AirbnbDash/AirbnbDashboard' />
+                    <param name='tabs' value='no' />
+                    <param name='toolbar' value='yes' />
+                    <param name='static_image' value='https://public.tableau.com/static/images/Gr/Group1-7AirbnbDash/AirbnbDashboard/1.png' />
+                    <param name='animate_transition' value='yes' />
+                    <param name='display_static_image' value='yes' />
+                    <param name='display_spinner' value='yes' />
+                    <param name='display_overlay' value='yes' />
+                    <param name='display_count' value='yes' />
+                    <param name='language' value='en-US' />
+                </object>
+            </div>
+        </div>
+        <script type='text/javascript'>
+            var divElement = document.getElementById('viz1733340270292');
+            var vizElement = divElement.getElementsByTagName('object')[0];
+            if (divElement.offsetWidth > 800) {
+                vizElement.style.width = '100%';
+                vizElement.style.height = '75vh'; // Adjust height dynamically
+            } else if (divElement.offsetWidth > 500) {
+                vizElement.style.width = '100%';
+                vizElement.style.height = '75vh'; // Smaller height for medium screens
+            } else {
+                vizElement.style.width = '100%';
+                vizElement.style.height = '100vh'; // Full height for small screens
+            }
+            var scriptElement = document.createElement('script');
+            scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js';
+            vizElement.parentNode.insertBefore(scriptElement, vizElement);
+        </script>
+        
+                        
+    </div>
 
-        <div class="tableau-container">
-            <div class='tableauPlaceholder' id='viz1733340270292' style='position: relative'>
-                <noscript>
-                    <a href='#'>
-                        <img alt='Airbnb Dashboard' src='https://public.tableau.com/static/images/Gr/Group1-7AirbnbDash/AirbnbDashboard/1_rss.png' style='border: none' />
-                    </a>
-                </noscript>
-                <object class='tableauViz' style='display:none;'>
-                    <param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' />
-                    <param name='embed_code_version' value='3' />
-                    <param name='site_root' value='' />
-                    <param name='name' value='Group1-7AirbnbDash/AirbnbDashboard' />
-                    <param name='tabs' value='no' />
-                    <param name='toolbar' value='yes' />
-                    <param name='static_image' value='https://public.tableau.com/static/images/Gr/Group1-7AirbnbDash/AirbnbDashboard/1.png' />
-                    <param name='animate_transition' value='yes' />
-                    <param name='display_static_image' value='yes' />
-                    <param name='display_spinner' value='yes' />
-                    <param name='display_overlay' value='yes' />
-                    <param name='display_count' value='yes' />
-                    <param name='language' value='en-US' />
-                </object>
-            </div>
-        </div>
-        <script type='text/javascript'>
-            var divElement = document.getElementById('viz1733340270292');
-            var vizElement = divElement.getElementsByTagName('object')[0];
-            if (divElement.offsetWidth > 800) {
-                vizElement.style.width = '100%';
-                vizElement.style.height = '75vh'; // Adjust height dynamically
-            } else if (divElement.offsetWidth > 500) {
-                vizElement.style.width = '100%';
-                vizElement.style.height = '75vh'; // Smaller height for medium screens
-            } else {
-                vizElement.style.width = '100%';
-                vizElement.style.height = '100vh'; // Full height for small screens
-            }
-            var scriptElement = document.createElement('script');
-            scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js';
-            vizElement.parentNode.insertBefore(scriptElement, vizElement);
-        </script>
-        
-                        
-    </div>
-
-    <!-- Footer -->
-    <footer>
-        <p>&copy; 2023 Turtle Shelter Project</p>
-    </footer>
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2023 Turtle Shelter Project</p>
+    </footer>
 </body>
 </html>
