@@ -72,49 +72,50 @@
                 <p style="font-family: sans-serif; font-weight: 100; font-size: 15.5px; text-align: center;">View analytics dashboard</p>
             </div>
         </div>
-
+        
         <div class="tableau-container" id="dash">
-            <div class='tableauPlaceholder' id='viz1733340270292' style='position: relative'>
+            <div class="tableauPlaceholder" id="viz1733440981311" style="position: relative;">
                 <noscript>
-                    <a href='#'>
-                        <img alt='Airbnb Dashboard' src='https://public.tableau.com/static/images/Gr/Group1-7AirbnbDash/AirbnbDashboard/1_rss.png' style='border: none' />
+                    <a href="#">
+                        <img alt="Dashboard 1" src="https://public.tableau.com/static/images/Tu/TurtleShetlerProjectAdminDashboard/Dashboard1/1_rss.png" style="border: none;" />
                     </a>
                 </noscript>
-                <object class='tableauViz' style='display:none;'>
-                    <param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' />
-                    <param name='embed_code_version' value='3' />
-                    <param name='site_root' value='' />
-                    <param name='name' value='Group1-7AirbnbDash/AirbnbDashboard' />
-                    <param name='tabs' value='no' />
-                    <param name='toolbar' value='yes' />
-                    <param name='static_image' value='https://public.tableau.com/static/images/Gr/Group1-7AirbnbDash/AirbnbDashboard/1.png' />
-                    <param name='animate_transition' value='yes' />
-                    <param name='display_static_image' value='yes' />
-                    <param name='display_spinner' value='yes' />
-                    <param name='display_overlay' value='yes' />
-                    <param name='display_count' value='yes' />
-                    <param name='language' value='en-US' />
+                <object class="tableauViz" style="display: none;">
+                    <param name="host_url" value="https%3A%2F%2Fpublic.tableau.com%2F" />
+                    <param name="embed_code_version" value="3" />
+                    <param name="site_root" value="" />
+                    <param name="name" value="TurtleShetlerProjectAdminDashboard/Dashboard1" />
+                    <param name="tabs" value="no" />
+                    <param name="toolbar" value="yes" />
+                    <param name="static_image" value="https://public.tableau.com/static/images/Tu/TurtleShetlerProjectAdminDashboard/Dashboard1/1.png" />
+                    <param name="animate_transition" value="yes" />
+                    <param name="display_static_image" value="yes" />
+                    <param name="display_spinner" value="yes" />
+                    <param name="display_overlay" value="yes" />
+                    <param name="display_count" value="yes" />
+                    <param name="language" value="en-US" />
+                    <param name="filter" value="publish=yes" />
                 </object>
             </div>
+            <script type="text/javascript">
+                var divElement = document.getElementById("viz1733440981311");
+                var vizElement = divElement.getElementsByTagName("object")[0];
+                if (divElement.offsetWidth > 800) {
+                    vizElement.style.width = "100%";
+                    vizElement.style.height = "75vh"; // Adjust height dynamically
+                } else if (divElement.offsetWidth > 500) {
+                    vizElement.style.width = "100%";
+                    vizElement.style.height = "75vh"; // Smaller height for medium screens
+                } else {
+                    vizElement.style.width = "100%";
+                    vizElement.style.height = "100vh"; // Full height for small screens
+                }
+                var scriptElement = document.createElement("script");
+                scriptElement.src = "https://public.tableau.com/javascripts/api/viz_v1.js";
+                vizElement.parentNode.insertBefore(scriptElement, vizElement);
+            </script>
         </div>
-        <script type='text/javascript'>
-            var divElement = document.getElementById('viz1733340270292');
-            var vizElement = divElement.getElementsByTagName('object')[0];
-            if (divElement.offsetWidth > 800) {
-                vizElement.style.width = '100%';
-                vizElement.style.height = '75vh'; // Adjust height dynamically
-            } else if (divElement.offsetWidth > 500) {
-                vizElement.style.width = '100%';
-                vizElement.style.height = '75vh'; // Smaller height for medium screens
-            } else {
-                vizElement.style.width = '100%';
-                vizElement.style.height = '100vh'; // Full height for small screens
-            }
-            var scriptElement = document.createElement('script');
-            scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js';
-            vizElement.parentNode.insertBefore(scriptElement, vizElement);
-        </script> 
-    </div>
+    </div>        
 
     <!-- Footer -->
     <footer class="site-footer" style="height: 150px; position: relative; bottom: 0; left: 0; width: 100%; background-color: #393939; padding: 0; border-top: .5px solid #FBFAF7">
