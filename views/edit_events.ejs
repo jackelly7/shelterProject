@@ -131,6 +131,15 @@
         <h2 style="font-size: 20px; font-weight: 100;">Edit Event Form</h2>
         <form action="/edit_events/<%= events.event_id %>" method="POST">
             <!-- Your existing form fields, similar to request_event.ejs -->
+            <label for="event_name" style="font-weight: 300;">UPDATE EVENT STATUS:</label>
+            <select id="event_status" name="event_status" required>
+                <option style="color: gray;" value="">Select an option</option>
+                <option value="approved" <% if (events.event_status === 'approved') { %>selected<% } %>>Approved</option>
+                <option value="pending" <% if (events.event_status === 'pending') { %>selected<% } %>>Pending</option>
+                <option value="declined" <% if (events.event_status === 'declined') { %>selected<% } %>>Declined</option>
+                <option value="completed" <% if (events.event_status === 'completed') { %>selected<% } %>>Completed</option>
+            </select>
+            
             <label for="event_name" style="font-weight: 150;">Event name:</label>
             <input type="text" id="event_name" name="event_name" value="<%= events.event_name %>" required>
 
@@ -146,7 +155,13 @@
             </select>
 
             <label for="event_date_time" style="font-weight: 150;">Event date and time:</label>
-            <input type="datetime-local" id="event_date_time" name="event_date_time" value="<%= events.event_date_time %>" required>
+            <input 
+                type="datetime-local" 
+                id="event_date_time" 
+                name="event_date_time" 
+                value="<%= new Date(events.event_date_time).toISOString().slice(0, 16) %>" 
+                required
+            >
 
             <label for="event_street_address" style="font-weight: 150;">Event address:</label>
             <input type="text" id="event_street_address" name="event_street_address" value="<%= events.event_street_address %>" required>

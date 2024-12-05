@@ -173,6 +173,7 @@ app.post('/edit_events/:event_id', async (req, res) => {
       .where({ event_id: eventId })
       .update({
         event_name: eventData.event_name,
+        event_status: eventData.event_status,
         event_date_time: eventData.event_date_time,
         event_city: eventData.event_city,
         event_county: eventData.event_county,
