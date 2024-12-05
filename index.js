@@ -116,11 +116,6 @@ app.get("/meet_jen", (req, res) => {
     res.render("meet_jen");
 });
 
-// //Become a volunteer GET
-// app.get("/request_volunteer", (req, res) => {
-//   res.render("request_volunteer");
-// });
-
 // Login Page
 app.get("/login", (req, res) => {
     res.render("login"); // Render 'login.ejs'
@@ -439,7 +434,6 @@ app.post("/request_event", authMiddleware, (req, res) => {
         });
 });
 
-
 //GET route for event page
 app.get('/request_volunteer', (req, res) => {
   knex('volunteers').select('*')
@@ -453,8 +447,7 @@ app.get('/request_volunteer', (req, res) => {
 });
 
 // POST route to request to be a volunteer
-// POST route to request to be a volunteer
-app.post("/request_volunteer", authMiddleware, (req, res) => {
+app.post("/request_volunteer", (req, res) => {
   const {
       volunteer_first_name,
       volunteer_last_name,
@@ -467,6 +460,7 @@ app.post("/request_volunteer", authMiddleware, (req, res) => {
       volunteer_city,
       volunteer_county,
       volunteer_state,
+      volunteer_preference
   } = req.body;
 
   knex("volunteers")
@@ -482,71 +476,14 @@ app.post("/request_volunteer", authMiddleware, (req, res) => {
           volunteer_city,
           volunteer_county,
           volunteer_state,
+          volunteer_preference
       })
       .then(() => {
-          // Re-fetch volunteers to include the newly added volunteer
-          knex("volunteers").select("*").then((result) => {
-              res.render("request_volunteer", { volunteers: result });
-          });
+              res.render("request_volunteer");
       })
       .catch((error) => {
           console.error("Error inserting event:", error);
           res.status(500).send("Something went wrong");
-      });
-});
-
-
-
-
-
-
-
-
-// edit profile page
-app.get("/edit_profile", (req, res) => {
-  const userId = req.session.userId; // Assuming you store the user ID in the session
-  
-
-  knex("users")
-      .where({ user_id: userId })
-      .first()
-      .then((user) => {
-          if (!user) {
-              return res.redirect("/login"); // If user doesn't exist, redirect to login
-          }
-          res.render("edit_profile", { user });
-      })
-      .catch((error) => {
-          console.error("Error fetching user data:", error);
-          res.status(500).send("Internal server error");
-      });
-});
-
-app.post("/update_profile", (req, res) => {
-  const userId = req.session.userId; // Assuming user ID is stored in session
-  const { username, password, updateType } = req.body; // Get form data from request body
-
-  // Determine the update type
-  let updateData = {};
-  if (updateType === "username" && username) {
-    updateData.username = username;
-  } else if (updateType === "password" && password) {
-    updateData.password = password;
-  }
-
-  // If no valid data is provided, redirect back with an error
-  if (Object.keys(updateData).length === 0) {
-    return res.status(400).send("No valid data provided for update.");
-  }
-  knex("users")
-      .where({ user_id: userId })
-      .update({ username: username, user_password: password })
-      .then(() => {
-        res.redirect("/dashboard"); // Redirect back to the edit profile page
-      })
-      .catch((error) => {
-          console.error("Error updating profile:", error);
-          res.status(500).send("Internal server error");
       });
 });
 
@@ -632,8 +569,6 @@ app.get('/event_production_report/:event_id', async (req, res) => {
         res.status(500).send('Error fetching event production report.');
     }
 });
-
-
 
 //update event production
 // GET route to render the form
@@ -738,9 +673,7 @@ app.post('/update_event_production/:event_id', (req, res) => {
         });
 });
 
-
 //inventory view
-
 // Serve the inventory view page
 app.get('/inventory_view', (req, res) => {
     // Fetch all inventory items from the database
@@ -799,7 +732,6 @@ app.get("/volunteer_now", authMiddleware, isVolunteer, async (req, res) => {
       res.status(500).send('Something went wrong');
     }
   });  
-
 
 // Start the server
 app.listen(port, () => {

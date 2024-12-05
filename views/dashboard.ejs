@@ -48,6 +48,7 @@
 
         <!-- Cards Section -->
         <div class="cards-container">
+        <% if (userRole === 'admin') { %>
             <div class="card" onclick="location.href='/event_manager';">
                 <img src="assets/img/icons/calendar.png" alt="calendar Icon">
                 <p style="font-family: sans-serif; font-weight: 100; font-size: 15.5px; text-align: center;">View all events and <b style="font-weight: bolder;">record</b> completed events</p>
@@ -60,13 +61,19 @@
                 <img src="assets/img/icons/people.png" alt="Dashboard Icon">
                 <p style="font-family: sans-serif; font-weight: 100; font-size: 15.5px; text-align: center;">Manage user accounts</p>
             </div>
-            <div class="card" onclick="location.href='/internal-tool-3';">
+        <% } else { %>
+            <div class="card" onclick="location.href='/volunteer_now';">
+                <img src="assets/img/icons/people.png" alt="Volunteer Icon">
+                <p style="font-family: sans-serif; font-weight: 100; font-size: 15.5px; text-align: center;">Sign up to volunteer</p>
+            </div>
+        <% } %>
+            <div class="card" onclick="location.href='#dash';">
                 <img src="assets/img/icons/graph.png" alt="Dashboard Icon">
                 <p style="font-family: sans-serif; font-weight: 100; font-size: 15.5px; text-align: center;">View analytics dashboard</p>
             </div>
         </div>
 
-        <div class="tableau-container">
+        <div class="tableau-container" id="dash">
             <div class='tableauPlaceholder' id='viz1733340270292' style='position: relative'>
                 <noscript>
                     <a href='#'>
@@ -106,9 +113,7 @@
             var scriptElement = document.createElement('script');
             scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js';
             vizElement.parentNode.insertBefore(scriptElement, vizElement);
-        </script>
-        
-                        
+        </script> 
     </div>
 
     <!-- Footer -->
