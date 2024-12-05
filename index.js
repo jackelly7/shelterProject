@@ -287,6 +287,56 @@ app.post("/request_event", authMiddleware, (req, res) => {
         });
 });
 
+// edit profile page
+app.get("/edit_profile", (req, res) => {
+  const userId = req.session.userId; // Assuming you store the user ID in the session
+  
+
+  knex("users")
+      .where({ user_id: userId })
+      .first()
+      .then((user) => {
+          if (!user) {
+              return res.redirect("/login"); // If user doesn't exist, redirect to login
+          }
+          res.render("edit_profile", { user });
+      })
+      .catch((error) => {
+          console.error("Error fetching user data:", error);
+          res.status(500).send("Internal server error");
+      });
+});
+
+app.post("/update_profile", (req, res) => {
+  const userId = req.session.userId; // Assuming user ID is stored in session
+  const { username, password, updateType } = req.body; // Get form data from request body
+
+  // Determine the update type
+  let updateData = {};
+  if (updateType === "username" && username) {
+    updateData.username = username;
+  } else if (updateType === "password" && password) {
+    updateData.password = password;
+  }
+
+  // If no valid data is provided, redirect back with an error
+  if (Object.keys(updateData).length === 0) {
+    return res.status(400).send("No valid data provided for update.");
+  }
+  knex("users")
+      .where({ user_id: userId })
+      .update({ username: username, user_password: password })
+      .then(() => {
+        res.redirect("/admin"); // Redirect back to the edit profile page
+      })
+      .catch((error) => {
+          console.error("Error updating profile:", error);
+          res.status(500).send("Internal server error");
+      });
+});
+
+
+
 // Start the server
 app.listen(port, () => {
     console.log(`Server is running on http://localhost:${port}`);
