@@ -200,7 +200,7 @@ app.get("/logout", (req, res) => {
             return res.status(500).send("Server error");
         }
         res.clearCookie("connect.sid");
-        res.redirect("/login");
+        res.redirect("/");
     });
 });
 
@@ -236,8 +236,6 @@ app.get('/request_event', (req, res) => {
       res.status(500).send('Something went wrong');
     });
 });
-
-
 
 // POST route to request an event
 app.post("/request_event", authMiddleware, (req, res) => {
@@ -343,38 +341,3 @@ app.post("/update_profile", (req, res) => {
 app.listen(port, () => {
     console.log(`Server is running on http://localhost:${port}`);
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

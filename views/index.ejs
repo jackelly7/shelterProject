@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <title>Clean Blog - Start Bootstrap Theme</title>
+        <title>The Turtle Shelter Project</title>
         <link rel="icon" type="image/x-icon" href="assets/favicon.png" />
         <!-- Font Awesome icons (free version)-->
         <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
@@ -19,9 +19,12 @@
     </head>
     <body>
         <!-- Navigation-->
-        <nav class="navbar navbar-expand-lg navbar-light" id="mainNav" style='background-color: white; position: fixed; border-bottom: 1px solid #393939'>
+        <nav class="navbar navbar-expand-lg navbar-light" id="mainNav" style='background-color: #FBFAF7; position: fixed; border-bottom: .5px solid rgba(0,0,0,0.75)'>
             <div class="container px-4 px-lg-5">
-                <a class="navbar-brand" href="/" style="color: #393939">TURTLE SHELTER PROJECT</a>
+                <a class="navbar-brand" href="/" style="color: #393939;">
+                    <img src="assets/favicon.png" alt="Logo" style="height: 40px; margin-right: 10px;">
+                    TURTLE SHELTER PROJECT
+                </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                     Menu
                     <i class="fas fa-bars"></i>
@@ -47,37 +50,37 @@
         </nav>
 
         <!-- Page Header-->
-        <header class="masthead" style="background-image: url('assets/img/test-bkg.png')">
-            <div class="container position-relative px-4 px-lg-5">
-                <div class="row gx-4 gx-lg-5 justify-content-center">
-                    <div class="col-md-10 col-lg-8 col-xl-7">
-                        <div class="site-heading">
-                            <h1 id="save-lives-heading">Helping to save lives of people experiencing homelessness</h1>
-                            <span class="subheading" style="font-weight: bold;">STARTS WITH YOU</span>
-                            <br>
-                            <a href="#get-involved" class="btn btn-success btn-lg">Volunteer Now!</a>
-                        </div>
-                    </div>
-                </div>
+        <header class="masthead" style="background-color: #FBFAF7; background-image: url('/assets/img/homeless-bkg.png'); background-size: auto 80%; background-position: bottom center; padding-top: 50px; height: auto; width: 100%; margin: 0; border-bottom-left-radius: 8px; border-bottom-right-radius: 8px; overflow: hidden;">
+            <div class="container position-relative px-4 px-lg-5" style="display: flex; flex-direction: column; align-items: center; justify-content: flex-start; margin-top: 100px;">
+                <h2 id="save-lives-heading">Helping to save lives of people experiencing homelessness</h2>
+                <span class="subheading" style="font-weight: 100; font-size: 50px; text-align: center; margin-bottom: 10px;">STARTS WITH YOU</span>
+                <a href="#get-involved" class="btn btn-success" style="text-align: center; display: inline-flex; align-items: center; justify-content: center; height: 30px; padding: 0 15px;">Volunteer Now!</a>
             </div>
         </header>
+        
+        
+        
 
         <!-- About Us Section -->
-        <section id="about-us" class="py-5 bg-light">
+        <section id="about-us" class="py-5" style="background-color: #F9F3E5;">
             <div class="container">
                 <div class="row">
                     <div class="col-md-6">
-                        <img src="assets/img/vests.jpeg" alt="About Turtle Shelter Project" class="img-fluid" style="width: 75%;">
+                        <!-- Adjust the margin-top to move the image up -->
+                        <img src="assets/img/vests2.png" alt="About Turtle Shelter Project" class="img-fluid" style="width: 100%; max-width: 500px;">
                     </div>
                     <div class="col-md-6">
                         <h2>What is the Turtle Shelter Project?</h2>
-                        <p>
-                            The Turtle Shelter Project started with a high-tech yet simple solution designed to help save lives. Inspired by the need for portable shelter, much like a turtle carries its shell, the project creates vests, aimed to provide essential warmth and protection to those experiencing homelessness. After losing seven friends to the harsh winter cold during her own time on the streets, our founder Jen found a way to make a difference. The Turtle Shelter Project creates affordable, high-tech foam vests that keep people warm in temperatures as low as 10 degrees below zero, offering a life-saving solution to alleviate suffering. The project invites individuals, businesses, and communities to get involved by requesting vests or organizing efforts to create and distribute them, making a real impact on the lives of those in need.
+                        <p style="font-family: sans-serif; font-weight: 100; font-size: 15.5px;">
+                            The Turtle Shelter Project started with a high-tech yet simple solution designed to <b style="font-weight: bold;">help save lives</b>. Inspired by the need for portable shelter, much like a turtle carries its shell, <b style="font-weight: bold;">the project creates vests</b>, aimed to provide essential warmth and protection to those experiencing homelessness. After losing seven friends to the harsh winter cold during her own time on the streets, our founder Jen found a way to make a difference. The Turtle Shelter Project creates affordable, high-tech foam vests that keep people warm in temperatures as low as 10 degrees below zero, offering a life-saving solution to alleviate suffering. The project invites individuals, businesses, and communities to get involved by requesting events and organizing efforts to create and distribute them, <b style="font-weight: bold;">making a real impact</b> on the lives of those in need.
                         </p>
+                        <h4 style="font-family: sans-serif; font-weight: 50; font-size: 80px; text-align: center;">5,900 VESTS</h4>
+                        <p style="font-family: sans-serif; font-weight: 100; font-size: 15.5px;">donated as of 2024</p>
                     </div>
                 </div>
             </div>
         </section>
+
 
         <!-- Join Our Mission Section -->
         <section id="join-us" class="extra-section py-5 bg-light">
@@ -96,45 +99,61 @@
                 </div>
             </div>
         </section>        
-         <!-- Sponsor Section-->
-<!-- Sponsor Section-->
-<div class="container">
-    <div class="text-center mb-5">
-        <br>
-        <br>
-        <h2 style="font-family: Open Sans; font-weight: 100;">Thank You to Our Existing Sponsors for Years of Support</h2>
-    </div>
-    <div class="sponsor-container">
-        <div class="sponsor-box">
-            <img src="assets/img/cheney.jpeg" alt="Cheney Brothers Construction">
-            <h3>Cheney Brothers Construction</h3>
+
+        <!-- Sponsor Section-->
+        <div class="container">
+            <div class="text-center mb-5">
+                <br>
+                <br>
+                <h2 style="font-family: Open Sans; font-weight: 100; font-size: 16px;">Thank You to Our Existing Sponsors for Years of Support</h2>
+                <p>Please click on each companies logo to visit their sites!</p>
+            </div>
+            <div class="sponsor-container">
+                <div class="sponsor-box">
+                    <a href="https://www.cheneybrothersconstruction.com/" target="_blank">
+                        <img src="assets/img/cheney.jpeg" alt="Cheney Brothers Construction">
+                        <h3>Cheney Brothers Construction</h3>
+                    </a>
+                </div>
+                <div class="sponsor-box">
+                    <a href="https://designsourceslc.com/" target="_blank">
+                        <img src="assets/img/design.jpeg" alt="Design Source">
+                        <h3>Design Source</h3>
+                    </a>
+                </div>
+                <div class="sponsor-box">
+                    <a href="https://www.futurefoam.com/" target="_blank">
+                        <img src="assets/img/foam.jpeg" alt="Future Foam">
+                        <h3>Future Foam</h3>
+                    </a>
+                </div>
+                <div class="sponsor-box">
+                    <a href="http://www.givemeachanceutah.org/" target="_blank">
+                        <img src="assets/img/daughters.jpeg" alt="Give Me a Chance a Daughters of Charity Ministry">
+                        <h3>Give Me a Chance a Daughters of Charity Ministry</h3>
+                    </a>
+                </div>
+                <div class="sponsor-box">
+                    <a href="https://www.owfinc.com/" target="_blank">
+                        <img src="assets/img/owf.jpeg" alt="Outdoor Wilderness Fabrics">
+                        <h3>Outdoor Wilderness Fabrics</h3>
+                    </a>
+                </div>
+                <div class="sponsor-box">
+                    <a href="https://www.softminkyblankets.com/" target="_blank">
+                        <img src="assets/img/minkey.jpeg" alt="Minky Couture">
+                        <h3>Minky Couture</h3>
+                    </a>
+                </div>
+                <div class="sponsor-box">
+                    <a href="https://www.goodshepherdogden.org/" target="_blank">
+                        <img src="assets/img/church.png" alt="​The Episcopal Church of the Good Shepherd">
+                        <h3>​The Episcopal Church of the Good Shepherd</h3>
+                    </a>
+                </div>
+            </div>
         </div>
-        <div class="sponsor-box">
-            <img src="assets/img/design.jpeg" alt="Design Source">
-            <h3>Design Source</h3>
-        </div>
-        <div class="sponsor-box">
-            <img src="assets/img/foam.jpeg" alt="Future Foam">
-            <h3>Future Foam</h3>
-        </div>
-        <div class="sponsor-box">
-            <img src="assets/img/daughters.jpeg" alt="Give Me a Chance a Daughters of Charity Ministry">
-            <h3>Give Me a Chance a Daughters of Charity Ministry</h3>
-        </div>
-        <div class="sponsor-box">
-            <img src="assets/img/owf.jpeg" alt="Outdoor Wilderness Fabrics">
-            <h3>Outdoor Wilderness Fabrics</h3>
-        </div>
-        <div class="sponsor-box">
-            <img src="assets/img/minkey.jpeg" alt="Minky Couture">
-            <h3>Minky Couture</h3>
-        </div>
-        <div class="sponsor-box">
-            <img src="assets/img/church.png" alt="​The Episcopal Church of the Good Shepherd">
-            <h3>​The Episcopal Church of the Good Shepherd</h3>
-        </div>
-    </div>
-</div>
+
 
 <!-- Optional: Add custom padding for spacing -->
 <style>
@@ -144,60 +163,60 @@
     }
 </style>
 
-        <!-- Site footer -->
-        <footer class="site-footer">
-            <div class="container">
-            <div class="row">
-                <div class="col-sm-12 col-md-6">
-                <h6>Contact the Turtle Shelter Project</h6>
-                <p class="text-justify">Scanfcode.com <i>CODE WANTS TO BE SIMPLE </i> is an initiative  to help the upcoming programmers with the code. Scanfcode focuses on providing the most efficient code or snippets as the code wants to be simple. We will help programmers build up concepts in different programming languages that include C, C++, Java, HTML, CSS, Bootstrap, JavaScript, PHP, Android, SQL and Algorithm.</p>
-                </div>
+    <!-- Site footer -->
+    <footer class="site-footer">
+        <div class="container">
+        <div class="row">
+            <div class="col-sm-12 col-md-6">
+            <h6>Contact the Turtle Shelter Project</h6>
+            <p class="text-justify" style="font-family: sans-serif;">Scanfcode.com <i>CODE WANTS TO BE SIMPLE </i> is an initiative  to help the upcoming programmers with the code. Scanfcode focuses on providing the most efficient code or snippets as the code wants to be simple. We will help programmers build up concepts in different programming languages that include C, C++, Java, HTML, CSS, Bootstrap, JavaScript, PHP, Android, SQL and Algorithm.</p>
+            </div>
 
-                <div class="col-xs-6 col-md-3">
-                <h6>Counties</h6>
-                <ul class="footer-links">
-                    <li>Box Elder</li>
-                    <li>Davis</li>
-                    <li>Morgan</li>
-                    <li>Salt Lake City</li>
-                    <li>Summit</li>
-                    <li>Toole</li>
-                    <li>Utah</li>
-                    <li>Wasatch</li>
-                    <li>Weber</li>
-                </ul>
-                </div>
+            <div class="col-xs-6 col-md-3">
+            <h6>Counties</h6>
+            <ul class="footer-links">
+                <li>Box Elder</li>
+                <li>Davis</li>
+                <li>Morgan</li>
+                <li>Salt Lake City</li>
+                <li>Summit</li>
+                <li>Toole</li>
+                <li>Utah</li>
+                <li>Wasatch</li>
+                <li>Weber</li>
+            </ul>
+            </div>
 
-                <div class="col-xs-6 col-md-3">
-                <h6>Quick Links</h6>
-                <ul class="footer-links">
-                    <li><a href="http://scanfcode.com/about/">About Us</a></li>
-                    <li><a href="http://scanfcode.com/contact/">Contact Us</a></li>
-                    <li><a href="http://scanfcode.com/contribute-at-scanfcode/">Contribute</a></li>
-                    <li><a href="http://scanfcode.com/privacy-policy/">Privacy Policy</a></li>
-                    <li><a href="http://scanfcode.com/sitemap/">Sitemap</a></li>
-                </ul>
-                </div>
+            <div class="col-xs-6 col-md-3">
+            <h6>Quick Links</h6>
+            <ul class="footer-links">
+                <li><a href="http://scanfcode.com/about/">About Us</a></li>
+                <li><a href="http://scanfcode.com/contact/">Contact Us</a></li>
+                <li><a href="http://scanfcode.com/contribute-at-scanfcode/">Contribute</a></li>
+                <li><a href="http://scanfcode.com/privacy-policy/">Privacy Policy</a></li>
+                <li><a href="http://scanfcode.com/sitemap/">Sitemap</a></li>
+            </ul>
             </div>
-            <hr>
+        </div>
+        <hr>
+        </div>
+        <div class="container">
+        <div class="row">
+            <div class="col-md-8 col-sm-6 col-xs-12">
+            <p class="copyright-text" style="font-family: sans-serif;">Copyright &copy; 2024 The Turtle Shelter Project. All Rights Reserved. We are a registered 501(c)(3) nonprofit organization.</p>
             </div>
-            <div class="container">
-            <div class="row">
-                <div class="col-md-8 col-sm-6 col-xs-12">
-                <p class="copyright-text">Copyright &copy; 2024 The Turtle Shelter Project. All Rights Reserved. We are a registered 501(c)(3) nonprofit organization.</p>
-                </div>
 
-                <div class="col-md-4 col-sm-6 col-xs-12">
-                <ul class="social-icons">
-                    <li><a class="facebook" href="#"><i class="fa fa-facebook"></i></a></li>
-                    <li><a class="twitter" href="#"><i class="fa fa-twitter"></i></a></li>
-                    <li><a class="dribbble" href="#"><i class="fa fa-dribbble"></i></a></li>
-                    <li><a class="linkedin" href="#"><i class="fa fa-linkedin"></i></a></li>   
-                </ul>
-                </div>
+            <div class="col-md-4 col-sm-6 col-xs-12">
+            <ul class="social-icons">
+                <li><a class="facebook" href="#"><i class="fa fa-facebook"></i></a></li>
+                <li><a class="twitter" href="#"><i class="fa fa-twitter"></i></a></li>
+                <li><a class="dribbble" href="#"><i class="fa fa-dribbble"></i></a></li>
+                <li><a class="linkedin" href="#"><i class="fa fa-linkedin"></i></a></li>   
+            </ul>
             </div>
-            </div>
-        </footer>
+        </div>
+        </div>
+    </footer>
 
         <!-- Bootstrap core JS-->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
