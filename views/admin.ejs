@@ -15,7 +15,7 @@
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-light" id="mainNav" style="position: fixed; width: 100%; z-index: 100; background-color: #393939;">
         <div class="container px-4 px-lg-5">
-            <a class="navbar-brand" href="/">
+            <a class="navbar-brand" href="/" style="font-weight: 100;">
                 <img src="assets/favicon.png" alt="Logo" style="height: 40px; margin-right: 10px;">
                 TURTLE SHELTER PROJECT
             </a>
@@ -27,7 +27,7 @@
                 <ul class="navbar-nav ms-auto py-4 py-lg-0">
                     <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="/meet_jen">Manage Volunteers</a></li>
                     <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="/event_manager">Manage Events</a></li>
-                    <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="/admin"> <%= adminName %></a></li>
+                    <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="/edit_profile">Profile</a></li>
                     <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="/logout">Logout</a></li>
                 </ul>
             </div>
@@ -41,15 +41,15 @@
         <!-- Cards Section -->
         <div class="cards-container">
             <div class="card" onclick="location.href='/event_manager';">
-                <h3>Event Manager</h3>
+                <img src="assets/img/icons/calendar.png" alt="calendar Icon">
                 <p>View / edit all current and pending events</p>
             </div>
             <div class="card" onclick="location.href='/internal-tool-2';">
-                <h3>Tool 2</h3>
+                <img src="assets/img/icons/people.png" alt="Volunteers Icon">
                 <p>Manage user accounts</p>
             </div>
             <div class="card" onclick="location.href='/internal-tool-3';">
-                <h3>Tool 3</h3>
+                <img src="assets/img/icons/graph.png" alt="Dashboard Icon">
                 <p>View analytics dashboard</p>
             </div>
         </div>
