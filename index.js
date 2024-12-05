@@ -4,6 +4,7 @@ const bcrypt = require("bcrypt");
 const path = require("path");
 require("dotenv").config();
 
+
 const app = express();
 const bodyParser = require("body-parser");
 const port = 3000;
@@ -22,6 +23,9 @@ const knex = require("knex")({
 
 // Middleware to parse POST request bodies
 app.use(express.urlencoded({ extended: true }));
+app.use(express.static('public'));
+
+
 
 // Session configuration
 app.use(
@@ -69,7 +73,7 @@ function isVolunteer(req, res, next) {
 
 // -----> Routes
 
-// Homepage
+
 // app.get("/", (req, res) => {
 //     res.render("index");
 // });
@@ -135,6 +139,69 @@ app.get("/event_manager", authMiddleware, isAdmin, (req, res) => {
       res.status(500).send('Something went wrong');
     });
 });
+
+//edit_events GET route
+app.get('/edit_events/:eventId', async (req, res) => {
+  const eventId = req.params.eventId;
+  try {
+    const events= await knex('events').where({ "event_id": eventId }).first();
+    if (!events) {
+      return res.status(404).send('Event not found');
+    }
+    const stateAbbreviations = [
+      'AL', 'AK', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DE', 'FL', 'GA',
+      'HI', 'ID', 'IL', 'IN', 'IA', 'KS', 'KY', 'LA', 'ME', 'MD',
+      'MA', 'MI', 'MN', 'MS', 'MO', 'MT', 'NE', 'NV', 'NH', 'NJ',
+      'NM', 'NY', 'NC', 'ND', 'OH', 'OK', 'OR', 'PA', 'RI', 'SC',
+      'SD', 'TN', 'TX', 'UT', 'VT', 'VA', 'WA', 'WV', 'WI', 'WY'
+    ];
+    res.render('edit_events', { events, stateAbbreviations });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Server error');
+  }
+});
+
+//edit_events POST route
+app.post('/edit_events/:event_id', async (req, res) => {
+  const eventId = req.params.event_id;
+  const eventData = req.body;
+
+  try {
+    // Update the event using Knex
+    await knex('events')
+      .where({ event_id: eventId })
+      .update({
+        event_name: eventData.event_name,
+        event_date_time: eventData.event_date_time,
+        event_city: eventData.event_city,
+        event_county: eventData.event_county,
+        event_state: eventData.event_state,
+        event_street_address: eventData.event_street_address,
+        event_zip: eventData.event_zip,
+        event_duration_hrs: eventData.event_duration_hrs,
+        number_of_participants_expected: eventData.number_of_participants_expected,
+        event_type: eventData.event_type,
+        event_contact_phone: eventData.event_contact_phone,
+        event_contact_email: eventData.event_contact_email,
+        event_jen_story: eventData.event_jen_story === 'true', // convert to boolean
+        event_donate_money: eventData.event_donate_money === 'true' // convert to boolean
+      });
+
+    res.redirect('/event_manager');
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Server error');
+  }
+});
+
+// Delete Event
+app.get('/delete_event/:event_id', async (req, res) => {
+  const eventId = req.params.event_id;
+  await db.query('DELETE FROM events WHERE event_id = $1', [eventId]);
+  res.redirect('/event_manager');
+});
+
 
 // Login Route
 app.post("/login", async (req, res) => {
