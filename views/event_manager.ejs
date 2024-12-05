@@ -5,47 +5,58 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <link rel="icon" type="image/x-icon" href="assets/favicon.png" />
-        <title>Event Manager - Turtle Shelter Project</title>
+        <title>Admin Page</title>
         <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+        <!-- Font Awesome icons (free version)-->
         <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+        <!-- Google fonts-->
+        <link href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet" type="text/css" />
         <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css" />
+        <link href="https://fonts.googleapis.com/css2?family=Newsreader:wght@400&display=swap" rel="stylesheet" type="text/css">
+        <!-- Core theme CSS (includes Bootstrap)-->
         <link href="css/styles.css" rel="stylesheet" />
         <link href="css/ourStyles.css" rel="stylesheet" />
-            <style>
-         .btn-delete {
-            color: rgb(0, 0, 0);
-            border: none;
-            padding: 5px 7px;
-            margin-left: 7px;
+    <style>
+        .contain-btns {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .contain-btns a {
+            display: inline-block;
+            padding: 4px 8px;
+            font-size: 0.8rem;
+            color: white;
+            border-radius: 4px;
+            text-align: center;
             text-decoration: none;
-            border-radius: 10px;
+            margin-right: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
         }
+   </style>
+</head>
+<body>
 
-        .btn-delete:hover {
-            background-color: rgb(248, 24, 24);
-            color: rgb(0, 0, 0); /* Ensure text color remains unchanged on hover */
-            border-radius: 10px;
-        }
-    </style>
-
-    </head>
-    <body>
-        <!-- Navigation -->
-        <nav class="navbar navbar-expand-lg navbar-light" id="mainNav" style="position: fixed; width: 100%; z-index: 100; background-color: #393939;">
-            <div class="container px-4 px-lg-5">
-                <a class="navbar-brand" href="/">
-                    <img src="assets/favicon.png" alt="Logo" style="height: 40px; margin-right: 10px;">
-                    TURTLE SHELTER PROJECT
-                </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-                    Menu
-                    <i class="fas fa-bars"></i>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarResponsive">
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light" id="mainNav" style="position: fixed; width: 100%; z-index: 100; background-color: #393939; border-bottom: .5px solid #FBFAF7">
+        <div class="container px-4 px-lg-5">
+            <a class="navbar-brand" href="/" style="color: #FBFAF7;">
+                <img src="assets/favicon.png" alt="Logo" style="height: 40px; margin-right: 10px;">
+                TURTLE SHELTER PROJECT
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                Menu
+                <i class="fas fa-bars"></i>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav ms-auto py-4 py-lg-0">
-                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="/meet_jen">Manage Volunteers</a></li>
-                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="/request_event">Manage Events</a></li>
+                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="/event_manager">Manage Events</a></li>
+                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="/volunteer_manager">Manage Volunteers</a></li>
+                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" style="color: #FBFAF7;" href="/inventory_view">Inventory</a></li>
+                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" style="color: #FBFAF7;" href="/edit_profile">Profile</a></li>
+                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" style="color: #FBFAF7;" href="/logout">Logout</a></li>
                         <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="/admin">My Dashboard</a></li>
                     </ul>
                 </div>
@@ -53,8 +64,8 @@
         </nav>
         
         <div class="admin-container">
-            <h1 style="color: white;">EVENT MANAGER</h1>
-            <h2>Approved Events</h2>
+            <h1 style="color: #FBFAF7;">EVENT MANAGER</h1>
+            <h2 style="color: #FBFAF7; font-weight: 100;"> Approved Events</h2>
             <table>
                 <thead>
                     <tr>
@@ -80,19 +91,21 @@
                             <td><%= events.event_jen_story %></td>
                             <td><%= events.event_contact_first_name %> <%= events.event_contact_last_name %>: <%= events.event_contact_phone %></td>
                             <td>
-                                <a href="/edit_events/<%= events.event_id %>" class="btn btn-edit">Edit</a>
-                                <a href="/delete_event/<%= events.event_id %>" class="btn btn-delete" onclick="return confirm('Are you sure you want to delete this event?');">Delete</a>
-                            </td>
+                                <div class="contain-btns">
+                                    <a href="/edit_events/<%= events.event_id %>" class="btn btn-success">Edit</a>
+                                    <a href="/delete_event/<%= events.event_id %>" class="btn btn-delete" onclick="return confirm('Are you sure you want to delete this event?');">Delete</a>    
+                                </div>
+                            </td>                                                     
                             <td><%= events.event_status %></td>
                         </tr>
                     <% }) %>
                 </tbody>
             </table>
 
-            <h2>Pending Events</h2>
+            <h2 style="color: #FBFAF7; font-weight: 100;">Pending Events</h2>
             <table>
                 <thead>
-                    <tr>
+                    <tr">
                         <th>Event Name</th>
                         <th>Event Type</th>
                         <th>Participants</th>
@@ -115,16 +128,18 @@
                             <td><%= events.event_jen_story %></td>
                             <td><%= events.event_contact_first_name %> <%= events.event_contact_last_name %>: <%= events.event_contact_phone %></td>
                             <td>
-                                <a href="/edit_events/<%= events.event_id %>" class="btn btn-edit">Edit</a>
-                                <a href="/delete_event/<%= events.event_id %>" class="btn btn-delete" onclick="return confirm('Are you sure you want to delete this event?');">Delete</a>
-                            </td>
+                                <div class="contain-btns">
+                                    <a href="/edit_events/<%= events.event_id %>" class="btn btn-success">Edit</a>
+                                    <a href="/delete_event/<%= events.event_id %>" class="btn btn-delete" onclick="return confirm('Are you sure you want to delete this event?');">Delete</a>    
+                                </div>
+                            </td>  
                             <td><%= events.event_status %></td>
                         </tr>
                     <% }) %>
                 </tbody>
             </table>
 
-            <h2>Declined Events</h2>
+            <h2 style="color: #FBFAF7; font-weight: 100;">Declined Events</h2>
             <table>
                 <thead>
                     <tr>
@@ -150,16 +165,18 @@
                             <td><%= events.event_jen_story %></td>
                             <td><%= events.event_contact_first_name %> <%= events.event_contact_last_name %>: <%= events.event_contact_phone %></td>
                             <td>
-                                <a href="/edit_events/<%= events.event_id %>" class="btn btn-edit">Edit</a>
-                                <a href="/delete_event/<%= events.event_id %>" class="btn btn-delete" onclick="return confirm('Are you sure you want to delete this event?');">Delete</a>
-                            </td>
+                                <div class="contain-btns">
+                                    <a href="/edit_events/<%= events.event_id %>" class="btn btn-success">Edit</a>
+                                    <a href="/delete_event/<%= events.event_id %>" class="btn btn-delete" onclick="return confirm('Are you sure you want to delete this event?');">Delete</a>    
+                                    </div>
+                            </td>  
                             <td><%= events.event_status %></td>
                         </tr>
                     <% }) %>
                 </tbody>
             </table>
 
-            <h2>Completed Events</h2>
+            <h2 style="color: #FBFAF7; font-weight: 100;">Completed Events</h2>
             <table>
                 <thead>
                     <tr>
@@ -185,20 +202,44 @@
                             <td><%= events.event_jen_story %></td>
                             <td><%= events.event_contact_first_name %> <%= events.event_contact_last_name %>: <%= events.event_contact_phone %></td>
                             <td>
-                                <a href="/edit_events/<%= events.event_id %>" class="btn btn-edit">Edit</a>
-                                <a href="/delete_event/<%= events.event_id %>" class="btn btn-delete" onclick="return confirm('Are you sure you want to delete this event?');">Delete</a>
-                                <a href="/event_production_report/<%= events.event_id %>" class="btn btn-primary">Report</a>
-
-                            </td>
-                            
+                                <div class="contain-btns">
+                                    <a href="/edit_events/<%= events.event_id %>" class="btn btn-success">Edit</a>
+                                    <a href="/delete_event/<%= events.event_id %>" class="btn btn-delete" onclick="return confirm('Are you sure you want to delete this event?');">Delete</a>   
+                                    <a href="/event_production_report/<%= events.event_id %>" class="btn btn-report">Report</a>
+                                </div>
+                            </td>  
                             <td><%= events.event_status %></td>
                         </tr>
                     <% }) %>
                 </tbody>
             </table>
+
+            <form action="/add_event" method = "GET" style="background-color: none;">
+                <div style="display: flex; width: 100%; justify-content: center; align-items: center;">
+                    <button class="btn btn-success" type = "submit">Add Event</button>
+                </div>
+            </form>    
         </div>
-        <form action="/add_event" method = "GET">
-            <button type = "submit">Add Event</button>
-        </form>
+        <!-- Smaller Site Footer -->
+        <footer class="site-footer" style="height: 150px; position: relative; bottom: 0; left: 0; width: 100%; background-color: #393939; padding: 0; border-top: .5px solid #FBFAF7">
+            <div class="container" style="height: 100%; display: flex; flex-direction: column; justify-content: center; padding:0">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <h5 class="text-uppercase" style="font-weight: 100; font-size: 16px; text-align: center; color: #FBFAF7; padding-top: 40px;">Thank you for visiting the turtle shelter project</h5>
+                        <p class="small mb-0" style="font-family: sans-serif; font-size: 10px; font-weight: 100; text-align: center; color: #FBFAF7;">
+                            &copy; 2024 Turtle Shelter Project. All Rights Reserved. We are a registered 501(c)(3) nonprofit organization.
+                        </p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12 text-center">
+                        <ul class="social-icons">
+                            <li><a class="facebook" href="https://www.facebook.com/turtleshelterproject/"><i class="fab fa-facebook" style="color: #FBFAF7;"></i></a></li>
+                            <li><a class="linkedin" href="https://www.linkedin.com/in/turtle-shelter-project-6aa0aa1a4/"><i class="fab fa-linkedin" style="color: #FBFAF7;"></i></a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </footer>
     </body>
 </html>
