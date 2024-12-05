@@ -10503,7 +10503,7 @@ header.masthead {
   padding-top: calc(8rem + 57px);
   padding-bottom: 8rem;
   background: no-repeat center center;
-  background-color: white;
+  background-color: #FBFAF7;
   background-size: cover;
   background-attachment: scroll;
 }

@@ -10,16 +10,16 @@
     <style>
         /* Login page-specific styles */
         body {
-            background-color: #2b2b2b; /* Match admin page background */
+            background-color: #FBFAF7; /* Match admin page background */
             margin: 0;
         }
 
         .login-container {
             margin: 150px auto;
             max-width: 400px;
-            background-color: rgba(255, 255, 255, 0.9);
+            background-color: #F9F3E5;
             border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            /* box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); */
             padding: 20px;
             text-align: center;
         }
@@ -49,11 +49,11 @@
             font-size: 1rem;
             border: 1px solid #393939;
             border-radius: 4px;
-            background-color: transparent;
+            background-color: #FBFAF7;
         }
 
         button {
-            background-color: #0066ff; /* Correct blue color */
+            background-color: #457DD7; /* Correct blue color */
             color: white;
             padding: 10px 20px;
             font-size: 1rem;
@@ -79,32 +79,31 @@
     </style>
 </head>
 <body>
-    <!-- Navigation: Using the same header as the admin page -->
-    <nav class="navbar navbar-expand-lg navbar-light" id="mainNav" style="position: fixed; width: 100%; z-index: 100; background-color: #393939;">
-        <div class="container px-4 px-lg-5">
-            <a class="navbar-brand" href="/">
-                <img src="assets/favicon.png" alt="Logo" style="height: 40px; margin-right: 10px;">
-                TURTLE SHELTER PROJECT
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-                Menu
-                <i class="fas fa-bars"></i>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarResponsive">
-                <ul class="navbar-nav ms-auto py-4 py-lg-0">
-                    <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="#about-us">About</a></li>
-                    <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="#join-us">Sponsorship</a></li>
-                    <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="/meet_jen">Jen's Story</a></li>
-                    <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="/request_event">How to help</a></li>
-                    <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="/admin">TSP Log In</a></li>
-                </ul>
+        <!-- Navigation-->
+        <nav class="navbar navbar-expand-lg navbar-light" id="mainNav" style='background-color: #FBFAF7; position: fixed; border-bottom: .5px solid rgba(0,0,0,0.75)'>
+            <div class="container px-4 px-lg-5">
+                <a class="navbar-brand" href="/" style="color: #393939;">
+                    <img src="assets/favicon.png" alt="Logo" style="height: 40px; margin-right: 10px;">
+                    TURTLE SHELTER PROJECT
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                    Menu
+                    <i class="fas fa-bars"></i>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarResponsive">
+                    <ul class="navbar-nav ms-auto py-4 py-lg-0" style="color: #393939;">
+                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" style="color: #393939;" href="#about-us">About</a></li>
+                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" style="color: #393939;" href="#join-us">Sponsorship</a></li>
+                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" style="color: #393939;" href="/meet_jen">Jen's Story</a></li>
+                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" style="color: #393939;" href="/request_event">How to help</a></li>
+                    </ul>
+                </div>
             </div>
-        </div>
-    </nav>
+        </nav>
 
     <!-- Login Form -->
     <div class="login-container">
-        <h2>Turtle Team Login</h2>
+        <h2 style="font-family: sans-serif; font-weight: 100; font-size: 24px; text-align: center;">TURTLE TEAM LOG IN</h2>
         <form action="/login" method="POST">
             <div class="form-group">
                 <label for="username">Username</label>
