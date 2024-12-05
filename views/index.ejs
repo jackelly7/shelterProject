@@ -34,14 +34,15 @@
                         <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" style="color: #393939;" href="#about-us">About</a></li>
                         <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" style="color: #393939;" href="#join-us">Sponsorship</a></li>
                         <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" style="color: #393939;" href="/meet_jen">Jen's Story</a></li>
-                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" style="color: #393939;" href="/request_event">How to help</a></li>
+                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" style="color: #393939;" href="/request_event">Request Event</a></li>
+                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" style="color: #393939;" href="/request_volunteer">Volunteer Sign-Up</a></li>
                         <% if (adminName) { %>
                             <li class="nav-item">
                                 <a class="nav-link px-lg-3 py-3 py-lg-4" style="color: #393939;" href="/admin">My Dashboard</a>
                             </li>
                         <% } else { %>
                             <li class="nav-item">
-                                <a class="nav-link px-lg-3 py-3 py-lg-4" style="color: #393939;" href="/login">TSP Log In</a>
+                                <a class="nav-link px-lg-3 py-3 py-lg-4" style="color: #393939;" href="/login">Log In</a>
                             </li>
                         <% } %>
                     </ul>
@@ -54,7 +55,7 @@
             <div class="container position-relative px-4 px-lg-5" style="display: flex; flex-direction: column; align-items: center; justify-content: flex-start; margin-top: 100px;">
                 <h2 id="save-lives-heading">Helping to save lives of people experiencing homelessness</h2>
                 <span class="subheading" style="font-weight: 100; font-size: 50px; text-align: center; margin-bottom: 10px;">STARTS WITH YOU</span>
-                <a href="#get-involved" class="btn btn-success" style="text-align: center; display: inline-flex; align-items: center; justify-content: center; height: 30px; padding: 0 15px;">Volunteer Now!</a>
+                <a href="#join-us" class="btn btn-success" style="text-align: center; display: inline-flex; align-items: center; justify-content: center; height: 30px; padding: 0 15px;">Begin Today</a>
             </div>
         </header>
         
@@ -82,89 +83,118 @@
         </section>
 
         <!-- Our Technology -->
-        <section id="join-us" class="extra-section py-5" style="background-color: #FBFAF7">
-            <div class="container">
-                <div class="row">
-                    <div class="col text-center">
-                        <h2 class="section-heading">Join Our Mission</h2>
-                        <p class="section-text">
-                            Be a part of something bigger. Help us save lives and provide resources for those in need.
+        <!-- Testimonial Cards -->
+    <section id="our_impact" class="extra-section py-5" style="background-color: #FBFAF7">
+        <div class="container">
+            <div class="row">
+                <div class="col text-center">
+                    <h2 class="section-heading" style="font-size: 50px; font-weight: 100;">Our Impact</h2>
+                    <p class="section-text" style="font-family: sans-serif; font-weight: 100; font-size: 15.5px; text-align: center;">
+                        Since our founding in 2014, we have been driven by the goal of ensuring that no one has to freeze. Our vests offer lifesaving relief from suffering for those who are homeless and provide a meaningful way to serve for volunteers and participants.
+                    </p>
+                </div>
+            <!-- Testimonial Boxes -->
+            <div class="row mt-5">
+                <div class="col-md-5 mx-auto">
+                    <div class="box" style="width: 100%; padding: 30px; background-color: #F9F3E5; border: 2px solid #F9F3E5; border-radius: 5px;">
+                        <h2>Adam — Vest Recipient</h2>
+                        <p style="font-family: sans-serif; font-weight: 100; font-size: 15.5px; text-align: center;">
+                            "Before I received the vest, I was struggling to survive the cold nights on the streets. Every day was a battle against the freezing temperatures, and I didn't know how much longer I could hold on. Since receiving the vest, everything changed. I can now keep warm even in the harshest conditions, and it has given me a sense of hope that I didn’t have before. The warmth it provides, especially when I get wet, has saved my life. I feel like I have a fighting chance now."
                         </p>
-                        <div class="mt-3">
-                            <a href="#become-sponsor" class="btn btn-primary btn-lg me-3">Become a Sponsor Now</a>
-                            <a href="#donate-cause" class="btn btn-primary btn-lg me-3">Donate Now to Our Cause</a>
-                        </div>
                     </div>
                 </div>
+
+                <div class="col-md-5 mx-auto mt-3 mt-md-0">
+                    <div class="box" style="width: 100%; padding: 30px; background-color: #F9F3E5; border: 2px solid #F9F3E5; border-radius: 5px;">
+                        <h2>Hannah — Event Attendee</h2>
+                        <p style="font-family: sans-serif; font-weight: 100; font-size: 15.5px; text-align: center;">
+                            "Attending the volunteer event was a truly eye-opening experience for me. I’ve always wanted to give back, but I didn’t realize how much impact small actions could have. Seeing the faces of the people who received the vests, knowing that I helped make that possible, was one of the most rewarding moments of my life. The event opened my eyes to the struggles many people face and the power of coming together as a community. I left feeling inspired and more committed than ever to continue serving."
+                        </p>
+                    </div>
+                </div>
+                </div>
             </div>
-        </section>    
-
-
+        </div>
+    </section>
 
         <!-- Join Our Mission Section -->
-        <section id="join-us" class="extra-section py-5" style="background-color: #F9F3E5;">
+        <section id="join-us" class="extra-section py-5" style="background-color: #F9F3E5; height: 600px;">
             <div class="container">
                 <div class="row">
                     <div class="col text-center">
-                        <h2 class="section-heading">Join Our Mission</h2>
-                        <p class="section-text">
-                            Be a part of something bigger. Help us save lives and provide resources for those in need.
+                        <h2 class="section-heading" style="font-size: 50px; font-weight: 100;">Join Our Mission</h2>
+                        <p class="section-text" style="font-family: sans-serif; font-weight: 100; font-size: 15.5px; text-align: center;">
+                            Be a part of something bigger. <b style="font-weight: bold;">Request an event</b> or <b style="font-weight: bold;">become a volunteer</b> to help us save lives and provide resources for those in need.
                         </p>
                         <div class="mt-3">
-                            <a href="#become-sponsor" class="btn btn-primary btn-lg me-3">Become a Sponsor Now</a>
-                            <a href="#donate-cause" class="btn btn-primary btn-lg me-3">Donate Now to Our Cause</a>
+                            <a href="/request_event" class="btn btn-success" style="text-align: center; display: inline-flex; align-items: center; justify-content: center; height: 30px; padding: 0 15px;">Request an Event</a>
+                            <a href="/request_volunteer" class="btn btn-success" style="text-align: center; display: inline-flex; align-items: center; justify-content: center; height: 30px; padding: 0 15px;">Become a Volunteer</a>
                         </div>
                     </div>
                 </div>
+                
+                <!-- Photos Row -->
+                <div class="row mt-4 text-center">
+                    <div class="col-md-4">
+                        <img src="assets/img/sewing.png" alt="Photo 1" class="img-fluid rounded" style="max-height: 200px; object-fit: cover;">
+                    </div>
+                    <div class="col-md-4">
+                        <img src="assets/img/vests3.png" alt="Photo 2" class="img-fluid rounded" style="max-height: 200px; object-fit: cover;">
+                    </div>
+                    <div class="col-md-4">
+                        <img src="assets/img/sew2.png" alt="Photo 3" class="img-fluid rounded" style="max-height: 200px; object-fit: cover;">
+                    </div>
+                </div>
             </div>
-        </section>        
+        </section>
+       
 
         <!-- Sponsor Section-->
-        <div class="container" style="background-color: #FBFAF7">
+        <div class="container" style="background-color: #FBFAF7; padding-bottom: 30px;">
             <div class="text-center mb-5" style="background-color: #FBFAF7">
                 <br>
                 <br>
-                <h2 style="font-family: Open Sans; font-weight: 100; font-size: 16px;">Thank You to Our Existing Sponsors for Years of Support</h2>
-                <p>Please click on each companies logo to visit their sites!</p>
+                <h2>Thank You to Our Existing Sponsors for Years of Support</h2>
+                <h2 style="font-family: Open Sans; font-weight: 100; font-size: 16px; text-transform: none; padding-top: 0;">Please click on each companies logo to visit their sites!</h2>
             </div>
             <div class="sponsor-container" style="background-color: #FBFAF7">
-                <div class="sponsor-box">
+                <div class="sponsor-box" style="background-color: #F9F3E5;">
                     <a href="https://www.cheneybrothersconstruction.com/" target="_blank">
                         <img src="assets/img/cheney.jpeg" alt="Cheney Brothers Construction">
                         <h3>Cheney Brothers Construction</h3>
                     </a>
                 </div>
-                <div class="sponsor-box">
+                <div class="sponsor-box" style="background-color: #F9F3E5;">
                     <a href="https://designsourceslc.com/" target="_blank">
                         <img src="assets/img/design.jpeg" alt="Design Source">
                         <h3>Design Source</h3>
                     </a>
                 </div>
-                <div class="sponsor-box">
+                <div class="sponsor-box" style="background-color: #F9F3E5;">
                     <a href="https://www.futurefoam.com/" target="_blank">
                         <img src="assets/img/foam.jpeg" alt="Future Foam">
                         <h3>Future Foam</h3>
                     </a>
                 </div>
-                <div class="sponsor-box">
+                <div class="sponsor-box" style="background-color: #F9F3E5;">
                     <a href="http://www.givemeachanceutah.org/" target="_blank">
                         <img src="assets/img/daughters.jpeg" alt="Give Me a Chance a Daughters of Charity Ministry">
                         <h3>Give Me a Chance a Daughters of Charity Ministry</h3>
                     </a>
                 </div>
-                <div class="sponsor-box">
+                <div class="sponsor-box" style="background-color: #F9F3E5;">
                     <a href="https://www.owfinc.com/" target="_blank">
                         <img src="assets/img/owf.jpeg" alt="Outdoor Wilderness Fabrics">
                         <h3>Outdoor Wilderness Fabrics</h3>
                     </a>
                 </div>
-                <div class="sponsor-box">
+                <div class="sponsor-box" style="background-color: #F9F3E5;">
                     <a href="https://www.softminkyblankets.com/" target="_blank">
                         <img src="assets/img/minkey.jpeg" alt="Minky Couture">
                         <h3>Minky Couture</h3>
                     </a>
                 </div>
-                <div class="sponsor-box">
+                <div class="sponsor-box" style="background-color: #F9F3E5;">
                     <a href="https://www.goodshepherdogden.org/" target="_blank">
                         <img src="assets/img/church.png" alt="​The Episcopal Church of the Good Shepherd">
                         <h3>​The Episcopal Church of the Good Shepherd</h3>
@@ -178,64 +208,72 @@
 <style>
     .sponsor-container {
         padding-top: 30px;
-        padding-bottom: 50px; /* Adjust the value for more/less spacing */
+        padding-bottom: 0px; /* Adjust the value for more/less spacing */
         background-color: #FBFAF7;
     }
 </style>
 
-    <footer class="site-footer">
-        <div class="container">
-        <div class="row">
-            <div class="col-sm-12 col-md-6">
-            <h6>Contact the Turtle Shelter Project</h6>
-            <p class="text-justify" style="font-family: sans-serif;">Address:PO BOX 382, Kaysville, UT 84037</p>
-            <br>
-            <p class="text-justify" style="font-family: sans-serif;">Phone: (801) 872-3190</p>
-            <br>
-            <p class="text-justify" style="font-family: sans-serif;">Email:<a href="mailto:turtleshelterproject@gmail.com" class="text-light text-decoration-none">turtleshelterproject@gmail.com</a></p>
+    <!-- Footer-->
+    <footer class="py-3" style="background-color:#393939; color: #FBFAF7; height: 320px;">
+        <div class="container px-4 px-lg-5">
+            <div class="row gx-4 gx-lg-5">
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <h5 class="text-uppercase" style="font-weight: 100; font-size: 22px; text-align: left;">Contact Us</h5>
+                    <p class="small" style="font-family: sans-serif; font-size: 14px; font-weight: 100; text-align: left;">
+                        <strong>Address:</strong> PO BOX 382, Kaysville, UT 84037<br>
+                        <strong>Phone:</strong> 801-872-3190<br>
+                        <strong>Email:</strong> <a href="mailto:turtleshelterproject@gmail.com" class="text-light text-decoration-none">turtleshelterproject@gmail.com</a></p>
+                </div>
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <h5 class="text-uppercase" style="font-weight: 100; font-size: 22px; text-align: left;">Counties</h5>
+                    <br>
+                    <div class="row d-flex align-items-center">
+                        <div class="col-6">
+                            <ul class="small" style="font-family: sans-serif; font-size: 14px; font-weight: 100; text-align: left; list-style-type: none; padding-left: 0;">
+                                <li>Box Elder</li>
+                                <li>Cache</li>
+                                <li>Davis</li>
+                                <li>Morgan</li>
+                                <li>Salt Lake City</li>
+                            </ul>
+                        </div>
+                        <div class="col-6">
+                            <ul class="small" style="font-family: sans-serif; font-size: 14px; font-weight: 100; text-align: left; list-style-type: none; padding-left: 0;">
+                                <li>Summit</li>
+                                <li>Toole</li>
+                                <li>Utah</li>
+                                <li>Wasatch</li>
+                                <li>Weber</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                                    
+                <div class="col-lg-4 col-md-12">
+                    <h5 class="text-uppercase" style="font-weight: 100; font-size: 22px; text-align: left;">Stay in Touch</h5>
+                    <br>
+                    <div class="d-flex justify-content-left">
+                        <a href="https://www.facebook.com/TurtleShelterProject" target="_blank" class="text-light me-3">
+                            <i class="fab fa-facebook fa-2x"></i>
+                        </a>
+                        <a href="https://www.linkedin.com/in/turtle-shelter-project-6aa0aa1a4/" target="_blank" class="text-light me-3">
+                            <i class="fab fa-linkedin fa-2x"></i>
+                        </a>
+                        <a href="mailto:turtleshelterproject@gmail.com" target="_blank" class="text-light me-3">
+                            <i class="fas fa-envelope fa-2x"></i>
+                        </a>
+                    </div>
+                </div>
+                
             </div>
-
-            <div class="col-xs-6 col-md-3">
-            <h6>Counties</h6>
-            <ul class="footer-links">
-                <li>Box Elder</li>
-                <li>Davis</li>
-                <li>Morgan</li>
-                <li>Salt Lake City</li>
-                <li>Summit</li>
-                <li>Toole</li>
-                <li>Utah</li>
-                <li>Wasatch</li>
-                <li>Weber</li>
-            </ul>
+            <hr class="border-light my-2">
+            <div class="row">
+                <div class="col text-center">
+                    <p class="small mb-0" style="font-family: sans-serif; font-size: 14px; font-weight: 100; text-align: center;">
+                        &copy; 2024 Turtle Shelter Project. All Rights Reserved. We are a registered 501(c)(3) nonprofit organization.
+                    </p>
+                </div>
             </div>
-
-            <div class="col-xs-6 col-md-3">
-            <h6>Quick Links</h6>
-            <ul class="footer-links">
-                <li><a href="/">About Us</a></li>
-                <li><a href="/">Sponsorship</a></li>
-                <li><a href="/donate">Contribute</a></li>
-                <li><a href="/volunteer">Volunteer</a></li>
-                <li><a href="/request_event">Request Event</a></li>
-            </ul>
-            </div>
-        </div>
-        <hr>
-        </div>
-        <div class="container">
-        <div class="row">
-            <div class="col-md-8 col-sm-6 col-xs-12">
-            <p class="copyright-text" style="font-family: sans-serif;">Copyright &copy; 2024 The Turtle Shelter Project. All Rights Reserved. We are a registered 501(c)(3) nonprofit organization.</p>
-            </div>
-
-            <div class="col-md-4 col-sm-6 col-xs-12">
-            <ul class="social-icons">
-                <li><a class="facebook" href="https://www.facebook.com/turtleshelterproject"><i class="fa fa-facebook"></i></a></li>
-                <li><a class="linkedin" href="https://www.linkedin.com/in/turtle-shelter-project-6aa0aa1a4/"><i class="fa fa-linkedin"></i></a></li>   
-            </ul>
-            </div>
-        </div>
         </div>
     </footer>
         <!-- Bootstrap core JS-->

@@ -108,6 +108,11 @@ app.get("/meet_jen", (req, res) => {
     res.render("meet_jen");
 });
 
+//Become a volunteer GET
+app.get("/request_volunteer", (req, res) => {
+  res.render("request_volunteer");
+});
+
 // Login Page
 app.get("/login", (req, res) => {
     res.render("login"); // Render 'login.ejs'
@@ -173,6 +178,7 @@ app.post('/edit_events/:event_id', async (req, res) => {
       .where({ event_id: eventId })
       .update({
         event_name: eventData.event_name,
+        event_status: eventData.event_status,
         event_date_time: eventData.event_date_time,
         event_city: eventData.event_city,
         event_county: eventData.event_county,
