@@ -436,6 +436,64 @@ app.post("/request_event", authMiddleware, (req, res) => {
         });
 });
 
+
+//GET route for event page
+app.get('/request_volunteer', (req, res) => {
+  knex('volunteers').select('*')
+    .then(result => {
+      res.render('request_volunteer', { volunteers: result });
+    })
+    .catch(error => {
+      console.error('Error fetching events:', error);
+      res.status(500).send('Something went wrong');
+    });
+});
+
+// POST route to request to be a volunteer
+app.post("/request_volunteer", authMiddleware, (req, res) => {
+    const {
+        volunteer_first_name,
+        volunteer_last_name,
+        volunteer_enroll_date,
+        volunteer_how_heard,
+        volunteer_sewing_level,
+        volunteer_hrs_monthly_availability,
+        volunteer_email,
+        volunteer_phone,
+        volunteer_city,
+        volunteer_county,
+        volunteer_state,
+    } = req.body;
+
+    knex("volunteers")
+        .insert({
+          volunteer_first_name,
+          volunteer_last_name,
+          volunteer_enroll_date,
+          volunteer_how_heard,
+          volunteer_sewing_level,
+          volunteer_hrs_monthly_availability,
+          volunteer_email,
+          volunteer_phone,
+          volunteer_city,
+          volunteer_county,
+          volunteer_state,
+        })
+        .then(() => {
+            res.redirect("/request_event");
+        })
+        .catch((error) => {
+            console.error("Error inserting event:", error);
+            res.status(500).send("Something went wrong");
+        });
+});
+
+
+
+
+
+
+
 // edit profile page
 app.get("/edit_profile", (req, res) => {
   const userId = req.session.userId; // Assuming you store the user ID in the session

@@ -134,6 +134,60 @@
         <h1 style="background-color: #FBFAF7;">Become a Volunteer</h1>
     </header>
 
+    <div class="form-container">
+        <h2 style="font-size: 20px; font-weight: 100;">New Volunteer Form</h2>
+        <form action="/request_event" method="POST">
+            <label for="volunteer_first_name" style="font-weight: 150;">Volunteer First Name:</label>
+            <input type="text" id="volunteer_first_name" name="volunteer_first_name" required>
+    
+            <label for="volunteer_last_name" style="font-weight: 150;">Volunteer Last Name:</label>
+            <input type="number" id="volunteer_last_name" name="volunteer_last_name" required>
+    
+            <label for="volunteer_preference" style="font-weight: 150;">Event type:</label>
+                    <select id="volunteer_preference" name="volunteer_preference" required>
+                        <option style="color: gray;" value="">Select an option</option>
+                        <option value="sewing">Sewing Assistance</option>
+                        <option value="non-sewing">Event Lead</option>
+                        <option value="both">Support Staff</option>
+                    </select>
+
+         <label for="volunteer_sewing_level" style="font-weight: 150;">Sewing Experience:</label>
+                    <select id="volunteer_sewing_level" name="volunteer_sewing_level" required>
+                        <option style="color: gray;" value="">Select an option</option>
+                        <option value="sewing">Experienced</option>
+                        <option value="non-sewing">Beginner</option>
+                        <option value="both">Intermediate</option>
+                    </select>
+    
+            <label for="volunteer_email" style="font-weight: 150;">Email:</label>
+            <input type="email" id="volunteer_email" name="volunteer_email" required>
+    
+    
+            <label for="volunteer_phone" style="font-weight: 150;">Phone:</label>
+            <input type="tel" id="volunteer_phone" name="volunteer_phone" placeholder="123-456-7890" pattern="\d{3}-\d{3}-\d{4}" required>
+    
+            <label for="volunteert_city" style="font-weight: 150;">City:</label>
+            <input type="text" id="volunteer_city" name="volunteer_city" required>
+    
+            <label for="volunteer_county" style="font-weight: 150;">County:</label>
+            <input type="text" id="volunteer_county" name="volunteer_county" required>
+    
+            <label for="volunteer_state" style="font-weight: 150;">State:</label>
+            <input type="text" id="volunteer_state" name="volunteer_state" required>
+
+            <label for="volunteer_enroll_date" style="font-weight: 150;">Start availibility:</label>
+            <input type="date" id="volunteer_enroll_date" name="volunteer_enroll_date" required style="color: gray;">
+    
+            <label for="volunteer_hrs_monthly_availability" style="font-weight: 150;">Monthly Hourly Committment:</label>
+            <input type="number" id="volunteer_hrs_monthly_availability" name="volunteer_hrs_monthly_availability" required>
+
+            <label for="volunteer_how_heard"style="font-weight: 150;">Please tell us how you heard of the Turtle Shelter Project</label>
+            <input type="text" id="volunteer_how_heard" name="volunteer_how_heard" required>
+    
+            <button type="submit" style="background-color: #457DD7;">Become a Volunteer</button>
+        </form>
+    </div>
+
             <!-- Footer-->
         <!-- Smaller Site Footer -->
         <footer class="site-footer" style="height: 150px; position: relative; bottom: 0; left: 0; width: 100%; background-color: #393939; padding: 0;">
