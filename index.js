@@ -237,8 +237,6 @@ app.get('/request_event', (req, res) => {
     });
 });
 
-
-
 // POST route to request an event
 app.post("/request_event", authMiddleware, (req, res) => {
     const {
@@ -289,44 +287,7 @@ app.post("/request_event", authMiddleware, (req, res) => {
         });
 });
 
-
-
 // Start the server
 app.listen(port, () => {
     console.log(`Server is running on http://localhost:${port}`);
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
