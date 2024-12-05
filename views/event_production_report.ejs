@@ -24,19 +24,18 @@
         <table class="table table-striped">
             <thead>
                 <tr>
-                    <th>Event Name</th>
-                    <th>Event Type</th>
-                    <th>Participants</th>
-                    <th>Date/Time</th>
-                    <th>City/State</th>
-                    <th>Jen's Story</th>
-                    <th>Contact</th>
-                    <th>Item Name</th> <!-- New column -->
-                    <th>Item Size</th> <!-- New column -->
-                    <th>Items Produced</th>
-                    <th>Total Attendees Actual</th>
-                    <th>Event Duration Actual</th>
-                    <th>Action</th>
+                    <th style="color: black;">Event Name</th>
+                    <th style="color: black;">Event Type</th>
+                    <th style="color: black;">Participants</th>
+                    <th style="color: black;">Date/Time</th>
+                    <th style="color: black;">City/State</th>
+                    <th style="color: black;">Jen's Story</th>
+                    <th style="color: black;">Contact</th>
+                    <th style="color: black;">Item Name</th>
+                    <th style="color: black;">Item Size</th>
+                    <th style="color: black;">Items Produced</th>
+                    <th style="color: black;">Total Attendees Actual</th>
+                    <th style="color: black;">Event Duration Actual</th>
                 </tr>
             </thead>
             <tbody>
@@ -49,18 +48,21 @@
                         <td><%= event.event_city %>, <%= event.event_state %></td>
                         <td><%= event.event_jen_story %></td>
                         <td><%= event.event_contact_first_name %> <%= event.event_contact_last_name %>: <%= event.event_contact_phone %></td>
-                        <td><%= event.inventory_name || 'N/A' %></td> <!-- Display inventory_name -->
-                        <td><%= event.inventory_size || 'N/A' %></td> <!-- Display inventory_size -->
+                        <td><%= event.inventory_name || 'N/A' %></td>
+                        <td><%= event.inventory_size || 'N/A' %></td>
                         <td><%= event.item_count || 'N/A' %></td>
                         <td><%= event.total_attendees_actual || 'N/A' %></td>
                         <td><%= event.event_duration_actual || 'N/A' %></td>
-                        <td>
-                            <a href="/update_event_production/<%= event.event_id %>" class="btn btn-primary">Report</a>
-                        </td>
                     </tr>
                 <% }) %>
             </tbody>
         </table>
+        <div class="mt-4 text-center">
+            <form action="/update_event_production/<%= completedEvents[0]?.event_id || '' %>" method="get">
+                <button type="submit" class="btn btn-primary">Add Report</button>
+            </form>
+            
+        </div>
     </div>
 </body>
 </html>
