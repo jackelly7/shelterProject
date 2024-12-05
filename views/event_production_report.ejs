@@ -31,6 +31,8 @@
                     <th>City/State</th>
                     <th>Jen's Story</th>
                     <th>Contact</th>
+                    <th>Item Name</th> <!-- New column -->
+                    <th>Item Size</th> <!-- New column -->
                     <th>Items Produced</th>
                     <th>Total Attendees Actual</th>
                     <th>Event Duration Actual</th>
@@ -47,11 +49,13 @@
                         <td><%= event.event_city %>, <%= event.event_state %></td>
                         <td><%= event.event_jen_story %></td>
                         <td><%= event.event_contact_first_name %> <%= event.event_contact_last_name %>: <%= event.event_contact_phone %></td>
+                        <td><%= event.inventory_name || 'N/A' %></td> <!-- Display inventory_name -->
+                        <td><%= event.inventory_size || 'N/A' %></td> <!-- Display inventory_size -->
                         <td><%= event.item_count || 'N/A' %></td>
                         <td><%= event.total_attendees_actual || 'N/A' %></td>
                         <td><%= event.event_duration_actual || 'N/A' %></td>
                         <td>
-                            <a href="/update-event-production/<%= event.event_id %>" class="btn btn-primary">Report</a>
+                            <a href="/update_event_production/<%= event.event_id %>" class="btn btn-primary">Report</a>
                         </td>
                     </tr>
                 <% }) %>

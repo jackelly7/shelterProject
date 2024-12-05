@@ -10,18 +10,19 @@
 <body>
     <div class="container">
         <h1>Update Production Details</h1>
-        <form action="/update-event-production/<%= event.event_id %>" method="POST">
+        <form action="/update_event_production/<%= event.event_id %>" method="POST">
             <div class="mb-3">
                 <label for="inventory_name" class="form-label">Inventory Name:</label>
                 <select id="inventory_name" name="inventory_name" class="form-select" required>
                     <option value="">Select...</option>
-                    <option value="completed vest" <%= event.inventory_name === 'completed vest' ? 'selected' : '' %>>Completed Vest</option>
+                    <option value="vest" <%= event.inventory_name === 'vest' ? 'selected' : '' %>>Vest</option>
                     <option value="collar" <%= event.inventory_name === 'collar' ? 'selected' : '' %>>Collar</option>
                     <option value="envelope" <%= event.inventory_name === 'envelope' ? 'selected' : '' %>>Envelope</option>
                     <option value="pocket" <%= event.inventory_name === 'pocket' ? 'selected' : '' %>>Pocket</option>
-                    <option value="fabric 1" <%= event.inventory_name === 'fabric 1' ? 'selected' : '' %>>Fabric 1</option>
-                    <option value="fabric 2" <%= event.inventory_name === 'fabric 2' ? 'selected' : '' %>>Fabric 2</option>
+                    <option value="fabric1_sqft" <%= event.inventory_name === 'fabric1_sqft' ? 'selected' : '' %>>Fabric 1 (sqft)</option>
+                    <option value="fabric2_sqft" <%= event.inventory_name === 'fabric2_sqft' ? 'selected' : '' %>>Fabric 2 (sqft)</option>
                 </select>
+                
             </div>
 
             <div class="mb-3">

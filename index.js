@@ -195,12 +195,30 @@ app.post('/edit_events/:event_id', async (req, res) => {
   }
 });
 
-// Delete Event
+// // Delete Event
+// app.get('/delete_event/:event_id', async (req, res) => {
+//   const eventId = req.params.event_id;
+//   await db.query('DELETE FROM events WHERE event_id = $1', [eventId]);
+//   res.redirect('/event_manager');
+// });
 app.get('/delete_event/:event_id', async (req, res) => {
-  const eventId = req.params.event_id;
-  await db.query('DELETE FROM events WHERE event_id = $1', [eventId]);
-  res.redirect('/event_manager');
-});
+    const eventId = req.params.event_id;
+  
+    try {
+      // Use Knex to delete the event from the database
+      await knex('events').where('event_id', eventId).del();
+      
+      // Redirect to the event manager page after successful deletion
+      res.redirect('/event_manager');
+    } catch (err) {
+      console.error("Error deleting event:", err);
+      
+      // Redirect to the event manager page in case of an error (you can add an error message if needed)
+      res.redirect('/event_manager');
+    }
+  });
+  
+  
 
 
 // Login Route
@@ -451,10 +469,11 @@ app.post("/update_profile", (req, res) => {
 });
 
 //event_production_report
-app.get('/event-production-report', async (req, res) => {
+app.get('/event_production_report', async (req, res) => {
     try {
         const completedEvents = await knex('events as e')
             .leftJoin('event_production as ep', 'e.event_id', 'ep.event_id')
+            .leftJoin('inventory as i', 'ep.inventory_id', 'i.inventory_id')  // Join with the inventory table
             .select(
                 'e.event_id',
                 'e.event_name',
@@ -469,7 +488,9 @@ app.get('/event-production-report', async (req, res) => {
                 'e.event_contact_phone',
                 'ep.item_count',
                 'ep.total_attendees_actual',
-                'ep.event_duration_actual'
+                'ep.event_duration_actual',
+                'i.inventory_name',        // Select inventory_name
+                'i.inventory_size'         // Select inventory_size
             )
             .where('e.event_status', 'completed');
 
@@ -480,9 +501,10 @@ app.get('/event-production-report', async (req, res) => {
     }
 });
 
+
 //update event production
 // GET route to render the form
-app.get('/update-event-production/:event_id', async (req, res) => {
+app.get('/update_event_production/:event_id', async (req, res) => {
     const eventId = req.params.event_id;
 
     try {
@@ -509,14 +531,17 @@ app.get('/update-event-production/:event_id', async (req, res) => {
     }
 });
 
-// POST route to handle the form submission
-app.post('/update-event-production/:event_id', (req, res) => {
+app.post('/update_event_production/:event_id', (req, res) => {
     const eventId = req.params.event_id;
     const { inventory_name, inventory_size, item_count, total_attendees_actual, event_duration_actual } = req.body;
 
-    // Fetch the inventory_id based on inventory_name and inventory_size
+    // Convert inventory_name and inventory_size to lowercase to ensure case-insensitive comparison
+    const normalizedInventoryName = inventory_name.toLowerCase();
+    const normalizedInventorySize = inventory_size.toLowerCase();
+
+    // Fetch the inventory_id based on normalized inventory_name and inventory_size
     knex('inventory')
-        .where({ inventory_name, inventory_size })
+        .where({ inventory_name: normalizedInventoryName, inventory_size: normalizedInventorySize })
         .first()
         .then(inventory => {
             if (!inventory) {
@@ -566,7 +591,7 @@ app.post('/update-event-production/:event_id', (req, res) => {
                     });
             })
             .then(() => {
-                res.redirect('/event-production-report');
+                res.redirect('/event_production_report');
             })
             .catch(err => {
                 console.error('Error updating event production:', err);
@@ -576,6 +601,43 @@ app.post('/update-event-production/:event_id', (req, res) => {
         .catch(err => {
             console.error('Error querying inventory:', err);
             res.status(500).send('Error querying inventory.');
+        });
+});
+
+
+//inventory view
+
+// Serve the inventory view page
+app.get('/inventory_view', (req, res) => {
+    // Fetch all inventory items from the database
+    knex('inventory')
+        .select('*')
+        .then(inventory => {
+            // Render the inventory view and pass the data to the template
+            res.render('inventory_view', { inventory: inventory });
+        })
+        .catch(err => {
+            console.error('Error fetching inventory:', err);
+            res.status(500).send('Error fetching inventory');
+        });
+});
+
+// Route to update inventory quantity
+app.post('/update_inventory/:inventory_id', (req, res) => {
+    const inventoryId = req.params.inventory_id;
+    const newQuantity = req.body.inventory_quantity;
+
+    // Using Knex to update the inventory_quantity
+    knex('inventory')
+        .where('inventory_id', inventoryId)
+        .update({ inventory_quantity: newQuantity })
+        .then(() => {
+            console.log(`Updated inventory ${inventoryId} with new quantity: ${newQuantity}`);
+            res.redirect('/inventory_view');  // Redirect back to the inventory view
+        })
+        .catch(err => {
+            console.error('Error updating inventory:', err);
+            res.status(500).send('Error updating inventory');
         });
 });
 
