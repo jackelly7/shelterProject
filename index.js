@@ -55,6 +55,14 @@ function authMiddleware(req, res, next) {
     next();
 }
 
+function isLoggedIn(req, res, next) {
+    if (req.session.userId) {
+        next();
+    } else {
+        res.status(403).send("Access denied");
+    }
+}
+
 function isAdmin(req, res, next) {
     if (req.session.role === "admin") {
         next();
@@ -304,7 +312,7 @@ app.post("/login", async (req, res) => {
         req.session.role = user.user_type;
 
         // Redirect based on role
-        res.redirect(user.user_type === "admin" ? "/admin" : "/volunteer");
+        res.redirect("/dashboard");
     } catch (err) {
         console.error("Error during login:", err);
         res.status(500).send("Server error");
@@ -316,30 +324,25 @@ app.post("/login", async (req, res) => {
 //     res.render("admin");
 // });
 
-app.get('/admin', authMiddleware, isAdmin, async (req, res) => {
+app.get('/dashboard', authMiddleware, isLoggedIn, async (req, res) => {
     try {
-        const adminDetails = await knex('admins')
-            .join('users', 'admins.user_id', 'users.user_id')
-            .select('admins.admin_first_name')
+        knex('users')
+            .leftJoin('admins', 'users.user_id', 'admins.user_id')
+            .leftJoin('volunteers', 'users.user_id', 'volunteers.user_id')
+            .select('admins.admin_first_name', 'volunteers.volunteer_first_name', 'users.user_type')
             .where('users.user_id', req.session.userId)
-            .first();
-  
-        if (!adminDetails) {
-            return res.status(404).send('Admin details not found');
-        }
-  
-        res.render('admin', { adminName: adminDetails.admin_first_name });
-  
+            .first()
+            .then(userDetails => {
+                if (!userDetails) {
+                    return res.status(404).send('User details not found');
+                }
+                res.render('dashboard', { userDetails, userRole: userDetails.user_type });
+            });  
     } catch (error) {
         console.error('Error fetching admin details:', error);
         res.status(500).send('Server error');
     }
   });
-
-// Volunteer-only route
-app.get("/volunteer", authMiddleware, isVolunteer, (req, res) => {
-    res.render("volunteer");
-});
 
 // Logout Route
 app.get("/logout", (req, res) => {
@@ -539,7 +542,7 @@ app.post("/update_profile", (req, res) => {
       .where({ user_id: userId })
       .update({ username: username, user_password: password })
       .then(() => {
-        res.redirect("/admin"); // Redirect back to the edit profile page
+        res.redirect("/dashboard"); // Redirect back to the edit profile page
       })
       .catch((error) => {
           console.error("Error updating profile:", error);
@@ -587,7 +590,7 @@ app.post("/update_profile", (req, res) => {
       .where({ user_id: userId })
       .update({ username: username, user_password: password })
       .then(() => {
-        res.redirect("/admin"); // Redirect back to the edit profile page
+        res.redirect("/dashboard"); // Redirect back to the edit profile page
       })
       .catch((error) => {
           console.error("Error updating profile:", error);
@@ -772,7 +775,30 @@ app.post('/update_inventory/:inventory_id', (req, res) => {
         });
 });
 
-
+app.get("/volunteer_now", authMiddleware, isVolunteer, async (req, res) => {
+    try {
+      // Fetch volunteer data
+      const volunteer = await knex('volunteers')
+        .select('*')
+        .where('user_id', req.session.userId)
+        .first();
+  
+      if (!volunteer) {
+        return res.status(404).send('Volunteer not found');
+      }
+  
+      // Fetch approved events
+      const events = await knex('events')
+        .select('*')
+        .where('event_status', 'approved');
+  
+      // Render the view with both volunteer and events data
+      res.render("volunteer_now", { volunteer, events });
+    } catch (error) {
+      console.error('Error:', error);
+      res.status(500).send('Something went wrong');
+    }
+  });  
 
 
 // Start the server
