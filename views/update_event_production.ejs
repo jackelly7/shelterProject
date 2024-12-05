@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Update Event Production</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="/css/ourStyles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Update Production Details</h1>
+        <form action="/update-event-production/<%= event.event_id %>" method="POST">
+            <div class="mb-3">
+                <label for="inventory_name" class="form-label">Inventory Name:</label>
+                <select id="inventory_name" name="inventory_name" class="form-select" required>
+                    <option value="">Select...</option>
+                    <option value="completed vest" <%= event.inventory_name === 'completed vest' ? 'selected' : '' %>>Completed Vest</option>
+                    <option value="collar" <%= event.inventory_name === 'collar' ? 'selected' : '' %>>Collar</option>
+                    <option value="envelope" <%= event.inventory_name === 'envelope' ? 'selected' : '' %>>Envelope</option>
+                    <option value="pocket" <%= event.inventory_name === 'pocket' ? 'selected' : '' %>>Pocket</option>
+                    <option value="fabric 1" <%= event.inventory_name === 'fabric 1' ? 'selected' : '' %>>Fabric 1</option>
+                    <option value="fabric 2" <%= event.inventory_name === 'fabric 2' ? 'selected' : '' %>>Fabric 2</option>
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label for="inventory_size" class="form-label">Inventory Size:</label>
+                <select id="inventory_size" name="inventory_size" class="form-select" required>
+                    <option value="">Select...</option>
+                    <option value="XXS" <%= event.inventory_size === 'XXS' ? 'selected' : '' %>>XXS</option>
+                    <option value="XS" <%= event.inventory_size === 'XS' ? 'selected' : '' %>>XS</option>
+                    <option value="S" <%= event.inventory_size === 'S' ? 'selected' : '' %>>S</option>
+                    <option value="M" <%= event.inventory_size === 'M' ? 'selected' : '' %>>M</option>
+                    <option value="L" <%= event.inventory_size === 'L' ? 'selected' : '' %>>L</option>
+                    <option value="XL" <%= event.inventory_size === 'XL' ? 'selected' : '' %>>XL</option>
+                    <option value="XXL" <%= event.inventory_size === 'XXL' ? 'selected' : '' %>>XXL</option>
+                    <option value="XXXL" <%= event.inventory_size === 'XXXL' ? 'selected' : '' %>>XXXL</option>
+                    <option value="XXXXL" <%= event.inventory_size === 'XXXXL' ? 'selected' : '' %>>XXXXL</option>
+                    <option value="N/A" <%= event.inventory_size === 'N/A' ? 'selected' : '' %>>N/A</option>
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label for="item_count" class="form-label">Change in Item Count:</label>
+                <input type="number" id="item_count" name="item_count" class="form-control" min="-10000" required>
+                <small class="form-text text-muted">Use negative values to decrease the item count.</small>
+            </div>            
+
+            <div class="mb-3">
+                <label for="total_attendees_actual" class="form-label">Total Attendees Actual:</label>
+                <input type="number" id="total_attendees_actual" name="total_attendees_actual" class="form-control" min="0" value="<%= event.total_attendees_actual %>" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="event_duration_actual" class="form-label">Event Duration Actual (hrs):</label>
+                <input type="number" id="event_duration_actual" name="event_duration_actual" class="form-control" min="0" step="0.1" value="<%= event.event_duration_actual %>" required>
+            </div>
+
+            <button type="submit" class="btn btn-success">Update Production</button>
+        </form>
+    </div>
+</body>
+</html>

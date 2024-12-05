@@ -402,6 +402,184 @@ app.post("/update_profile", (req, res) => {
       });
 });
 
+// edit profile page
+app.get("/edit_profile", (req, res) => {
+  const userId = req.session.userId; // Assuming you store the user ID in the session
+  
+
+  knex("users")
+      .where({ user_id: userId })
+      .first()
+      .then((user) => {
+          if (!user) {
+              return res.redirect("/login"); // If user doesn't exist, redirect to login
+          }
+          res.render("edit_profile", { user });
+      })
+      .catch((error) => {
+          console.error("Error fetching user data:", error);
+          res.status(500).send("Internal server error");
+      });
+});
+
+app.post("/update_profile", (req, res) => {
+  const userId = req.session.userId; // Assuming user ID is stored in session
+  const { username, password, updateType } = req.body; // Get form data from request body
+
+  // Determine the update type
+  let updateData = {};
+  if (updateType === "username" && username) {
+    updateData.username = username;
+  } else if (updateType === "password" && password) {
+    updateData.password = password;
+  }
+
+  // If no valid data is provided, redirect back with an error
+  if (Object.keys(updateData).length === 0) {
+    return res.status(400).send("No valid data provided for update.");
+  }
+  knex("users")
+      .where({ user_id: userId })
+      .update({ username: username, user_password: password })
+      .then(() => {
+        res.redirect("/admin"); // Redirect back to the edit profile page
+      })
+      .catch((error) => {
+          console.error("Error updating profile:", error);
+          res.status(500).send("Internal server error");
+      });
+});
+
+//event_production_report
+app.get('/event-production-report', async (req, res) => {
+    try {
+        const completedEvents = await knex('events as e')
+            .leftJoin('event_production as ep', 'e.event_id', 'ep.event_id')
+            .select(
+                'e.event_id',
+                'e.event_name',
+                'e.event_type',
+                'e.number_of_participants_expected',
+                'e.event_date_time',
+                'e.event_city',
+                'e.event_state',
+                'e.event_jen_story',
+                'e.event_contact_first_name',
+                'e.event_contact_last_name',
+                'e.event_contact_phone',
+                'ep.item_count',
+                'ep.total_attendees_actual',
+                'ep.event_duration_actual'
+            )
+            .where('e.event_status', 'completed');
+
+        res.render('event_production_report', { completedEvents });
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Error fetching completed events.');
+    }
+});
+
+//update event production
+// GET route to render the form
+app.get('/update-event-production/:event_id', async (req, res) => {
+    const eventId = req.params.event_id;
+
+    try {
+        const event = await knex('events')
+            .leftJoin('event_production', 'events.event_id', 'event_production.event_id')
+            .select(
+                'events.event_id',
+                'events.event_name',
+                'event_production.item_count',
+                'event_production.total_attendees_actual',
+                'event_production.event_duration_actual'
+            )
+            .where('events.event_id', eventId)
+            .first();
+
+        if (!event) {
+            return res.status(404).send('Event not found.');
+        }
+
+        res.render('update_event_production', { event });
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Error fetching event production details.');
+    }
+});
+
+// POST route to handle the form submission
+app.post('/update-event-production/:event_id', (req, res) => {
+    const eventId = req.params.event_id;
+    const { inventory_name, inventory_size, item_count, total_attendees_actual, event_duration_actual } = req.body;
+
+    // Fetch the inventory_id based on inventory_name and inventory_size
+    knex('inventory')
+        .where({ inventory_name, inventory_size })
+        .first()
+        .then(inventory => {
+            if (!inventory) {
+                return res.status(400).send('Invalid inventory selection.');
+            }
+            const inventory_id = inventory.inventory_id;
+            const current_inventory_quantity = inventory.inventory_quantity; // Get current inventory quantity
+
+            // Calculate the new inventory quantity
+            const new_inventory_quantity = current_inventory_quantity + parseInt(item_count);
+
+            // Start a transaction to update both the inventory and event_production tables
+            return knex.transaction(trx => {
+                // Update the inventory table with the new inventory quantity
+                return trx('inventory')
+                    .where('inventory_id', inventory_id)
+                    .update({
+                        inventory_quantity: new_inventory_quantity
+                    })
+                    .then(() => {
+                        // Check if the event_production record exists
+                        return trx('event_production')
+                            .where({ event_id: eventId, inventory_id: inventory_id })
+                            .first()
+                            .then(eventProduction => {
+                                if (eventProduction) {
+                                    // If the record exists, update the values
+                                    return trx('event_production')
+                                        .where({ event_id: eventId, inventory_id: inventory_id })
+                                        .update({
+                                            item_count: eventProduction.item_count + parseInt(item_count),
+                                            total_attendees_actual,
+                                            event_duration_actual
+                                        });
+                                } else {
+                                    // If the record doesn't exist, insert a new one
+                                    return trx('event_production')
+                                        .insert({
+                                            event_id: eventId,
+                                            inventory_id: inventory_id,
+                                            item_count: item_count,
+                                            total_attendees_actual,
+                                            event_duration_actual
+                                        });
+                                }
+                            });
+                    });
+            })
+            .then(() => {
+                res.redirect('/event-production-report');
+            })
+            .catch(err => {
+                console.error('Error updating event production:', err);
+                res.status(500).send('Error updating event production.');
+            });
+        })
+        .catch(err => {
+            console.error('Error querying inventory:', err);
+            res.status(500).send('Error querying inventory.');
+        });
+});
+
+
 
 
 // Start the server
