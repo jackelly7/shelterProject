@@ -533,11 +533,13 @@ app.post("/update_profile", (req, res) => {
 });
 
 //event_production_report
-app.get('/event_production_report', async (req, res) => {
+app.get('/event_production_report/:event_id', async (req, res) => {
+    const { event_id } = req.params; // Get the event_id from the route parameters
+
     try {
         const completedEvents = await knex('events as e')
             .leftJoin('event_production as ep', 'e.event_id', 'ep.event_id')
-            .leftJoin('inventory as i', 'ep.inventory_id', 'i.inventory_id')  // Join with the inventory table
+            .leftJoin('inventory as i', 'ep.inventory_id', 'i.inventory_id') // Join with the inventory table
             .select(
                 'e.event_id',
                 'e.event_name',
@@ -556,14 +558,15 @@ app.get('/event_production_report', async (req, res) => {
                 'i.inventory_name',        // Select inventory_name
                 'i.inventory_size'         // Select inventory_size
             )
-            .where('e.event_status', 'completed');
+            .where('e.event_id', event_id); // Filter by the specific event_id
 
         res.render('event_production_report', { completedEvents });
     } catch (error) {
         console.error(error);
-        res.status(500).send('Error fetching completed events.');
+        res.status(500).send('Error fetching event production report.');
     }
 });
+
 
 
 //update event production
@@ -655,7 +658,8 @@ app.post('/update_event_production/:event_id', (req, res) => {
                     });
             })
             .then(() => {
-                res.redirect('/event_production_report');
+                res.redirect(`/event_production_report/${eventId}`);
+
             })
             .catch(err => {
                 console.error('Error updating event production:', err);
