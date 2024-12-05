@@ -108,6 +108,11 @@ app.get("/meet_jen", (req, res) => {
     res.render("meet_jen");
 });
 
+//Become a volunteer GET
+app.get("/request_volunteer", (req, res) => {
+  res.render("request_volunteer");
+});
+
 // Login Page
 app.get("/login", (req, res) => {
     res.render("login"); // Render 'login.ejs'
