@@ -771,22 +771,23 @@ app.get('/inventory_view', (req, res) => {
 
 // Route to update inventory quantity
 app.post('/update_inventory/:inventory_id', (req, res) => {
-    const inventoryId = req.params.inventory_id;
-    const newQuantity = req.body.inventory_quantity;
+  const inventoryId = req.params.inventory_id;
+  const newQuantity = req.body.inventory_quantity;
 
-    // Using Knex to update the inventory_quantity
-    knex('inventory')
-        .where('inventory_id', inventoryId)
-        .update({ inventory_quantity: newQuantity })
-        .then(() => {
-            console.log(`Updated inventory ${inventoryId} with new quantity: ${newQuantity}`);
-            res.redirect('/inventory_view');  // Redirect back to the inventory view
-        })
-        .catch(err => {
-            console.error('Error updating inventory:', err);
-            res.status(500).send('Error updating inventory');
-        });
+  // Using Knex to update the inventory_quantity
+  knex('inventory')
+      .where('inventory_id', inventoryId)
+      .update({ inventory_quantity: newQuantity })
+      .then(() => {
+          console.log(`Updated inventory ${inventoryId} with new quantity: ${newQuantity}`); // Use backticks for string interpolation
+          res.redirect('/inventory_view');  // Redirect back to the inventory view
+      })
+      .catch(err => {
+          console.error('Error updating inventory:', err);
+          res.status(500).send('Error updating inventory');
+      });
 });
+
 
 // Route for signed in volunteers to view and sign up for events
 app.get("/volunteer_now", authMiddleware, isVolunteer, async (req, res) => {

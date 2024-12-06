@@ -4743,9 +4743,9 @@ textarea.form-control-lg {
 
 .btn-close {
   box-sizing: content-box;
-  width: 1em;
-  height: 1em;
-  padding: 0.25em 0.25em;
+  width: 0.5em;
+  height: 0.5em;
+  padding: 0em 0em;
   color: #000;
   background: transparent url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23000'%3e%3cpath d='M.293.293a1 1 0 0 1 1.414 0L8 6.586 14.293.293a1 1 0 1 1 1.414 1.414L9.414 8l6.293 6.293a1 1 0 0 1-1.414 1.414L8 9.414l-6.293 6.293a1 1 0 0 1-1.414-1.414L6.586 8 .293 1.707a1 1 0 0 1 0-1.414z'/%3e%3c/svg%3e") center/1em auto no-repeat;
   border: 0;
@@ -4838,7 +4838,7 @@ textarea.form-control-lg {
   word-wrap: break-word;
 }
 
-.modal {
+/* .modal {
   --bs-modal-zindex: 1055;
   --bs-modal-width: 500px;
   --bs-modal-padding: 1rem;
@@ -4866,9 +4866,9 @@ textarea.form-control-lg {
   overflow-x: hidden;
   overflow-y: auto;
   outline: 0;
-}
+} */
 
-.modal-dialog {
+/* .modal-dialog {
   position: relative;
   width: auto;
   margin: var(--bs-modal-margin);
@@ -4899,9 +4899,9 @@ textarea.form-control-lg {
 }
 .modal-dialog-scrollable .modal-body {
   overflow-y: auto;
-}
+} */
 
-.modal-dialog-centered {
+/* .modal-dialog-centered {
   display: flex;
   align-items: center;
   min-height: calc(100% - var(--bs-modal-margin) * 2);
@@ -4931,8 +4931,8 @@ textarea.form-control-lg {
   width: 100vw;
   height: 100vh;
   background-color: var(--bs-backdrop-bg);
-}
-.modal-backdrop.fade {
+} */
+/* .modal-backdrop.fade {
   opacity: 0;
 }
 .modal-backdrop.show {
@@ -4961,9 +4961,9 @@ textarea.form-control-lg {
   position: relative;
   flex: 1 1 auto;
   padding: var(--bs-modal-padding);
-}
+} */
 
-@media (min-width: 576px) {
+/* @media (min-width: 576px) {
   .modal {
     --bs-modal-margin: 1.75rem;
     --bs-modal-box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
@@ -4995,8 +4995,8 @@ textarea.form-control-lg {
   margin: 0;
 }
 .modal-fullscreen .modal-content {
-  height: 100%;
-  border: 0;
+  height: 100%; */
+  /* border: 0;
 }
 .modal-fullscreen .modal-body {
   overflow-y: auto;
@@ -5034,8 +5034,8 @@ textarea.form-control-lg {
 }
 @media (max-width: 991.98px) {
   .modal-fullscreen-lg-down {
-    width: 100vw;
-    max-width: none;
+    width: 100vw; */
+    /* max-width: none;
     height: 100%;
     margin: 0;
   }
@@ -5047,8 +5047,8 @@ textarea.form-control-lg {
     overflow-y: auto;
   }
 }
-@media (max-width: 1199.98px) {
-  .modal-fullscreen-xl-down {
+@media (max-width: 1199.98px) { */
+  /* .modal-fullscreen-xl-down {
     width: 100vw;
     max-width: none;
     height: 100%;
@@ -5076,7 +5076,7 @@ textarea.form-control-lg {
   .modal-fullscreen-xxl-down .modal-body {
     overflow-y: auto;
   }
-}
+} */
 .tooltip {
   --bs-tooltip-zindex: 1080;
   --bs-tooltip-max-width: 200px;
