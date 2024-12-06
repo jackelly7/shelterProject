@@ -632,7 +632,7 @@ app.post("/update_profile", (req, res) => {
 });
 
 //event_production_report
-app.get('/event_production_report/:event_id', isAdmin, async (req, res) => {
+app.get('/event_production_report/:event_id', async (req, res) => {
     const { event_id } = req.params; // Get the event_id from the route parameters
 
     try {
@@ -665,6 +665,9 @@ app.get('/event_production_report/:event_id', isAdmin, async (req, res) => {
         res.status(500).send('Error fetching event production report.');
     }
 });
+
+
+
 
 //update event production
 // GET route to render the form
@@ -771,12 +774,13 @@ app.post('/update_event_production/:event_id', (req, res) => {
 
 //inventory view
 // Serve the inventory view page
-app.get('/inventory_view', isAdmin, (req, res) => {
-    // Fetch all inventory items from the database
+app.get('/inventory_view', (req, res) => {
+    // Fetch all inventory items sorted by inventory_name
     knex('inventory')
         .select('*')
+        .orderBy('inventory_name', 'asc') // Sorts inventory by name in ascending order
         .then(inventory => {
-            // Render the inventory view and pass the data to the template
+            // Render the inventory view and pass the sorted data to the template
             res.render('inventory_view', { inventory: inventory });
         })
         .catch(err => {
@@ -784,6 +788,7 @@ app.get('/inventory_view', isAdmin, (req, res) => {
             res.status(500).send('Error fetching inventory');
         });
 });
+
 
 // Route to update inventory quantity
 app.post('/update_inventory/:inventory_id', (req, res) => {
