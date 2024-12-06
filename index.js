@@ -148,6 +148,77 @@ app.get("/event_manager", authMiddleware, isAdmin, (req, res) => {
     });
 });
 
+// Admin Event Manager Page
+app.get("/volunteer_manager", authMiddleware, isAdmin, (req, res) => {
+  // Fetch volunteers based on the volunteer_approved status
+  knex('volunteers') // Correct table name
+    .select('*')
+    .then(result => {
+      // Separate volunteers by approval status
+      const notVols = result.filter(volunteers => volunteers.volunteer_approved === false); // Corrected comparison
+      const approvedVols = result.filter(volunteers => volunteers.volunteer_approved === true); // Corrected comparison
+
+      // Render the volunteer manager page with the separated volunteer data
+      res.render("volunteer_manager", {
+        notVols,
+        approvedVols
+      });
+    })
+    .catch(error => {
+      console.error('Error fetching volunteers:', error); // Corrected log message
+      res.status(500).send('Something went wrong');
+    });
+});
+
+//edit_events GET route
+app.get('/edit_volunteer/:vol_id', async (req, res) => {
+  const vol_id = req.params.vol_id;
+  try {
+    const volunteers = await knex('volunteers').where({ "vol_id": vol_id }).first();
+    if (!volunteers) {
+      return res.status(404).send('Volunteer not found');
+    }
+    res.render('edit_volunteer', { events, userRole: req.session.role });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Server error');
+  }
+});
+
+//edit_events POST route
+app.post('/edit_volunteer/:vol_id', async (req, res) => {
+  const vol_id= req.params.vol_id;
+  const volData = req.body;
+
+  try {
+    // Update the event using Knex
+    await knex('events')
+      .where({ event_id: eventId })
+      .update({
+        volunteer_first_name: volData.volunteer_first_name,
+        volunteer_last_name: volData.volunteer_last_name,
+        volunteer_email: volData.volunteer_email,
+        volunteer_phone: volData.volunteer_phone,
+        volunteer_city: volData.volunteer_city,
+        volunteer_county: volData.volunteer_county,
+        volunteer_state: volData.volunteer_state,
+        volunteer_preference: volData.volunteer_preference,
+        volunteer_enroll_date: volData.volunteer_enroll_date,
+        volunteer_how_heard: volData.volunteer_how_heard,
+        volunteer_sewing_level: volData.volunteer_sewing_level,
+        volunteer_hrs_monthly_availability: volData.volunteer_hrs_monthly_availability,
+        volunteer_approved: volData.volunteer_approved,
+      });
+
+    res.redirect('/event_manager');
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Server error');
+  }
+});
+
+
+
 //edit_events GET route
 app.get('/edit_events/:eventId', async (req, res) => {
   const eventId = req.params.eventId;
@@ -163,7 +234,7 @@ app.get('/edit_events/:eventId', async (req, res) => {
       'NM', 'NY', 'NC', 'ND', 'OH', 'OK', 'OR', 'PA', 'RI', 'SC',
       'SD', 'TN', 'TX', 'UT', 'VT', 'VA', 'WA', 'WV', 'WI', 'WY'
     ];
-    res.render('edit_events', { events, stateAbbreviations });
+    res.render('edit_events', { events, stateAbbreviations, userRole: req.session.role });
   } catch (error) {
     console.error(error);
     res.status(500).send('Server error');
@@ -197,7 +268,6 @@ app.post('/edit_events/:event_id', async (req, res) => {
         event_contact_email: eventData.event_contact_email,
         event_jen_story: eventData.event_jen_story === 'true', // convert to boolean
         event_donate_money: eventData.event_donate_money === 'true', // convert to boolean
-        event_status: eventData.event_status
       });
 
     res.redirect('/event_manager');
@@ -207,60 +277,7 @@ app.post('/edit_events/:event_id', async (req, res) => {
   }
 });
 
-//edit_events GET route
-app.get('/add_event', async (req, res) => {
-  
-  try {
-    knex('events')
-    .then(events => {
-      const stateAbbreviations = [
-        'AL', 'AK', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DE', 'FL', 'GA',
-        'HI', 'ID', 'IL', 'IN', 'IA', 'KS', 'KY', 'LA', 'ME', 'MD',
-        'MA', 'MI', 'MN', 'MS', 'MO', 'MT', 'NE', 'NV', 'NH', 'NJ',
-        'NM', 'NY', 'NC', 'ND', 'OH', 'OK', 'OR', 'PA', 'RI', 'SC',
-        'SD', 'TN', 'TX', 'UT', 'VT', 'VA', 'WA', 'WV', 'WI', 'WY'
-      ];
-      res.render('add_event', { events, stateAbbreviations });
-    })
-  } catch (error) {
-    console.error(error);
-    res.status(500).send('Server error');
-  }
-});
 
-//edit_events POST route
-app.post('/add_event', async (req, res) => {
-  const eventData = req.body;
-
-  try {
-    // Update the event using Knex
-    await knex('events')
-      .insert({
-        event_name: eventData.event_name,
-        event_date_time: eventData.event_date_time,
-        event_city: eventData.event_city,
-        event_county: eventData.event_county,
-        event_state: eventData.event_state,
-        event_street_address: eventData.event_street_address,
-        event_zip: eventData.event_zip,
-        event_duration_hrs: eventData.event_duration_hrs,
-        number_of_participants_expected: eventData.number_of_participants_expected,
-        event_type: eventData.event_type,
-        event_contact_first_name: eventData.event_contact_first_name,
-        event_contact_last_name: eventData.event_contact_last_name,
-        event_contact_phone: eventData.event_contact_phone,
-        event_contact_email: eventData.event_contact_email,
-        event_jen_story: eventData.event_jen_story === 'true', // convert to boolean
-        event_donate_money: eventData.event_donate_money === 'true', // convert to boolean
-        event_status: eventData.event_status
-      });
-
-    res.redirect('/event_manager');
-  } catch (error) {
-    console.error(error);
-    res.status(500).send('Server error');
-  }
-});
 
 // // Delete Event
 // app.get('/delete_event/:event_id', async (req, res) => {
@@ -460,7 +477,8 @@ app.post("/request_volunteer", (req, res) => {
       volunteer_city,
       volunteer_county,
       volunteer_state,
-      volunteer_preference
+      volunteer_preference,
+      volunteer_approved
   } = req.body;
 
   knex("volunteers")
@@ -476,7 +494,8 @@ app.post("/request_volunteer", (req, res) => {
           volunteer_city,
           volunteer_county,
           volunteer_state,
-          volunteer_preference
+          volunteer_preference,
+          volunteer_approved: "false"
       })
       .then(() => {
               res.render("request_volunteer");
