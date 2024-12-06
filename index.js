@@ -184,10 +184,10 @@ app.post("/signup", async (req, res) => {
         return res.status(400).send("Passwords do not match.");
     }
 
-    const isAdmin = admin_key === process.env.ADMIN_CREATE_KEY;
+    const isAdmin = admin_key == process.env.ADMIN_CREATE_KEY;
     const user_type = isAdmin ? "admin" : "volunteer";
 
-    if (admin_key && !isAdmin) {
+    if (!isAdmin) {
         return res.status(400).send("Invalid admin key.");
     }
 
