@@ -5,18 +5,207 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <title>The Turtle Shelter Project</title>
-        <link rel="icon" type="image/x-icon" href="assets/favicon.png" />
+        <title>Event Volunteers</title>
+        <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+        <!-- Font Awesome icons (free version)-->
         <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
         <!-- Google fonts-->
         <link href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet" type="text/css" />
         <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css" />
         <link href="https://fonts.googleapis.com/css2?family=Newsreader:wght@400&display=swap" rel="stylesheet" type="text/css">
         <!-- Core theme CSS (includes Bootstrap)-->
-        <link href="css/styles.css" rel="stylesheet" />
-        <link href="css/ourStyles.css" rel="stylesheet" />
+        <link href="/css/styles.css" rel="stylesheet" />
+        <link href="/css/ourStyles.css" rel="stylesheet"/>        
+        <style>
+            /* Apply white background to both html and body */
+            html, body {
+                background-color: #2D3A4F;
+                margin: 0;
+                padding: 0;
+            }        
+            footer {
+                background-color: #393939;
+                text-align: center;
+                padding: 10px 0;
+            }
+        
+            select option {
+                color: lightgray;
+            }
+        
+            select {
+                color: gray; /* Ensures the text color for select dropdown is gray */
+            }
+        
+            header h1 {
+                text-align: center;
+                color: #393939;
+                background-color: #2D3A4F;
+            }
+        
+            .form-container {
+                max-width: 800px;
+                margin: 20px auto;
+                padding: 20px;
+                background-color: #F9F3E5;
+                border-radius: 8px;
+                /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); */
+            }
+        
+            .form-container h2 {
+                text-align: center;
+                color: #393939;
+            }
+        
+            form label {
+                display: block;
+                margin: 8px 0;
+                color: #393939;
+                padding: 0;
+                font-weight: 100;
+            }
+        
+            form input, form select {
+                width: 100%;
+                padding: 8px;
+                margin-bottom: 10px;
+                border-radius: 4px;
+                border: 1px solid #ddd;
+                background-color: #FBFAF7;
+            }
+        
+            form button {
+                width: 100%;
+                padding: 10px;
+                background-color: #393939;
+                color: white;
+                border: none;
+                border-radius: 4px;
+                font-size: 16px;
+                cursor: pointer;
+            }
+        
+            form button:hover {
+                background-color: #555;
+            }
+            form select {
+                width: 100%;
+                padding: 8px;
+                margin: 0; /* Ensure no margin is added around the select elements */
+                border-radius: 4px;
+                border: 1px solid #ddd;
+                background-color: #FBFAF7;
+            }
+            form input, form select, form textarea, form button {
+            margin: 0;
+            padding: 8px;
+            }
+
+        </style>        
     </head>
-<body>
-<h1>Hello</h1>
-</body>
+    <body>
+        <!-- Navigation-->
+        <nav class="navbar navbar-expand-lg navbar-light" id="mainNav" style="position: fixed; width: 100%; z-index: 100; background-color: #1F2B3D; border-bottom: .5px solid #FBFAF7">
+        <div class="container px-4 px-lg-5">
+            <a class="navbar-brand" href="/" style="font-weight: 100;">
+                <img src="/assets/favicon.png" alt="Logo" style="height: 40px; margin-right: 10px;">
+                TURTLE SHELTER PROJECT
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                Menu
+                <i class="fas fa-bars"></i>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                    <ul class="navbar-nav ms-auto py-4 py-lg-0">
+                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="/event_manager">Manage Events</a></li>
+                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="/volunteer_manager">Manage Volunteers</a></li>
+                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" style="color: #FBFAF7;" href="/inventory_view">Inventory</a></li>
+                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" style="color: #FBFAF7;" href="/edit_profile">Profile</a></li>
+                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" style="color: #FBFAF7;" href="/logout">Logout</a></li>
+                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="/dashboard">My Dashboard</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <header>
+        <h1 style="background-color: #2D3A4F; color:#FBFAF7" >Volunteer Event — Admin Edit</h1>
+    </header>
+    <div class="form-container">
+        <h2 style="font-size: 20px; font-weight: 100;">Edit Volunteer Info</h2>
+        <form action="/edit_volunteer/<%= volunteers.vol_id %>" method="POST">
+
+            <label for="volunteer_approved" style="font-weight: 150;">Volunteer approval:</label>
+            <input type="text" id="volunteer_approved" name="volunteer_approved" value="<%= volunteers.volunteer_approved %>" required>
+
+            <label for="volunteer_first_name" style="font-weight: 150;">Volunteer first name:</label>
+            <input type="text" id="volunteer_first_name" name="volunteer_first_name" value="<%= volunteers.volunteer_first_name %>" required>
+ 
+            <label for="volunteer_last_name" style="font-weight: 150;">Volunteer last name:</label>
+            <input type="text" id="volunteer_last_name" name="volunteer_last_name" value="<%= volunteers.volunteer_last_name %>" required>
+        
+            <label for="volunteer_email" style="font-weight: 150;">Email:</label>
+            <input type="text" id="volunteer_email" name="volunteer_email" value="<%= volunteers.volunteer_email %>" required>
+
+            <label for="volunteer_phone" style="font-weight: 150;">Phone:</label>
+            <input type="text" id="volunteer_phone" name="volunteer_phone" value="<%= volunteers.volunteer_phone %>" required>
+
+            <label for="volunteer_city" style="font-weight: 150;">City:</label>
+            <input type="text" id="volunteer_city" name="volunteer_city" value="<%= volunteers.volunteer_city %>" required>
+    
+            <label for="volunteer_state" style="font-weight: 150;">State:</label>
+            <input type="text" id="volunteer_state" name="volunteer_state" value="<%= volunteers.volunteer_state %>" required>
+    
+            <label for="volunteer_preference" style="font-weight: 150;">Volunteer Type:</label>
+                <select id="volunteer_preference" name="volunteer_preference" required>
+                    <option style="color: gray;" value="">Select an option</option>
+                    <option value="sewing" <% if (volunteers.volunteer_preference === 'sewing') { %>selected<% } %>>Sewing Assistance</option>
+                    <option value="lead" <% if (volunteers.volunteer_preference === 'lead') { %>selected<% } %>>Event Lead</option>
+                    <option value="support" <% if (volunteers.volunteer_preference === 'pending') { %>selected<% } %>>Support Staff</option>
+                </select>
+
+            <label for="volunteer_sewing_level" style="font-weight: 150;">Experience:</label>
+                <select id="volunteer_sewing_level" name="volunteer_sewing_level" required>
+                    <option style="color: gray;" value="">Select an option</option>
+                    <option value="experienced" <% if (volunteers.volunteer_sewing_level === 'experienced') { %>selected<% } %>>Experienced</option>
+                    <option value="beginner" <% if (volunteers.volunteer_sewing_level === 'beginner') { %>selected<% } %>>Beginner</option>
+                    <option value="intermediate" <% if (volunteers.volunteer_sewing_level === 'intermediate') { %>selected<% } %>>Intermediate</option>
+                </select>
+
+            <label for="volunteer_enroll_date" style="font-weight: 150;">Start date:</label>
+            <input type="date" id="volunteer_enroll_date" name="volunteer_enroll_date" value="<%= volunteers.volunteer_enroll_date %>" required>
+ 
+ 
+            <label for="volunteer_hrs_monthly_availability" style="font-weight: 150;">Monthly Hr Commitment::</label>
+            <input type="number" id="volunteer_hrs_monthly_availability" name="volunteer_hrs_monthly_availability" value="<%= volunteers.volunteer_hrs_monthly_availability %>" required>
+ 
+ 
+            <label for="volunteer_how_heard" style="font-weight: 150;">Referral:</label>
+            <input type="text" id="volunteer_how_heard" name="volunteer_how_heardy"  value="<%= volunteers.volunteer_how_heard %>" required>
+
+            <button type="submit" style="background-color: #457DD7;">Submit Event Changes</button>
+        </form>
+    </div>
+        <!-- Smaller Site Footer -->
+        <footer class="site-footer" style="height: 150px; position: relative; bottom: 0; left: 0; width: 100%; background-color: #1F2B3D; padding: 0; border-top: .5px solid #FBFAF7">
+            <div class="container" style="height: 100%; display: flex; flex-direction: column; justify-content: center;">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <h5 class="text-uppercase" style="font-weight: 100; font-size: 16px; text-align: center; color: #FBFAF7; padding-top: 40px;">Thank you for visiting the turtle shelter project</h5>
+                        <p class="small mb-0" style="font-family: sans-serif; font-size: 10px; font-weight: 100; text-align: center; color: #FBFAF7;">
+                            &copy; 2024 Turtle Shelter Project. All Rights Reserved. We are a registered 501(c)(3) nonprofit organization.
+                        </p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12 text-center">
+                        <ul class="social-icons">
+                            <li><a class="facebook" href="https://www.facebook.com/turtleshelterproject/"><i class="fab fa-facebook" style="color: #FBFAF7;"></i></a></li>
+                            <li><a class="linkedin" href="https://www.linkedin.com/in/turtle-shelter-project-6aa0aa1a4/"><i class="fab fa-linkedin" style="color: #FBFAF7;"></i></a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </body>
 </html>

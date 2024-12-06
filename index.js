@@ -244,7 +244,7 @@ app.get('/edit_volunteer/:vol_id', isAdmin, async (req, res) => {
     if (!volunteers) {
       return res.status(404).send('Volunteer not found');
     }
-    res.render('edit_volunteer', { events, userRole: req.session.role });
+    res.render('edit_volunteer', { volunteers, userRole: req.session.role });
   } catch (error) {
     console.error(error);
     res.status(500).send('Server error');
@@ -258,8 +258,8 @@ app.post('/edit_volunteer/:vol_id', async (req, res) => {
 
   try {
     // Update the event using Knex
-    await knex('events')
-      .where({ event_id: eventId })
+    await knex('volunteers')
+      .where({ vol_id })
       .update({
         volunteer_first_name: volData.volunteer_first_name,
         volunteer_last_name: volData.volunteer_last_name,
@@ -276,7 +276,7 @@ app.post('/edit_volunteer/:vol_id', async (req, res) => {
         volunteer_approved: volData.volunteer_approved,
       });
 
-    res.redirect('/event_manager');
+    res.redirect('/volunteer_manager');
   } catch (error) {
     console.error(error);
     res.status(500).send('Server error');
@@ -359,7 +359,27 @@ app.get('/delete_event/:event_id', isAdmin, async (req, res) => {
       // Redirect to the event manager page in case of an error (you can add an error message if needed)
       res.redirect('/event_manager');
     }
+  });
+
+app.get('/delete_volunteer/:vol_id', async (req, res) => {
+  const vol_id = req.params.vol_id;
+
+  try {
+    // Use Knex to delete the event from the database
+    await knex('volunteers').where('vol_id', vol_id).del();
+    
+    // Redirect to the event manager page after successful deletion
+    res.redirect('/volunteer_manager');
+  } catch (err) {
+    console.error("Error deleting volunteer:", err);
+    
+    // Redirect to the event manager page in case of an error (you can add an error message if needed)
+    res.redirect('/volunteer_manager');
+  }
 });
+  
+  
+
 
 // Login Route
 app.post("/login", async (req, res) => {

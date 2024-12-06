@@ -150,7 +150,11 @@
  
  
         <label for="number_of_participants_expected" style="font-weight: 150;">Number of participants:</label>
-            <input type="number" id="number_of_participants_expected" name="number_of_participants_expected" value="<%= events.number_of_participants_expected %>" required>
+        <input type="number" id="number_of_participants_expected" name="number_of_participants_expected" value="<%= events.number_of_participants_expected %>" required>
+        
+        <label for="volunteers_needed" style="font-weight: 150;">Volunteers Needed:</label>
+            <input type="number" id="volunteers_needed" name="volunteers_needed" value="<%= Math.round(events.number_of_participants_expected / 10) %>" required>
+
         <label for="event_type" style="font-weight: 150;">Event type:</label>
             <select id="event_type" name="event_type" required>
                 <option style="color: gray;" value="">Select an option</option>
@@ -158,6 +162,7 @@
                 <option value="non-sewing" <% if (events.event_type === 'non-sewing') { %>selected<% } %>>Non-sewing</option>
                 <option value="both" <% if (events.event_type === 'both') { %>selected<% } %>>Both</option>
             </select>
+            
         <label for="event_date_time" style="font-weight: 150;">Event date and time:</label>
             <input
                 type="datetime-local"
@@ -190,8 +195,8 @@
             <input type="text" id="event_zip" name="event_zip" value="<%= events.event_zip %>" required>
  
  
-        <label for="event_duration_hrs"style="font-weight: 150;">Event duration:</label>
-        <input type="number" id="event_duration_hrs" name="event_duration_hrs" value="<%= events.event_duration_hrs %>"required>         
+            <label for="event_duration_hrs"style="font-weight: 150;">Event duration:</label>
+            <input type="number" id="event_duration_hrs" name="event_duration_hrs" value="<%= events.event_duration_hrs %>"required>         
            
             <label for="event_contact_first_name" style="font-weight: 150;">First Name:</label>
             <input type="text" style="background-color: #FBFAF7"id="event_contact_first_name" name="event_contact_first_name" value="<%= events.event_contact_first_name %>"required>
@@ -208,10 +213,6 @@
             <label for="event_contact_email" style="font-weight: 150;">Email:</label>
             <input type="email" id="event_contact_email" name="event_contact_email" value="<%= events.event_contact_email %>"required>
  
- 
-            
-            
-            
            
             <label for="event_jen_story" style="font-weight: 150; margin-right: 10px;">Would you like Jen to tell her story?</label>
             <input type="text" id="event_jen_story" name="event_jen_story" value="<%= events.event_jen_story %>" required>
