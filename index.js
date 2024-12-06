@@ -34,6 +34,7 @@ app.use(
         cookie: {
             secure: process.env.NODE_ENV === "production",
             httpOnly: true,
+            maxAge: 24 * 60 * 60 * 1000, // 24 hours
         },
     })
 );
@@ -122,6 +123,44 @@ app.get("/login", (req, res) => {
     } else {
         res.redirect("/dashboard");
     }
+});
+
+// Login Route
+app.post("/login", async (req, res) => {
+    const { username, password } = req.body;
+
+    try {
+        const user = await knex("users")
+            .where({ username, user_password: password })
+            .first();
+
+        if (!user) {
+            console.log("Invalid username or password");
+            return res.status(401).send("Invalid username or password");
+        }
+
+        // Set session variables
+        req.session.userId = user.user_id;
+        req.session.role = user.user_type;
+
+        // Redirect based on role
+        res.redirect("/dashboard");
+    } catch (err) {
+        console.error("Error during login:", err);
+        res.status(500).send("Server error");
+    }
+});
+
+// Logout Route
+app.get("/logout", (req, res) => {
+    req.session.destroy((err) => {
+        if (err) {
+            console.error("Error during logout:", err);
+            return res.status(500).send("Server error");
+        }
+        res.clearCookie("connect.sid");
+        res.redirect("/");
+    });
 });
 
 // Signup Page
@@ -384,35 +423,6 @@ app.get('/delete_volunteer/:vol_id', async (req, res) => {
     res.redirect('/volunteer_manager');
   }
 });
-  
-  
-
-
-// Login Route
-app.post("/login", async (req, res) => {
-    const { username, password } = req.body;
-
-    try {
-        const user = await knex("users")
-            .where({ username, user_password: password })
-            .first();
-
-        if (!user) {
-            console.log("Invalid username or password");
-            return res.status(401).send("Invalid username or password");
-        }
-
-        // Set session variables
-        req.session.userId = user.user_id;
-        req.session.role = user.user_type;
-
-        // Redirect based on role
-        res.redirect("/dashboard");
-    } catch (err) {
-        console.error("Error during login:", err);
-        res.status(500).send("Server error");
-    }
-});
 
 app.get('/dashboard', authMiddleware, isLoggedIn, async (req, res) => {
     try {
@@ -433,37 +443,6 @@ app.get('/dashboard', authMiddleware, isLoggedIn, async (req, res) => {
         res.status(500).send('Server error');
     }
 });
-
-// Logout Route
-app.get("/logout", (req, res) => {
-    req.session.destroy((err) => {
-        if (err) {
-            console.error("Error during logout:", err);
-            return res.status(500).send("Server error");
-        }
-        res.clearCookie("connect.sid");
-        res.redirect("/");
-    });
-});
-
-// Register New User (For testing purposes only)
-// app.post("/register", async (req, res) => {
-//     const { username, password, user_type } = req.body;
-
-//     const hashedPassword = await bcrypt.hash(password, 10);
-
-//     try {
-//         await knex("users").insert({
-//             username,
-//             user_password: hashedPassword,
-//             user_type,
-//         });
-//         res.send("User registered successfully!");
-//     } catch (error) {
-//         console.error("Error registering user:", error);
-//         res.status(500).send("Server error");
-//     }
-// });
 
 const stateAbbreviations = ["AL", "AK", "AZ", "AR", "CA", "CO", "CT", "DE", "FL", "GA", "HI", "ID", "IL", "IN", "IA", "KS", "KY", "LA", "ME", "MD", "MA", "MI", "MN", "MS", "MO", "MT", "NE", "NV", "NH", "NJ", "NM", "NY", "NC", "ND", "OH", "OK", "OR", "PA", "RI", "SC", "SD", "TN", "TX", "UT", "VT", "VA", "WA", "WV", "WI", "WY"];
 
