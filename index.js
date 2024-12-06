@@ -25,8 +25,6 @@ const knex = require("knex")({
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'));
 
-
-
 // Session configuration
 app.use(
     session({
@@ -55,6 +53,7 @@ function authMiddleware(req, res, next) {
     next();
 }
 
+// Check if ANY user is logged in
 function isLoggedIn(req, res, next) {
     if (req.session.userId) {
         next();
@@ -63,6 +62,7 @@ function isLoggedIn(req, res, next) {
     }
 }
 
+// Check if an admin is logged in
 function isAdmin(req, res, next) {
     if (req.session.role === "admin") {
         next();
@@ -71,6 +71,7 @@ function isAdmin(req, res, next) {
     }
 }
 
+// Check if a volunteer is logged in
 function isVolunteer(req, res, next) {
     if (req.session.role === "volunteer") {
         next();
@@ -79,49 +80,114 @@ function isVolunteer(req, res, next) {
     }
 }
 
-// -----> Routes
-
-
-// app.get("/", (req, res) => {
-//     res.render("index");
-// });
-
 app.get("/", async (req, res) => {
     try {
-      let adminName;
-  
-      // Check if the user is logged in and has an admin role
-      if (req.session.userId && req.session.role === 'admin') {
-        const adminDetails = await knex('admins')
-          .join('users', 'admins.user_id', 'users.user_id')
-          .select('admins.admin_first_name')
-          .where('users.user_id', req.session.userId)
-          .first();
-  
-        if (adminDetails) {
-          adminName = adminDetails.admin_first_name;
-        }
+        let user = false;
+
+      // Check if a user is logged
+      if (req.session.userId) {
+        user = true;
       }
   
-      // Render index.ejs and pass adminName (null if not logged in)
-      res.render("index", { adminName });
+      // Render index.ejs and pass if user is logged in
+      res.render("index", { user });
     } catch (error) {
-      console.error("Error fetching admin details:", error);
+      console.error("Error fetching user details:", error);
       res.status(500).send("Server error");
     }
-  });
+});
 
 // Meet Jen Page
 app.get("/meet_jen", (req, res) => {
-    res.render("meet_jen");
+    try {
+        let user = false;
+
+      // Check if a user is logged
+      if (req.session.userId) {
+        user = true;
+      }
+  
+      // Render index.ejs and pass if user is logged in
+      res.render("meet_jen", { user });
+    } catch (error) {
+      console.error("Error fetching user details:", error);
+      res.status(500).send("Server error");
+    }
 });
 
 // Login Page
 app.get("/login", (req, res) => {
-    res.render("login"); // Render 'login.ejs'
+    if (!req.session.userId) {
+        res.render("login");
+    } else {
+        res.redirect("/dashboard");
+    }
 });
 
-// Admin Event Manager Page
+// Signup Page
+app.get("/signup", (req, res) => {
+    res.render("signup");
+});
+
+app.post("/signup", async (req, res) => {
+    const {
+        first_name,
+        last_name,
+        email,
+        phone,
+        username,
+        password,
+        con_password,
+        admin_key,
+    } = req.body;
+
+    if (password !== con_password) {
+        return res.status(400).send("Passwords do not match.");
+    }
+
+    const isAdmin = admin_key === process.env.ADMIN_CREATE_KEY;
+    const user_type = isAdmin ? "admin" : "volunteer";
+
+    if (admin_key && !isAdmin) {
+        return res.status(400).send("Invalid admin key.");
+    }
+
+    try {
+        // Insert into the `users` table and get the auto-generated `user_id`
+        const [user_id] = await knex("users")
+            .insert({
+                username,
+                user_password: password, // Store password as plain text (not recommended for production)
+                user_type,
+            })
+            .returning("user_id");
+
+        // Insert into `admins` or `volunteers` table using the same `user_id` as `admin_id` or `vol_id`
+        if (isAdmin) {
+            await knex("admins").insert({
+                admin_id: user_id, // Use the auto-generated `user_id`
+                first_name,
+                last_name,
+                email,
+                phone,
+            });
+        } else {
+            await knex("volunteers").insert({
+                vol_id: user_id, // Use the auto-generated `user_id`
+                first_name,
+                last_name,
+                email,
+                phone,
+            });
+        }
+
+        res.redirect("/login");
+    } catch (error) {
+        console.error("Error registering user:", error);
+        res.status(500).send("Server error.");
+    }
+});
+
 // Admin Event Manager Page
 app.get("/event_manager", authMiddleware, isAdmin, (req, res) => {
   // Fetch events based on the event_status
@@ -170,8 +236,8 @@ app.get("/volunteer_manager", authMiddleware, isAdmin, (req, res) => {
     });
 });
 
-//edit_events GET route
-app.get('/edit_volunteer/:vol_id', async (req, res) => {
+//edit volunteer GET route
+app.get('/edit_volunteer/:vol_id', isAdmin, async (req, res) => {
   const vol_id = req.params.vol_id;
   try {
     const volunteers = await knex('volunteers').where({ "vol_id": vol_id }).first();
@@ -185,7 +251,7 @@ app.get('/edit_volunteer/:vol_id', async (req, res) => {
   }
 });
 
-//edit_events POST route
+//edit volunteer POST route
 app.post('/edit_volunteer/:vol_id', async (req, res) => {
   const vol_id= req.params.vol_id;
   const volData = req.body;
@@ -220,7 +286,7 @@ app.post('/edit_volunteer/:vol_id', async (req, res) => {
 
 
 //edit_events GET route
-app.get('/edit_events/:eventId', async (req, res) => {
+app.get('/edit_events/:eventId', isAdmin, async (req, res) => {
   const eventId = req.params.eventId;
   try {
     const events= await knex('events').where({ "event_id": eventId }).first();
@@ -277,15 +343,8 @@ app.post('/edit_events/:event_id', async (req, res) => {
   }
 });
 
-
-
 // // Delete Event
-// app.get('/delete_event/:event_id', async (req, res) => {
-//   const eventId = req.params.event_id;
-//   await db.query('DELETE FROM events WHERE event_id = $1', [eventId]);
-//   res.redirect('/event_manager');
-// });
-app.get('/delete_event/:event_id', async (req, res) => {
+app.get('/delete_event/:event_id', isAdmin, async (req, res) => {
     const eventId = req.params.event_id;
   
     try {
@@ -300,10 +359,7 @@ app.get('/delete_event/:event_id', async (req, res) => {
       // Redirect to the event manager page in case of an error (you can add an error message if needed)
       res.redirect('/event_manager');
     }
-  });
-  
-  
-
+});
 
 // Login Route
 app.post("/login", async (req, res) => {
@@ -331,11 +387,6 @@ app.post("/login", async (req, res) => {
     }
 });
 
-// Admin-only route
-// app.get("/admin", authMiddleware, isAdmin, (req, res) => {
-//     res.render("admin");
-// });
-
 app.get('/dashboard', authMiddleware, isLoggedIn, async (req, res) => {
     try {
         knex('users')
@@ -354,7 +405,7 @@ app.get('/dashboard', authMiddleware, isLoggedIn, async (req, res) => {
         console.error('Error fetching admin details:', error);
         res.status(500).send('Server error');
     }
-  });
+});
 
 // Logout Route
 app.get("/logout", (req, res) => {
@@ -369,23 +420,23 @@ app.get("/logout", (req, res) => {
 });
 
 // Register New User (For testing purposes only)
-app.post("/register", async (req, res) => {
-    const { username, password, user_type } = req.body;
+// app.post("/register", async (req, res) => {
+//     const { username, password, user_type } = req.body;
 
-    const hashedPassword = await bcrypt.hash(password, 10);
+//     const hashedPassword = await bcrypt.hash(password, 10);
 
-    try {
-        await knex("users").insert({
-            username,
-            user_password: hashedPassword,
-            user_type,
-        });
-        res.send("User registered successfully!");
-    } catch (error) {
-        console.error("Error registering user:", error);
-        res.status(500).send("Server error");
-    }
-});
+//     try {
+//         await knex("users").insert({
+//             username,
+//             user_password: hashedPassword,
+//             user_type,
+//         });
+//         res.send("User registered successfully!");
+//     } catch (error) {
+//         console.error("Error registering user:", error);
+//         res.status(500).send("Server error");
+//     }
+// });
 
 const stateAbbreviations = ["AL", "AK", "AZ", "AR", "CA", "CO", "CT", "DE", "FL", "GA", "HI", "ID", "IL", "IN", "IA", "KS", "KY", "LA", "ME", "MD", "MA", "MI", "MN", "MS", "MO", "MT", "NE", "NV", "NH", "NJ", "NM", "NY", "NC", "ND", "OH", "OK", "OR", "PA", "RI", "SC", "SD", "TN", "TX", "UT", "VT", "VA", "WA", "WV", "WI", "WY"];
 
@@ -402,7 +453,7 @@ app.get('/request_event', (req, res) => {
 });
 
 // POST route to request an event
-app.post("/request_event", authMiddleware, (req, res) => {
+app.post("/request_event", (req, res) => {
     const {
         event_name,
         number_of_participants_expected,
@@ -451,7 +502,7 @@ app.post("/request_event", authMiddleware, (req, res) => {
         });
 });
 
-//GET route for event page
+//GET route for volunteer page
 app.get('/request_volunteer', (req, res) => {
   knex('volunteers').select('*')
     .then(result => {
@@ -507,10 +558,9 @@ app.post("/request_volunteer", (req, res) => {
 });
 
 // edit profile page
-app.get("/edit_profile", (req, res) => {
+app.get("/edit_profile", isLoggedIn, (req, res) => {
   const userId = req.session.userId; // Assuming you store the user ID in the session
   
-
   knex("users")
       .where({ user_id: userId })
       .first()
@@ -555,7 +605,7 @@ app.post("/update_profile", (req, res) => {
 });
 
 //event_production_report
-app.get('/event_production_report/:event_id', async (req, res) => {
+app.get('/event_production_report/:event_id', isAdmin, async (req, res) => {
     const { event_id } = req.params; // Get the event_id from the route parameters
 
     try {
@@ -591,7 +641,7 @@ app.get('/event_production_report/:event_id', async (req, res) => {
 
 //update event production
 // GET route to render the form
-app.get('/update_event_production/:event_id', async (req, res) => {
+app.get('/update_event_production/:event_id', isAdmin, async (req, res) => {
     const eventId = req.params.event_id;
 
     try {
@@ -694,7 +744,7 @@ app.post('/update_event_production/:event_id', (req, res) => {
 
 //inventory view
 // Serve the inventory view page
-app.get('/inventory_view', (req, res) => {
+app.get('/inventory_view', isAdmin, (req, res) => {
     // Fetch all inventory items from the database
     knex('inventory')
         .select('*')
@@ -727,6 +777,7 @@ app.post('/update_inventory/:inventory_id', (req, res) => {
         });
 });
 
+// Route for signed in volunteers to view and sign up for events
 app.get("/volunteer_now", authMiddleware, isVolunteer, async (req, res) => {
     try {
       // Fetch volunteer data
@@ -750,7 +801,63 @@ app.get("/volunteer_now", authMiddleware, isVolunteer, async (req, res) => {
       console.error('Error:', error);
       res.status(500).send('Something went wrong');
     }
-  });  
+});
+
+const nodemailer = require('nodemailer');
+app.post('/volunteer_now', authMiddleware, isVolunteer, async (req, res) => {
+    const { volunteerName, eventName, eventDate } = req.body;
+
+    // Log received data
+    console.log("Received data:", { volunteerName, eventName, eventDate });
+
+    // Verify required fields
+    if (!volunteerName || !eventName || !eventDate) {
+        console.error("Missing required information.");
+        return res.status(400).send('Missing required information.');
+    }
+
+    try {
+        // Configure nodemailer transporter
+        console.log("Configuring transporter...");
+        const transporter = nodemailer.createTransport({
+            service: 'Gmail',
+            auth: {
+                user: process.env.EMAIL_USER,
+                pass: process.env.EMAIL_PASS
+            }
+        });
+        console.log("Transporter configured.");
+
+        // Format the event date
+        const formattedDate = new Date(eventDate).toLocaleString('en-US', {
+            month: 'long',
+            day: '2-digit',
+            year: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit'
+        });
+        console.log("Formatted event date:", formattedDate);
+
+        // Define email options
+        const mailOptions = {
+            from: `"Turtle Shelter Project" <${process.env.EMAIL_USER}>`,
+            to: process.env.NOTIFICATION_EMAIL, // Replace with the recipient email address
+            subject: `Volunteer Sign-Up: ${eventName}`,
+            text: `Hi,\n\n${volunteerName} has signed up for the following event:\n\nEvent Name: ${eventName}\nEvent Date: ${formattedDate}\n\nBest regards,\nTurtle Shelter Team`,
+            html: `<p>Hi,</p><p><strong>${volunteerName}</strong> has signed up for the following event:</p><ul><li><strong>Event Name:</strong> ${eventName}</li><li><strong>Event Date:</strong> ${formattedDate}</li></ul><p>Best regards,<br>Turtle Shelter Team</p>`
+        };
+
+        console.log("Mail options:", mailOptions);
+
+        // Send the email
+        const result = await transporter.sendMail(mailOptions);
+        console.log("Email sent successfully:", result);
+        res.status(200).send('Sign-up successful and email sent.');
+    } catch (error) {
+        console.error("Error sending email:", error);
+        res.status(500).send('Something went wrong.');
+    }
+});
 
 // Start the server
 app.listen(port, () => {
