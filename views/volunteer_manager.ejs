@@ -97,9 +97,15 @@
                                 <td><%= volunteers.volunteer_city %>, <%= volunteers.volunteer_state %></td>
                                 <td><%= volunteers.volunteer_preference %></td>
                                 <td><%= volunteers.volunteer_sewing_level %></td>
-                                <td><%= new Date(volunteers.volunteer_enroll_date).toLocaleString('en-US', { month: '2-digit', day: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' }) %></td>
+                                <td><%= new Date(volunteers.volunteer_enroll_date).toLocaleDateString('en-US') %></td>
                                 <td><%= volunteers.volunteer_hrs_monthly_availability %></td>
                                 <td><%= volunteers.volunteer_how_heard %></td>
+                                <td>
+                                <div class="contain-btns">
+                                    <a href="/edit_volunteer/<%= volunteers.vol_id %>" class="btn btn-success">Edit</a>
+                                    <a href="/delete_volunteer/<%= volunteers.vol_id %>" class="btn btn-delete" onclick="return confirm('Are you sure you want to delete this volunteer? Their data will not be saved.');">Delete</a>    
+                                </div>
+                                </td> 
                             </tr>
                         <% }) %>
                     </tbody>
@@ -132,15 +138,15 @@
                             <td><%= volunteers.volunteer_city %>, <%= volunteers.volunteer_state %></td>
                             <td><%= volunteers.volunteer_preference %></td>
                             <td><%= volunteers.volunteer_sewing_level %></td>
-                            <td><%= new Date(volunteers.volunteer_enroll_date).toLocaleString('en-US', { month: '2-digit', day: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' }) %></td>
+                            <td><%= new Date(volunteers.volunteer_enroll_date).toLocaleDateString('en-US') %></td>
                             <td><%= volunteers.volunteer_hrs_monthly_availability %></td>
                             <td><%= volunteers.volunteer_how_heard %></td>
                             <td>
                             <div class="contain-btns">
                                 <a href="/edit_volunteer/<%= volunteers.vol_id %>" class="btn btn-success">Edit</a>
-
+                                <a href="/delete_volunteer/<%= volunteers.vol_id %>" class="btn btn-delete" onclick="return confirm('Are you sure you want to delete this volunteer? Their data will not be saved.');">Delete</a>    
                             </div>
-                        </td>    
+                            </td>    
                         </tr>
                         <% }) %>
                     </tbody>
