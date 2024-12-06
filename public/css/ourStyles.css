@@ -1,7 +1,9 @@
-
+html {
+  scroll-behavior: smooth;
+}
 /* Full-width section with grey background */
 .admin-container {
-    background-color: #393939; /* Dark grey */
+    background-color: #2D3A4F; /* Dark grey */
     width: 100%;
     padding: 40px 0;
 }
@@ -9,7 +11,7 @@
 h2.welcome-msg {
     text-align: center;
     margin-top: 100px;
-    font-size: 2.5rem;
+    font-size: 3rem;
     font-weight: 100;
     color: white; 
     font-family: "Open Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
@@ -297,7 +299,7 @@ th {
 
 /* Table data styling */
 td {
-
+  text-transform: capitalize;
   padding: 12px;
   text-align: left;
   font-size: 0.85rem;
@@ -553,12 +555,18 @@ form select, form label {
 
 .btn-edit, .btn-delete {
   background-color: #d31f1f;  /* New color for both buttons */
-  color: white;
+  color: #FBFAF7;
+  border-radius: 5px; /* Slightly rounded corners */
+  font-weight: normal; /* Remove bold font */
+  padding: 8px 20px; /* Adjust padding to make the button thinner */
 }
 
 .btn-report {
   background-color: #1ad31a;  /* New color for both buttons */
-  color: white;
+  color: #FBFAF7;
+  border-radius: 5px; /* Slightly rounded corners */
+  font-weight: normal; /* Remove bold font */
+  padding: 8px 20px; /* Adjust padding to make the button thinner */
 }
 
 .btn-edit:hover, .btn-delete:hover {
@@ -568,3 +576,63 @@ form select, form label {
 .btn:active {
   transform: scale(0.95);  /* Makes the button shrink a bit when clicked */
 } 
+
+
+    /* The Modal (background) */
+    .modal {
+        display: none; /* Hidden by default */
+        position: fixed;
+        z-index: 1;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.4); /* Black with opacity */
+    }
+
+    /* Modal Content */
+    .modal-content {
+        background-color: #FBFAF7;
+        margin: 15% auto;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 80%;
+        max-width: 600px;
+        border-radius: 5px;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    /* The Close Button */
+    .close {
+        color: #aaa;
+        font-size: 28px;
+        font-weight: bold;
+        position: absolute;
+        top: 5px;
+        right: 15px;
+        cursor: pointer;
+    }
+
+    .close:hover,
+    .close:focus {
+        color: black;
+        text-decoration: none;
+        cursor: pointer;
+    }
+
+    /* Button */
+    .btn-success {
+        background-color: #457DD7;
+        color: #FBFAF7;
+        padding: 10px 20px;
+        text-transform: uppercase;
+        text-align: center;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 14px;
+    }
+
+    .btn-success:hover {
+        background-color: #356FB3;
+    }

@@ -1,135 +1,139 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/x-icon" href="assets/favicon.png" />
-    <title>Edit Profile</title>
-    <link rel="stylesheet" href="/css/styles.css">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>Profile Page</title>
+        <link rel="icon" type="image/x-icon" href="assets/favicon.png" />
+        <!-- Font Awesome icons (free version)-->
+        <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+        <!-- Google fonts-->
+        <link href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet" type="text/css" />
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css" />
+        <link href="https://fonts.googleapis.com/css2?family=Newsreader:wght@400&display=swap" rel="stylesheet" type="text/css">
+        <!-- Core theme CSS (includes Bootstrap)-->
+        <link href="css/styles.css" rel="stylesheet" />
+        <link href="css/ourStyles.css" rel="stylesheet"/>
     <style>
         /* Shared styling from login page */
         body {
-            background-color: #2b2b2b;
+            background-color: #2D3A4F;
             margin: 0;
-            font-family: "Open Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-        }
-
-        .container {
-            margin: 150px auto;
-            max-width: 600px;
-            background-color: white;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-            padding: 30px;
-        }
-
-        h2, h3 {
-            color: #0066ff;
-            text-align: center;
-            margin-bottom: 20px;
-        }
-
-        .form-section {
-            margin-bottom: 30px;
-            padding: 20px;
-            border: 1px solid #ccc;
-            border-radius: 8px;
-        }
-
-        .form-section h3 {
-            font-size: 1.5rem;
-            margin-bottom: 15px;
-        }
-
-        .form-group {
-            margin-bottom: 15px;
-            text-align: left;
-        }
-
-        .form-group label {
-            display: block;
-            font-size: 1rem;
-            margin-bottom: 5px;
-            color: #333;
-        }
-
-        .form-group input {
-            width: 100%;
-            padding: 10px;
-            font-size: 1rem;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
-
-        button {
-            display: block;
-            width: 50%;
-            background-color: #0066ff;
-            color: white;
-            padding: 10px;
-            font-size: 1rem;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-
-        button:hover {
-            background-color: #004db3;
-        }
-
-        .alert {
-            margin-bottom: 20px;
-            padding: 10px;
-            border-radius: 4px;
-            font-size: 0.9rem;
-            text-align: center;
-        }
-
-        .alert-success {
-            background-color: #d4edda;
-            color: #155724;
-            border: 1px solid #c3e6cb;
-        }
-
-        .alert-danger {
-            background-color: #f8d7da;
-            color: #721c24;
-            border: 1px solid #f5c6cb;
+            padding: 0;
         }
     </style>
-</head>
-    
-<body>
-    <div class="container">
-        <h2>Edit Your Profile</h2>
-        
-        <!-- Section to Edit Username -->
-        <div>
-            <h3>Edit Username</h3>
-            <form action="/update_profile" method="POST">
-                <div>
-                    <label for="username">New Username:</label>
-                    <input type="text" name="username" id="username" placeholder="Enter new username">
-                </div>
-                <input type="hidden" name="updateType" value="username">
-                <button type="submit">Update Username</button>
-            </form>
-        </div>
+    </head>
+    <body>
 
-        <!-- Section to Edit Password -->
-        <div>
-            <h3>Edit Password</h3>
-            <form action="/update_profile" method="POST">
-                <div>
-                    <label for="password">New Password:</label>
-                    <input type="password" name="password" id="password" placeholder="Enter new password">
+    <nav class="navbar navbar-expand-lg navbar-light" id="mainNav" style="position: fixed; width: 100%; z-index: 100; background-color: #1F2B3D; border-bottom: .5px solid #FBFAF7">
+    <div class="container px-4 px-lg-5">
+        <a class="navbar-brand" href="/" style="font-weight: 100;">
+            <img src="assets/favicon.png" alt="Logo" style="height: 40px; margin-right: 10px;">
+            TURTLE SHELTER PROJECT
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            Menu
+            <i class="fas fa-bars"></i>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ms-auto py-4 py-lg-0">
+                    <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="/event_manager">Manage Events</a></li>
+                    <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="/volunteer_manager">Manage Volunteers</a></li>
+                    <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" style="color: #FBFAF7;" href="/inventory_view">Inventory</a></li>
+                    <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" style="color: #FBFAF7;" href="/edit_profile">Profile</a></li>
+                    <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" style="color: #FBFAF7;" href="/logout">Logout</a></li>
+                    <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="/dashboard">My Dashboard</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <header style="padding-top:150px">
+    </header>
+
+    <div class="form-container" style="background-color: #F9F3E5">
+    <div style="text-align: center; margin-bottom: 30px;">
+    <span class="subheading" style="font-weight: 100; font-size: 50px;">Edit Your Profile</span></div>
+
+    <!-- Section to Edit Username -->
+    <h3 style="font-family: sans-serif; font-weight: bold; font-size: 16px; color: #393939; text-align: left; text-transform:uppercase">Edit Username</h3>
+    <form action="/update_profile" method="POST" style="margin-bottom: 20px;">
+        <label for="username" style="font-family: sans-serif; font-weight: 100; font-size: 15.5px; text-align: left; color: #393939;">New Username:</label>
+        <input type="text" name="username" id="username" placeholder="Enter new username" required style="display: block; width: 100%; padding: 10px; margin: 10px 0; font-size: 14px; border: 1px solid #ccc; border-radius: 4px; background-color: #FBFAF7">
+        <input type="hidden" name="updateType" value="username">
+        <button type="submit" style="background-color: #457DD7; width: 100%" onclick="openPopup(); return false;">Update Username</button>
+            <div id="customAlert" class="modal">
+                <div class="modal-content">
+                    <span class="close" onclick="closePopup()">&times;</span>
+                    <h2 style="font-size: 18px; color: #393939">Username changed successfully</h2>
+                    <p style="font-size: 12px">Please contact turtleshelterproject@gmail.com if any log in issues persist.</p>
+                    <button class="btn btn-success" onclick="closePopup()">Close</button>
                 </div>
-                <input type="hidden" name="updateType" value="password">
-                <button type="submit">Update Password</button>
-            </form>
+            </div>
+    </form>
+    <br>
+    <!-- Section to Edit Password -->
+    <h3 style="font-family: sans-serif; font-weight: bold; font-size: 16px; color: #393939; text-align: left; text-transform:uppercase">Edit Password</h3>
+    <form action="/update_profile" method="POST">
+        <label for="password" style="font-family: sans-serif; font-weight: 100; font-size: 15.5px; text-align: left; color: #393939;">New Password:</label>
+        <input type="password" name="password" id="password" placeholder="Enter new password" required style="display: block; width: 100%; padding: 10px; margin: 10px 0; font-size: 14px; border: 1px solid #ccc; border-radius: 4px; background-color: #FBFAF7">
+        <input type="hidden" name="updateType" value="password">
+        <button type="submit" style="background-color: #457DD7; width: 100%" onclick="openPopup2(); return false;">Update Password</button>
+                <!-- The Modal -->
+        <div id="customAlert2" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="closePopup2()">&times;</span>
+                <h2 style="font-size: 18px; color: #393939">Password changed successfully</h2>
+                <p style="font-size: 12px">Please contact turtleshelterproject@gmail.com if any log in issues persist.</p>
+                <button class="btn btn-success" onclick="closePopup2()">Close</button>
+            </div>
+        </div>
+        </form>
+</div>
+
+<footer class="site-footer" style="height: 150px; position: relative; bottom: 0; left: 0; width: 100%; background-color: #1F2B3D; padding: 0; border-top: .5px solid #FBFAF7">
+<div class="container" style="height: 100%; display: flex; flex-direction: column; justify-content: center;">
+    <div class="row">
+        <div class="col-sm-12">
+            <h5 class="text-uppercase" style="font-weight: 100; font-size: 16px; text-align: center; color: #FBFAF7; padding-top: 40px;">Thank you for visiting the turtle shelter project</h5>
+            <p class="small mb-0" style="font-family: sans-serif; font-size: 10px; font-weight: 100; text-align: center; color: #FBFAF7;">
+                &copy; 2024 Turtle Shelter Project. All Rights Reserved. We are a registered 501(c)(3) nonprofit organization.
+            </p>
         </div>
     </div>
+    <div class="row">
+        <div class="col-sm-12 text-center">
+            <ul class="social-icons">
+                <li><a class="facebook" href="https://www.facebook.com/turtleshelterproject/"><i class="fab fa-facebook" style="color: #FBFAF7;"></i></a></li>
+                <li><a class="linkedin" href="https://www.linkedin.com/in/turtle-shelter-project-6aa0aa1a4/"><i class="fab fa-linkedin" style="color: #FBFAF7;"></i></a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+</footer>
+
+<script>
+// Function to open the modal
+function openPopup() {
+    document.getElementById("customAlert").style.display = "block";
+}
+
+// Function to close the modal
+function closePopup() {
+    document.getElementById("customAlert").style.display = "none";
+}
+
+function openPopup2() {
+    document.getElementById("customAlert2").style.display = "block";
+}
+
+// Function to close the modal
+function closePopup2() {
+    document.getElementById("customAlert2").style.display = "none";
+}
+</script>
+
 </body>
 </html>
 
