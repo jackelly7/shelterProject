@@ -157,54 +157,79 @@
 
                 <label for="con_password" style="font-weight: 150;">Confirm Password:</label>
                 <input type="tel" id="con_password" name="con_password" placeholder="confirm password..." required>
+                
+                <label for="show">Show Password</label>
+                <input type="checkbox" id="togglePassword" name="show">
+                
 
                 <p>**Leave blank if creating volunteer account**</p>
-                <label for="admin_key" style="font-weight: 150;">Admin Create Key:</label>
-                <input type="text" id="admin_key" name="admin_key" required>
+                <label for="admin_key" stye="font-weight: 150;">Admin Create Key:</label>
+                <input type="text" id="admin_key" name="admin_key">
 
-                <button type="submit" style="background-color: #457DD7;" onclick="openPopup(); return false;">Create Account</button>
+                <button type="submit" style="background-color: #457DD7;">Create Account</button>
                     <!-- The Modal -->
                 <div id="customAlert" class="modal">
                     <div class="modal-content">
                         <span class="close" onclick="closePopup()">&times;</span>
                         <h2 style="font-size: 18px">Thank you for creating an account with us!</h2>
                         <p style="font-size: 12px">Being a volunteer changes lives. We will be contacting you shortly to provide more details. Please check your inbox for an email from jen@turtleshelterproject.com. If you do not hear from her in 24 hours, please check your spam folder. Thank you in advance for your contributions!</p>
-                        <button class="btn btn-success" onclick="closePopup()">Close</button>
+                        <button type="button" class="btn btn-success" onclick="closePopup()">Close</button>
                     </div>
                 </div>
         
                 <!-- JavaScript -->
-                <script>
-                    document.querySelector("form").addEventListener("submit", (e) => {
-                        const password = document.getElementById("password").value;
-                        const confirmPassword = document.getElementById("con_password").value;
-                        const adminKey = document.getElementById("admin_key").value;
-                
-                        // Ensure passwords match
-                        if (password !== confirmPassword) {
-                            e.preventDefault();
-                            alert("Passwords do not match.");
-                            return;
-                        }
-                
-                        // Check Admin Key if provided
-                        if (adminKey && adminKey !== "iloveturtles") {
-                            e.preventDefault();
-                            alert("Admin key is incorrect.");
+                 <script>
+                    document.getElementById("togglePassword").addEventListener("change", (e) => {
+                        const passwordField = document.getElementById("password");
+                        const confirmPasswordField = document.getElementById("con_password");
+                        
+                        if (e.target.checked) {
+                            // Show passwords
+                            passwordField.type = "text";
+                            confirmPasswordField.type = "text";
+                        } else {
+                            // Hide passwords
+                            passwordField.type = "password";
+                            confirmPasswordField.type = "password";
                         }
                     });
-                </script>
-                
+                 </script>
                 <script>
                     // Function to open the modal
                     function openPopup() {
                         document.getElementById("customAlert").style.display = "block";
                     }
-        
+
                     // Function to close the modal
                     function closePopup() {
                         document.getElementById("customAlert").style.display = "none";
+                        // redirect to dash page
+                        window.location.href = "/dashboard";
                     }
+                </script>
+                <script>
+                    document.querySelector("form").addEventListener("submit", (e) => {
+                    const password = document.getElementById("password").value;
+                    const confirmPassword = document.getElementById("con_password").value;
+                    const adminKey = document.getElementById("admin_key").value;
+
+                    // Ensure passwords match
+                    if (password !== confirmPassword) {
+                        e.preventDefault();
+                        alert("Passwords do not match.");
+                        return;
+                    }
+
+                    // Check Admin Key if provided
+                    if (adminKey && adminKey !== "iloveturtles") {
+                        e.preventDefault();
+                        alert("Admin key is incorrect.");
+                        return;
+                    }
+
+                    // Show popup without blocking form submission
+                    openPopup();
+                });
                 </script>
             </form>
         </div>

@@ -153,35 +153,42 @@ app.post("/signup", async (req, res) => {
     }
 
     try {
-        // Insert into the `users` table and get the auto-generated `user_id`
-        const [user_id] = await knex("users")
+        // Check if the username already exists
+        const existingUser = await knex("users").where({ username }).first();
+        if (existingUser) {
+            return res.status(400).send("Username already exists. Please choose another.");
+        }
+
+        // Insert into `users` table and get the generated `user_id`
+        const [insertedUser] = await knex("users")
             .insert({
                 username,
-                user_password: password, // Store password as plain text (not recommended for production)
+                user_password: password, // Store password directly (not secure for production)
                 user_type,
             })
             .returning("user_id");
 
-        // Insert into `admins` or `volunteers` table using the same `user_id` as `admin_id` or `vol_id`
+        const user_id = insertedUser.user_id || insertedUser; // Handle cases where returning gives object or plain integer
+
+        // Insert into the appropriate role-specific table
         if (isAdmin) {
             await knex("admins").insert({
-                admin_id: user_id, // Use the auto-generated `user_id`
-                first_name,
-                last_name,
-                email,
-                phone,
+                user_id, // Reference the user_id
+                admin_first_name: first_name,
+                admin_last_name: last_name,
+                admin_email: email,
+                admin_phone: phone,
             });
         } else {
             await knex("volunteers").insert({
-                vol_id: user_id, // Use the auto-generated `user_id`
-                first_name,
-                last_name,
-                email,
-                phone,
+                user_id, // Reference the user_id
+                volunteer_first_name: first_name,
+                volunteer_last_name: last_name,
+                volunteer_email: email,
+                volunteer_phone: phone,
             });
         }
 
-        res.redirect("/login");
     } catch (error) {
         console.error("Error registering user:", error);
         res.status(500).send("Server error.");
